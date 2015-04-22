@@ -1,0 +1,1 @@
+php symfony/OpenCahutte/app/console server:run
