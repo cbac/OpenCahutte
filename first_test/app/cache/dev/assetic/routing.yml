@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: /home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/config/routing_dev.yml
