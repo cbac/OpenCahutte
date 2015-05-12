@@ -1,0 +1,27 @@
+oc_platform_home:
+    path:      /{page}
+    defaults:  { _controller: OpenCahuttePlatformBundle:Advert:index, page: 1 }
+    requirements:
+        page: \d*
+
+oc_platform_view:
+    path:      /advert/{id}
+    defaults:  { _controller: OpenCahuttePlatformBundle:Advert:view }
+    requirements:
+        id: \d+
+
+oc_platform_add:
+    path:      /add
+    defaults:  { _controller: OpenCahuttePlatformBundle:Advert:add }
+    requirements:
+        id: \d+
+
+oc_platform_edit:
+    path:      /edit/{id}
+    defaults:  { _controller: OpenCahuttePlatformBundle:Advert:edit }
+
+oc_platform_delete:
+    path:      /delete/{id}
+    defaults:  { _controller: OpenCahuttePlatformBundle:Advert:delete }
+    requirements:
+        id: \d+

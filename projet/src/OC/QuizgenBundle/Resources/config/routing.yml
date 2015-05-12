@@ -1,0 +1,3 @@
+oc_quizgen_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OCQuizgenBundle:Default:index }

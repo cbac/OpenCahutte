@@ -1,0 +1,17 @@
+{# src/OpenCahutte/PlatformBundle/Resources/views/Advert/add.html.twig #}
+
+{% extends "OpenCahuttePlatformBundle::layout.html.twig" %}
+
+{% block body %}
+
+  <h2>Ajouter une annonce</h2>
+
+  {{ include("OpenCahuttePlatformBundle:Advert:form.html.twig") }}
+
+  <p>
+    Attention : cette annonce sera ajoutée directement
+    sur la page d'accueil après validation du formulaire.
+  </p>
+  
+
+{% endblock %}

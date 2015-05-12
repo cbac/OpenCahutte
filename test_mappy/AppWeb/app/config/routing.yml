@@ -1,3 +1,7 @@
+open_cahutte_platform:
+    resource: "@OpenCahuttePlatformBundle/Resources/config/routing.yml"
+    prefix:   /platform
+
 tutoWelcomeBundle:
     resource: "@tutoWelcomeBundle/Resources/config/routing.yml"
     prefix:   /
