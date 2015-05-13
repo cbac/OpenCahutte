@@ -70,6 +70,34 @@ class DefaultController extends Controller
       'listQuizs' => $listQuizs
     ));
   }
-  
+   public function deleteAction(Quiz $quiz)
+  {
+    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'article contre cette faille
+    $form = $this->createFormBuilder()->getForm();
+
+    $request = $this->getRequest();
+    if ($request->getMethod() == 'POST') {
+      $form->bind($request);
+
+      if ($form->isValid()) { // Ici, isValid ne vérifie donc que le CSRF
+        // On supprime l'article
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($quiz);
+        $em->flush();
+
+        // On définit un message flash
+        $this->get('session')->getFlashBag()->add('info', 'Le quiz a été supprimé.');
+
+        // Puis on redirige vers l'accueil
+        return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
+      }
+    }
+    // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+    return $this->render('OCQuizgenBundle:Default:delete.html.twig', array(
+      'quiz' => $quiz,
+      'form'    => $form->createView()
+    ));
+  }
   
 }
