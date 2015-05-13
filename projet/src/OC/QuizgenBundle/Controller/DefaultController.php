@@ -29,6 +29,24 @@ class DefaultController extends Controller
       ->add('save',      'submit')
     ;
     $form = $formBuilder->getForm();
+    
+    // À partir de maintenant, la variable $quiz contient les valeurs entrées dans le formulaire par le visiteur
+    $form->handleRequest($request);
+
+    // On vérifie que les valeurs entrées sont correctes
+    // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+    if ($form->isValid()) {
+      // On l'enregistre notre objet $quiz dans la base de données, par exemple
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($quiz);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un nouveau quiz.');
+
+      // On redirige vers la page de visualisation du quiz nouvellement créé
+      return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
+    }
+    
     // On passe la méthode createView() du formulaire à la vue
     // afin qu'elle puisse afficher le formulaire toute seule
     return $this->render('OCQuizgenBundle:Default:add.html.twig', array(
@@ -42,7 +60,7 @@ class DefaultController extends Controller
     $em = $this->getDoctrine()->getManager();
     // On récupère le $id
     $quiz = $em
-      ->getRepository('OCQuizgenBundle:Default')
+      ->getRepository('OCQuizgenBundle:Quiz')
       ->find($id)
     ;
     if (null === $quiz) {

@@ -11,6 +11,7 @@ oc_quizgen_edit:
     defaults: { _controller: OCQuizgenBundle:Default:edit }
 
 oc_quizgen_view: 
-    path:    /view
+    path:    /view/{id}
     defaults: { _controller: OCQuizgenBundle:Default:view }
-
+    requirements:
+         id: \d+
