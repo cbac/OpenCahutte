@@ -1,3 +1,16 @@
 oc_quizgen_homepage:
-    path:     /hello/{name}
+    path:     /home
     defaults: { _controller: OCQuizgenBundle:Default:index }
+
+oc_quizgen_add:
+    path:    /add
+    defaults: { _controller: CQuizgenBundle:Default:add }
+
+oc_quizgen_edit: 
+    path:    /edit
+    defaults: { _controller: CQuizgenBundle:Default:edit }
+
+oc_quizgen_view: 
+    path:    /view
+    defaults: { _controller: CQuizgenBundle:Default:view }
+

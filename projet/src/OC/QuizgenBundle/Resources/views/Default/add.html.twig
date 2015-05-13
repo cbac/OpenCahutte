@@ -1,0 +1,17 @@
+{# src/OC/QuizgenBundle/Resources/views/Default/add.html.twig #}
+
+{% extends "OCQuizgenBundle::layout.html.twig" %}
+
+{% block body %}
+
+  <h2>Ajouter une annonce</h2>
+
+  {{ include("OCQuizgenBundle:Default:form.html.twig") }}
+
+  <p>
+    Attention : cette annonce sera ajoutée directement
+    sur la page d'accueil après validation du formulaire.
+  </p>
+  
+
+{% endblock %}
