@@ -4,6 +4,7 @@ namespace OC\QuizgenBundle\Controller;
 
 
 use OC\QuizgenBundle\Entity\Quiz;
+use OC\QuizgenBundle\Form\QuizType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,35 +19,20 @@ class DefaultController extends Controller
      // On crée un objet Quiz
     $quiz = new Quiz();
     // On crée le FormBuilder grâce au service form factory
-    $formBuilder = $this->get('form.factory')->createBuilder('form', $quiz);
+    $form = $this->get('form.factory')->create(new QuizType(), $quiz);
     // On ajoute les champs de l'entité que l'on veut à notre formulaire
-    $formBuilder
-      ->add('date',      'date')
-      ->add('nom',     'text')
-      ->add('author',    'text')
-      ->add('category',    'text')
-      ->add('type',    'text')
-      ->add('save',      'submit')
-    ;
-    $form = $formBuilder->getForm();
     
     // À partir de maintenant, la variable $quiz contient les valeurs entrées dans le formulaire par le visiteur
-    $form->handleRequest($request);
-
-    // On vérifie que les valeurs entrées sont correctes
-    // (Nous verrons la validation des objets en détail dans le prochain chapitre)
-    if ($form->isValid()) {
-      // On l'enregistre notre objet $quiz dans la base de données, par exemple
+    if ($form->handleRequest($request)->isValid()) {
       $em = $this->getDoctrine()->getManager();
       $em->persist($quiz);
       $em->flush();
 
-      $request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un nouveau quiz.');
+      $request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un quiz avec succès.');
 
-      // On redirige vers la page de visualisation du quiz nouvellement créé
       return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
     }
-    
+         
     // On passe la méthode createView() du formulaire à la vue
     // afin qu'elle puisse afficher le formulaire toute seule
     return $this->render('OCQuizgenBundle:Default:add.html.twig', array(
