@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
   <parameters>
-    <parameter key="kernel.root_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app</parameter>
+    <parameter key="kernel.root_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.debug">true</parameter>
     <parameter key="kernel.name">app</parameter>
-    <parameter key="kernel.cache_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev</parameter>
-    <parameter key="kernel.logs_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/logs</parameter>
+    <parameter key="kernel.cache_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev</parameter>
+    <parameter key="kernel.logs_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\logs</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="SecurityBundle">Symfony\Bundle\SecurityBundle\SecurityBundle</parameter>
@@ -105,7 +105,7 @@
     <parameter key="session.storage.options" type="collection">
       <parameter key="gc_probability">1</parameter>
     </parameter>
-    <parameter key="session.save_path">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/sessions</parameter>
+    <parameter key="session.save_path">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
     <parameter key="security.secure_random.class">Symfony\Component\Security\Core\Util\SecureRandom</parameter>
     <parameter key="form.resolved_type_factory.class">Symfony\Component\Form\ResolvedFormTypeFactory</parameter>
@@ -181,7 +181,7 @@
     <parameter key="data_collector.form.extractor.class">Symfony\Component\Form\Extension\DataCollector\FormDataExtractor</parameter>
     <parameter key="profiler_listener.only_exceptions">false</parameter>
     <parameter key="profiler_listener.only_master_requests">false</parameter>
-    <parameter key="profiler.storage.dsn">file:/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/profiler</parameter>
+    <parameter key="profiler.storage.dsn">file:C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/profiler</parameter>
     <parameter key="profiler.storage.username"></parameter>
     <parameter key="profiler.storage.password"></parameter>
     <parameter key="profiler.storage.lifetime">86400</parameter>
@@ -205,7 +205,7 @@
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"></parameter>
-    <parameter key="router.resource">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/assetic/routing.yml</parameter>
+    <parameter key="router.resource">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/assetic/routing.yml</parameter>
     <parameter key="router.cache_class_prefix">appDev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
@@ -216,7 +216,7 @@
     <parameter key="debug.stopwatch.class">Symfony\Component\Stopwatch\Stopwatch</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
     <parameter key="debug.event_dispatcher.class">Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher</parameter>
-    <parameter key="debug.container.dump">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/appDevDebugProjectContainer.xml</parameter>
+    <parameter key="debug.container.dump">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/appDevDebugProjectContainer.xml</parameter>
     <parameter key="debug.controller_resolver.class">Symfony\Component\HttpKernel\Controller\TraceableControllerResolver</parameter>
     <parameter key="security.context.class">Symfony\Component\Security\Core\SecurityContext</parameter>
     <parameter key="security.user_checker.class">Symfony\Component\Security\Core\User\UserChecker</parameter>
@@ -338,7 +338,7 @@
         <parameter>Symfony\Bundle\TwigBundle\TwigDefaultEscapingStrategy</parameter>
         <parameter>guess</parameter>
       </parameter>
-      <parameter key="cache">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/twig</parameter>
+      <parameter key="cache">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/twig</parameter>
       <parameter key="charset">UTF-8</parameter>
       <parameter key="paths" type="collection"/>
     </parameter>
@@ -423,7 +423,7 @@
     <parameter key="swiftmailer.mailer.default.transport.smtp.auth_mode">null</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.timeout">30</parameter>
     <parameter key="swiftmailer.mailer.default.transport.smtp.source_ip">null</parameter>
-    <parameter key="swiftmailer.spool.default.memory.path">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/swiftmailer/spool/default</parameter>
+    <parameter key="swiftmailer.spool.default.memory.path">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/swiftmailer/spool/default</parameter>
     <parameter key="swiftmailer.mailer.default.spool.enabled">true</parameter>
     <parameter key="swiftmailer.mailer.default.plugin.impersonate">null</parameter>
     <parameter key="swiftmailer.mailer.default.single_address">null</parameter>
@@ -448,7 +448,7 @@
     <parameter key="assetic.worker.cache_busting.class">Assetic\Factory\Worker\CacheBustingWorker</parameter>
     <parameter key="assetic.value_supplier.class">Symfony\Bundle\AsseticBundle\DefaultValueSupplier</parameter>
     <parameter key="assetic.node.paths" type="collection"/>
-    <parameter key="assetic.cache_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/assetic</parameter>
+    <parameter key="assetic.cache_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/assetic</parameter>
     <parameter key="assetic.bundles" type="collection"/>
     <parameter key="assetic.twig_extension.class">Symfony\Bundle\AsseticBundle\Twig\AsseticExtension</parameter>
     <parameter key="assetic.twig_formula_loader.class">Assetic\Extension\Twig\TwigFormulaLoader</parameter>
@@ -458,10 +458,10 @@
     <parameter key="assetic.debug">true</parameter>
     <parameter key="assetic.use_controller">true</parameter>
     <parameter key="assetic.enable_profiler">false</parameter>
-    <parameter key="assetic.read_from">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/../web</parameter>
-    <parameter key="assetic.write_to">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/../web</parameter>
+    <parameter key="assetic.read_from">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/../web</parameter>
+    <parameter key="assetic.write_to">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/../web</parameter>
     <parameter key="assetic.variables" type="collection"/>
-    <parameter key="assetic.java.bin">/usr/bin/java</parameter>
+    <parameter key="assetic.java.bin">C:\ProgramData\Oracle\Java\javapath\java.EXE</parameter>
     <parameter key="assetic.node.bin">/usr/bin/node</parameter>
     <parameter key="assetic.ruby.bin">/usr/bin/ruby</parameter>
     <parameter key="assetic.sass.bin">/usr/bin/sass</parameter>
@@ -568,7 +568,7 @@
     <parameter key="doctrine.orm.second_level_cache.cache_configuration.class">Doctrine\ORM\Cache\CacheConfiguration</parameter>
     <parameter key="doctrine.orm.second_level_cache.regions_configuration.class">Doctrine\ORM\Cache\RegionsConfiguration</parameter>
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
-    <parameter key="doctrine.orm.proxy_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="sensio_framework_extra.view.guesser.class">Sensio\Bundle\FrameworkExtraBundle\Templating\TemplateGuesser</parameter>
     <parameter key="sensio_framework_extra.controller.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener</parameter>
@@ -694,7 +694,7 @@
               <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder" public="false">
                 <argument type="service" id="kernel"/>
                 <argument type="service" id="templating.filename_parser"/>
-                <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/Resources</argument>
+                <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/Resources</argument>
               </service>
             </argument>
             <argument type="service" id="templating.locator"/>
@@ -720,7 +720,7 @@
               <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder" public="false">
                 <argument type="service" id="kernel"/>
                 <argument type="service" id="templating.filename_parser"/>
-                <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/Resources</argument>
+                <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/Resources</argument>
               </service>
             </argument>
           </service>
@@ -742,7 +742,7 @@
     <service id="filesystem" class="Symfony\Component\Filesystem\Filesystem"/>
     <service id="file_locator" class="Symfony\Component\HttpKernel\Config\FileLocator">
       <argument type="service" id="kernel"/>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/Resources</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/Resources</argument>
     </service>
     <service id="uri_signer" class="Symfony\Component\HttpKernel\UriSigner">
       <argument>31640d589e907410878daa6df44df4addf86a7cc</argument>
@@ -839,7 +839,7 @@
         </argument>
       </argument>
       <argument type="collection">
-        <argument key="cache_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/translations</argument>
+        <argument key="cache_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/translations</argument>
         <argument key="debug">true</argument>
       </argument>
     </service>
@@ -1052,7 +1052,7 @@
     </service>
     <service id="security.secure_random" class="Symfony\Component\Security\Core\Util\SecureRandom">
       <tag name="monolog.logger" channel="security"/>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/secure_random.seed</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/secure_random.seed</argument>
       <argument type="service" id="monolog.logger.security" on-invalid="ignore"/>
     </service>
     <service id="form.resolved_type_factory" class="Symfony\Component\Form\Extension\DataCollector\Proxy\ResolvedTypeFactoryDataCollectorProxy">
@@ -1266,7 +1266,7 @@
     <service id="templating.filename_parser" class="Symfony\Bundle\FrameworkBundle\Templating\TemplateFilenameParser"/>
     <service id="templating.locator" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator" public="false">
       <argument type="service" id="file_locator"/>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev</argument>
     </service>
     <service id="templating.helper.slots" class="Symfony\Component\Templating\Helper\SlotsHelper">
       <tag name="templating.helper" alias="slots"/>
@@ -1304,7 +1304,7 @@
     <service id="templating.helper.code" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\CodeHelper">
       <tag name="templating.helper" alias="code"/>
       <argument>null</argument>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app</argument>
       <argument>UTF-8</argument>
     </service>
     <service id="templating.helper.translator" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\TranslatorHelper">
@@ -1359,7 +1359,7 @@
       </call>
       <call method="addXmlMappings">
         <argument type="collection">
-          <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml</argument>
+          <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Component\Form/Resources/config/validation.xml</argument>
         </argument>
       </call>
       <call method="enableAnnotationMapping">
@@ -1395,7 +1395,7 @@
       <tag name="monolog.logger" channel="profiler"/>
       <argument type="service">
         <service class="Symfony\Component\HttpKernel\Profiler\FileProfilerStorage" public="false">
-          <argument>file:/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/profiler</argument>
+          <argument>file:C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/profiler</argument>
           <argument></argument>
           <argument></argument>
           <argument>86400</argument>
@@ -2122,7 +2122,7 @@
           <argument>Symfony\Bundle\TwigBundle\TwigDefaultEscapingStrategy</argument>
           <argument>guess</argument>
         </argument>
-        <argument key="cache">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/twig</argument>
+        <argument key="cache">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="paths" type="collection"/>
       </argument>
@@ -2172,7 +2172,7 @@
           <service class="Symfony\Bridge\Twig\Extension\CodeExtension" public="false">
             <tag name="twig.extension"/>
             <argument>null</argument>
-            <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app</argument>
+            <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app</argument>
             <argument>UTF-8</argument>
           </service>
         </argument>
@@ -2309,7 +2309,7 @@
       <argument>twig.controller.exception:showAction</argument>
     </service>
     <service id="monolog.handler.main" class="Monolog\Handler\StreamHandler">
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/logs/dev.log</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\logs/dev.log</argument>
       <argument>100</argument>
       <argument>true</argument>
       <argument>null</argument>
@@ -2371,7 +2371,7 @@
             </argument>
             <argument type="service">
               <service class="Assetic\Cache\ConfigCache" public="false">
-                <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/assetic/config</argument>
+                <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/assetic/config</argument>
               </service>
             </argument>
             <argument>true</argument>
@@ -2385,7 +2385,7 @@
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="service" id="templating.loader"/>
             <argument></argument>
-            <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/Resources/views</argument>
+            <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/Resources/views</argument>
             <argument>/\.[^.]+\.twig$/</argument>
           </service>
         </argument>
@@ -2400,7 +2400,7 @@
           <factory service="service_container" method="getParameterBag"/>
         </service>
       </argument>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/../web</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/../web</argument>
       <argument>true</argument>
       <call method="addWorker">
         <argument type="service">
@@ -2421,7 +2421,7 @@
       <argument type="service" id="profiler" on-invalid="null"/>
     </service>
     <service id="assetic.cache" class="Assetic\Cache\FilesystemCache" public="false">
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/assetic/assets</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/assetic/assets</argument>
     </service>
     <service id="assetic.request_listener" class="Symfony\Bundle\AsseticBundle\EventListener\RequestListener">
       <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
@@ -2500,17 +2500,17 @@
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_metadata_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_49768e565507d28f823989f091b10d554c6cee6c2c3474464a8ba43e0fce59e7</argument>
+        <argument>sf2orm_default_a2905c51515ccaad3bff9df5a97ee02a66e72d63f4315c85c33f43f125fa6cc7</argument>
       </call>
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_result_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_49768e565507d28f823989f091b10d554c6cee6c2c3474464a8ba43e0fce59e7</argument>
+        <argument>sf2orm_default_a2905c51515ccaad3bff9df5a97ee02a66e72d63f4315c85c33f43f125fa6cc7</argument>
       </call>
     </service>
     <service id="doctrine_cache.providers.doctrine.orm.default_query_cache" class="Doctrine\Common\Cache\ArrayCache">
       <call method="setNamespace">
-        <argument>sf2orm_default_49768e565507d28f823989f091b10d554c6cee6c2c3474464a8ba43e0fce59e7</argument>
+        <argument>sf2orm_default_a2905c51515ccaad3bff9df5a97ee02a66e72d63f4315c85c33f43f125fa6cc7</argument>
       </call>
     </service>
     <service id="doctrine.orm.default_entity_listener_resolver" class="Doctrine\ORM\Mapping\DefaultEntityListenerResolver"/>
@@ -2540,7 +2540,7 @@
             </argument>
           </call>
           <call method="setProxyDir">
-            <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/doctrine/orm/Proxies</argument>
+            <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/doctrine/orm/Proxies</argument>
           </call>
           <call method="setProxyNamespace">
             <argument>Proxies</argument>
@@ -2727,7 +2727,7 @@
       <argument>^/bundles|^/_wdt</argument>
     </service>
     <service id="sensio_distribution.webconfigurator" class="Sensio\Bundle\DistributionBundle\Configurator\Configurator">
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app</argument>
       <call method="addStep">
         <argument type="service">
           <service class="Sensio\Bundle\DistributionBundle\Configurator\Step\DoctrineStep" public="false">
@@ -2875,7 +2875,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.filesystem" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage">
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/sessions</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service" id="session.storage.metadata_bag"/>
     </service>
@@ -2918,9 +2918,9 @@
     <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
       <tag name="monolog.logger" channel="router"/>
       <argument type="service" id="service_container"/>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/assetic/routing.yml</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/assetic/routing.yml</argument>
       <argument type="collection">
-        <argument key="cache_dir">/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev</argument>
+        <argument key="cache_dir">C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
         <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
@@ -2940,7 +2940,7 @@
       <argument type="service">
         <service class="Doctrine\Common\Annotations\AnnotationReader" public="false"/>
       </argument>
-      <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/cache/dev/annotations</argument>
+      <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app\cache\dev/annotations</argument>
       <argument>true</argument>
     </service>
     <service id="security.encoder_factory" class="Symfony\Component\Security\Core\Encoder\EncoderFactory">
@@ -2961,46 +2961,46 @@
       <argument type="service" id="templating.locator"/>
       <argument type="service" id="templating.name_parser"/>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bundle\FrameworkBundle/Resources/views</argument>
         <argument>Framework</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bundle\SecurityBundle/Resources/views</argument>
         <argument>Security</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bundle\TwigBundle/Resources/views</argument>
         <argument>Twig</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/swiftmailer-bundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\swiftmailer-bundle/Resources/views</argument>
         <argument>Swiftmailer</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/doctrine/doctrine-bundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\doctrine\doctrine-bundle/Resources/views</argument>
         <argument>Doctrine</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bundle\DebugBundle/Resources/views</argument>
         <argument>Debug</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/src/Acme/DemoBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\src\Acme\DemoBundle/Resources/views</argument>
         <argument>AcmeDemo</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bundle\WebProfilerBundle/Resources/views</argument>
         <argument>WebProfiler</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\sensio\distribution-bundle\Sensio\Bundle\DistributionBundle/Resources/views</argument>
         <argument>SensioDistribution</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/app/Resources/views</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/Resources/views</argument>
       </call>
       <call method="addPath">
-        <argument>/home/mps/Documents/INT/2a/Cassiopee/learning_Symphony/first_test/vendor/symfony/symfony/src/Symfony/Bridge/Twig/Resources/views/Form</argument>
+        <argument>C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\vendor\symfony\symfony\src\Symfony\Bridge\Twig/Resources/views/Form</argument>
       </call>
     </service>
     <service id="logger" class="Symfony\Bridge\Monolog\Logger">

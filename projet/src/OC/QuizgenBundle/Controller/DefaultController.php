@@ -59,12 +59,17 @@ class DefaultController extends Controller
   }
    public function menuAction($limit)
   {
-   // test affichage avec des quizs hors BDD
-    $listQuizs = array(
-      array('id' => 2, 'nom' => 'Symfony2'),
-      array('id' => 5, 'nom' => 'Appels système'),
-      array('id' => 9, 'nom' => 'Flex et Bison')
-    );
+	$listQuizs = $this
+		->getDoctrine()
+		->getManager()
+		->getRepository('OCQuizgenBundle:Quiz')
+		->findBy(
+			array(),
+			array('id' => 'desc'),
+			$limit,
+			0
+		)
+	;
 
     return $this->render('OCQuizgenBundle:Default:menu.html.twig', array(
       'listQuizs' => $listQuizs
