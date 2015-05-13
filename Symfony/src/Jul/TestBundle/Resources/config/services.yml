@@ -1,0 +1,6 @@
+services:
+    jul_test.doctrine.notification:
+        class: Jul\TestBundle\DoctrineListener\ApplicationNotification
+        arguments: [@mailer]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
