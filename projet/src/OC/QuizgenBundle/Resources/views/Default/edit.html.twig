@@ -6,7 +6,7 @@
   Modifier un quiz - {{ parent() }}
 {% endblock %}
 
-{% block ocquiz_body %}
+{% block ocquizgen_body %}
 
   <h2>Modifier un quiz</h2>
 
@@ -17,7 +17,7 @@
   </p>
 
   <p>
-    <a href="{{ path('oc_quizgen_view', {'id': advert.id}) }}" class="btn btn-default">
+    <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour au quiz
     </a>
