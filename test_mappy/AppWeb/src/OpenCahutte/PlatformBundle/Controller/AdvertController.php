@@ -83,7 +83,7 @@ class AdvertController extends Controller
 
   public function addAction(Request $request)
   { 
-  / On récupère l'EntityManager
+  // On récupère l'EntityManager
     $em = $this->getDoctrine()->getManager();
 
     // Création de l'entité Advert

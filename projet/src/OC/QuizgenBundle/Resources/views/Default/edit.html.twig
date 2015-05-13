@@ -3,24 +3,23 @@
 {% extends "OCQuizgenBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier une annonce - {{ parent() }}
+  Modifier un quiz - {{ parent() }}
 {% endblock %}
 
-{% block ocplatform_body %}
+{% block ocquiz_body %}
 
-  <h2>Modifier une annonce</h2>
+  <h2>Modifier un quiz</h2>
 
   {{ include("OCQuizgenBundle:Default:form.html.twig") }}
 
   <p>
-    Vous éditez une annonce déjà existante, merci de ne pas changer
-    l'esprit général de l'annonce déjà publiée.
+    Vous éditez un quiz. 
   </p>
 
   <p>
-    <a href="{{ path('oc_platform_view', {'id': advert.id}) }}" class="btn btn-default">
+    <a href="{{ path('oc_quizgen_view', {'id': advert.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'annonce
+      Retour au quiz
     </a>
   </p>
 

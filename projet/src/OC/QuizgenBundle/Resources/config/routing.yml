@@ -4,13 +4,13 @@ oc_quizgen_homepage:
 
 oc_quizgen_add:
     path:    /add
-    defaults: { _controller: CQuizgenBundle:Default:add }
+    defaults: { _controller: OCQuizgenBundle:Default:add }
 
 oc_quizgen_edit: 
     path:    /edit
-    defaults: { _controller: CQuizgenBundle:Default:edit }
+    defaults: { _controller: OCQuizgenBundle:Default:edit }
 
 oc_quizgen_view: 
     path:    /view
-    defaults: { _controller: CQuizgenBundle:Default:view }
+    defaults: { _controller: OCQuizgenBundle:Default:view }
 

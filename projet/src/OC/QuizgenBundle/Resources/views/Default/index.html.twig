@@ -6,21 +6,21 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocplatform_body %}
+{% block ocquiz_body %}
 
-  <h2>Liste des annonces</h2>
+  <h2>Liste des quizs</h2>
 
   <ul>
-    {% for advert in listAdverts %}
+    {% for quiz in listQuizs %}
       <li>
-        <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
-          {{ advert.title }}
+        <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
+          {{ quiz.title }}
         </a>
-        par {{ advert.author }},
-        le {{ advert.date|date('d/m/Y') }}
+        par {{ quiz.author }},
+        le {{ quiz.date|date('d/m/Y') }}
       </li>
     {% else %}
-      <li>Pas (encore !) d'annonces</li>
+      <li>Pas (encore !) de quizs.</li>
     {% endfor %}
   </ul>
 

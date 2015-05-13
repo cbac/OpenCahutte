@@ -2,6 +2,10 @@
 
 namespace OC\QuizgenBundle\Controller;
 
+
+use OC\QuizgenBundle\Entity\Quiz;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
@@ -36,13 +40,13 @@ class DefaultController extends Controller
   {
      
     $em = $this->getDoctrine()->getManager();
-    // On récupère l'annonce $id
+    // On récupère le quiz $id
     $quiz = $em
       ->getRepository('OCQuizgenBundle:Default')
       ->find($id)
     ;
     if (null === $quiz) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+      throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
     }
 
     return $this->render('OCQuizgenBundle:Default:view.html.twig', array(
