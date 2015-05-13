@@ -7,8 +7,15 @@ oc_quizgen_add:
     defaults: { _controller: OCQuizgenBundle:Default:add }
 
 oc_quizgen_edit: 
-    path:    /edit
+    path:    /edit/{id}
     defaults: { _controller: OCQuizgenBundle:Default:edit }
+    
+oc_quizgen_delete: 
+    path:    /delete/{id}
+    defaults: { _controller: OCQuizgenBundle:Default:delete }
+    requirements:
+         id: \d+
+
 
 oc_quizgen_view: 
     path:    /view/{id}
