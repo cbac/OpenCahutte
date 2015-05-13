@@ -40,7 +40,7 @@ class DefaultController extends Controller
   {
      
     $em = $this->getDoctrine()->getManager();
-    // On récupère le quiz $id
+    // On récupère le $id
     $quiz = $em
       ->getRepository('OCQuizgenBundle:Default')
       ->find($id)
@@ -51,6 +51,19 @@ class DefaultController extends Controller
 
     return $this->render('OCQuizgenBundle:Default:view.html.twig', array(
       'quiz'           => $quiz
+    ));
+  }
+   public function menuAction($limit)
+  {
+   // test affichage avec des quizs hors BDD
+    $listQuizs = array(
+      array('id' => 2, 'nom' => 'Symfony2'),
+      array('id' => 5, 'nom' => 'Appels système'),
+      array('id' => 9, 'nom' => 'Flex et Bison')
+    );
+
+    return $this->render('OCQuizgenBundle:Default:menu.html.twig', array(
+      'listQuizs' => $listQuizs
     ));
   }
   

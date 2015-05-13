@@ -1,9 +1,9 @@
 {# src/OC/QuizgenBundle/Resources/views/Default/menu.html.twig #}
 
 <ul class="nav nav-pills nav-stacked">
-  {% for quiz in listQuiz %}
+  {% for quiz in listQuizs %}
     <li>
-      <a href="{{ path('oc_platform_view', {'id': quiz.id}) }}">
+      <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
         {{ quiz.nom }}
       </a>
     </li>
