@@ -6,7 +6,7 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocquiz_body %}
+{% block ocquizgen_body %}
 
   <h2>Liste des quizs</h2>
 
@@ -14,7 +14,7 @@
     {% for quiz in listQuizs %}
       <li>
         <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
-          {{ quiz.title }}
+          {{ quiz.nom }}
         </a>
         par {{ quiz.author }},
         le {{ quiz.date|date('d/m/Y') }}

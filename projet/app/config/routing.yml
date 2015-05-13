@@ -1,7 +1,3 @@
 oc_quizgen:
     resource: "@OCQuizgenBundle/Resources/config/routing.yml"
     prefix:   /quiz
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
