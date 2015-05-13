@@ -16,8 +16,8 @@
 
   {# On met l'id du quiz dans la route de l'action du formulaire #}
   <form action="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" method="post">
-    <a href="{{ path('oc_quizgen_homepage') }}" class="btn">
-      <i class="icon-chevron-left"></i>
+    <a href="{{ path('oc_quizgen_homepage') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
       Retour aux quizs
     </a>
     <input type="submit" value="Supprimer" class="btn btn-danger" />

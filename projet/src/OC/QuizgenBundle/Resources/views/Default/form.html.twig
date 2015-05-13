@@ -3,40 +3,25 @@
 <h3>Formulaire de création de Quiz </h3>
 
 <div class="well">
+{# Thème personalisé pour obtenir un meilleur rendu des champs (dans Ressources/views/Form/fields.html.twig) #}
+{% form_theme form 'OCQuizgenBundle:Form:fields.html.twig' %}
+
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
     {# Les erreurs générales du formulaire. #}
     {{ form_errors(form) }}
 
-    <div class="form-group">
-      {# Génération du label. #}
-      {{ form_label(form.nom, "Titre du Quiz", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-
-      {# Affichage des erreurs pour ce champ précis. #}
-      {{ form_errors(form.nom) }}
-
-      <div class="col-sm-4">
-        {# Génération de l'input. #}
-        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
-
-    {# Idem pour un autre champ. #}
-    <div class="form-group">
-      {{ form_label(form.category, "Categorie du quiz", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-      {{ form_errors(form.nom) }}
-      <div class="col-sm-4">
-        {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
-      </div>
-    </div>
-
   {# Génération du label + error + widget pour un champ #}
-  {{ form_row(form.date) }}
+  {{ form_row(form.nom, {'label': 'Titre du quiz'} ) }}
 
-  {{ form_row(form.author) }}
+  {{ form_row(form.category, {'label': 'Catégorie du quiz'} ) }}
+
+  {{ form_row(form.date, {'label': 'Date de création'} ) }}
+
+  {{ form_row(form.author, {'label': 'Date de création'} ) }}
   
   
-  {{ form_row(form.type) }}
+  {{ form_row(form.type, {'label': 'Type de quiz'} ) }}
 
   {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
   {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
