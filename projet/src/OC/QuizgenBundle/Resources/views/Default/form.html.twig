@@ -3,34 +3,29 @@
 <h3>Formulaire de création de Quiz </h3>
 
 <div class="well">
-{# Thème personalisé pour obtenir un meilleur rendu des champs (dans Ressources/views/Form/fields.html.twig) #}
-{% form_theme form 'OCQuizgenBundle:Form:fields.html.twig' %}
+	{# Thème personalisé pour obtenir un meilleur rendu des champs (dans Ressources/views/Form/fields.html.twig) #}
+	{% form_theme form 'OCQuizgenBundle:Form:fields.html.twig' %}
 
-  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+	{# Overture de la balise <form> du formulaire HTML #}
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
     {# Les erreurs générales du formulaire. #}
     {{ form_errors(form) }}
 
-  {# Génération du label + error + widget pour un champ #}
-  {{ form_row(form.nom, {'label': 'Titre du quiz'} ) }}
+	{# Génération du label + error + widget pour un champ #}
+	{{ form_row(form.nom, {'label': 'Titre du quiz'} ) }}
+	{{ form_row(form.category, {'label': 'Catégorie du quiz'} ) }}
+	{{ form_row(form.date, {'label': 'Date de création'} ) }}
+	{{ form_row(form.author, {'label': 'Auteur'} ) }} 
+	{{ form_row(form.type, {'label': 'Type de quiz'} ) }}
+	{{ form_row(form.nbQuestions, {'label': 'Nombre de Questions'} ) }}
 
-  {{ form_row(form.category, {'label': 'Catégorie du quiz'} ) }}
+	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+	{{ form_widget(form.save, {'label':'Créer', 'attr': {'class': 'btn btn-primary'}}) }}
 
-  {{ form_row(form.date, {'label': 'Date de création'} ) }}
+	{# Génération automatique des champs pas encore écrits.#}
+	{{ form_rest(form) }}
 
-  {{ form_row(form.author, {'label': 'Date de création'} ) }}
-  
-  
-  {{ form_row(form.type, {'label': 'Type de quiz'} ) }}
-
-  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-
-  {# Génération automatique des champs pas encore écrits.
-     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-     et tous les champs cachés (type « hidden »). #}
-  {{ form_rest(form) }}
-  
-  {# Fermeture de la balise <form> du formulaire HTML #}
-  {{ form_end(form) }}
+	{# Fermeture de la balise <form> du formulaire HTML #}
+	{{ form_end(form) }}
 </div>
