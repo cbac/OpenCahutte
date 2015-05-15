@@ -13,7 +13,20 @@
   <i>Par {{ quiz.author }}, le {{ quiz.date|date('d/m/Y') }}</i>
 
   <div class="well">
-    {{ quiz.type }}
+    <ul>
+	  {% for QCM in quiz.QCMs %}
+		<li>{{ QCM.question }}</li>
+		<ul>
+			<li>PROPOSITION 1 : {{QCM.rep1}}</li>
+			<li>PROPOSITION 2 : {{QCM.rep2}}</li>
+			<li>PROPOSITION 3 : {{QCM.rep3}}</li>
+			<li>PROPOSITION 4 : {{QCM.rep4}}</li>
+			<li>BONNE REPONSE : {{QCM.bonneReponse + 1}}</li>
+		</ul>
+	  {% else %}
+		<li>Pas de questions trouvées.</li>
+	  {% endfor %}
+	</ul>
   </div>
   
    <p>
@@ -23,11 +36,11 @@
     </a>
     <a href="{{ path('oc_quizgen_edit', {'id': quiz.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
-      Modifier l'annonce
+      Modifier le quiz
     </a>
     <a href="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
-      Supprimer l'annonce
+      Supprimer le quiz
     </a>
   </p>
 

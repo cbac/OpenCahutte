@@ -14,7 +14,6 @@ class QuizType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$nbQuestionsChoices=range(1,10);
 		$categoryChoices=array(
 			'cg' => 'Culture générale', 
 			'maths' => 'Mathématiques', 
@@ -32,7 +31,11 @@ class QuizType extends AbstractType
 			->add('author', 		'text')
 			->add('category',		'choice', array('choices' => $categoryChoices ))
 			->add('type',			'choice', array('choices' => $typeChoices ))
-			->add('nbQuestions',	'choice', array('choices' => $nbQuestionsChoices))
+			->add('QCMs',			'collection', array(
+				'type'         => new QCMType(),
+				'allow_add'    => true,
+				'allow_delete' => true
+			))
 			->add('save',			'submit')
         ;
     }

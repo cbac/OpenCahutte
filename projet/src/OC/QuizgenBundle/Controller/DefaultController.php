@@ -38,6 +38,11 @@ class DefaultController extends Controller
 		if ($form->handleRequest($request)->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($quiz);
+			
+			foreach ($quiz->getQCMs() as $QCM) {
+				$QCM->setQuiz($quiz);
+			}
+			
 			$em->flush();
 
 			$request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un quiz avec succès.');

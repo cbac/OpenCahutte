@@ -278,14 +278,14 @@ class Advert
     }
 
     /**
-     * Add applications
+     * Add application
      *
-     * @param \Jul\TestBundle\Entity\Application $applications
+     * @param \Jul\TestBundle\Entity\Application $application
      * @return Advert
      */
-    public function addApplication(\Jul\TestBundle\Entity\Application $applications)
+    public function addApplication(\Jul\TestBundle\Entity\Application $application)
     {
-        $this->applications[] = $applications;
+        $this->applications[] = $application;
     
 		$application->setAdvert($this);
     
@@ -297,9 +297,9 @@ class Advert
      *
      * @param \Jul\TestBundle\Entity\Application $applications
      */
-    public function removeApplication(\Jul\TestBundle\Entity\Application $applications)
+    public function removeApplication(\Jul\TestBundle\Entity\Application $application)
     {
-        $this->applications->removeElement($applications);
+        $this->applications->removeElement($application);
     }
 
     /**

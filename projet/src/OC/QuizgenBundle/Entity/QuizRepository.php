@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuizRepository extends EntityRepository
 {
+	public function getQuizWithQCMs($id) {
+	
+		$qb = $this->createQueryBuilder('q')
+			->where('q.id=:id')
+			->setParameter('id', $id)
+		;
+
+
+		return $qb
+		  ->getQuery()
+		  ->getResult()
+		;
+	
+	}
 }

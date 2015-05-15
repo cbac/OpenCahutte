@@ -3,8 +3,6 @@
 <h3>Formulaire de création de Quiz </h3>
 
 <div class="well">
-	{# Thème personalisé pour obtenir un meilleur rendu des champs (dans Ressources/views/Form/fields.html.twig) #}
-	{% form_theme form 'OCQuizgenBundle:Form:fields.html.twig' %}
 
 	{# Overture de la balise <form> du formulaire HTML #}
 	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
@@ -13,12 +11,36 @@
     {{ form_errors(form) }}
 
 	{# Génération du label + error + widget pour un champ #}
-	{{ form_row(form.nom, {'label': 'Titre du quiz'} ) }}
-	{{ form_row(form.category, {'label': 'Catégorie du quiz'} ) }}
+	{{ form_row(form.nom, {'label': 'Titre du quiz', 'attr': {'style': 'width: 200px'} } ) }}
+	{{ form_row(form.category, {'label': 'Catégorie du quiz', 'attr': {'style': 'width: 200px'} } ) }}
 	{{ form_row(form.date, {'label': 'Date de création'} ) }}
-	{{ form_row(form.author, {'label': 'Auteur'} ) }} 
-	{{ form_row(form.type, {'label': 'Type de quiz'} ) }}
-	{{ form_row(form.nbQuestions, {'label': 'Nombre de Questions'} ) }}
+	{{ form_row(form.author, {'label': 'Auteur', 'attr': {'style': 'width: 200px'}} ) }} 
+	{{ form_row(form.type, {'label': 'Type de quiz', 'attr': {'style': 'width: 200px'}} ) }}
+	<h3>Questions</h3>
+	
+    <ul class="QCMs" data-prototype="
+		{% filter escape %}
+            {{ include('OCQuizgenBundle:Form:QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
+        {% endfilter %}
+		<br/>
+	">
+	{% for QCM in form.QCMs %}
+		<li>
+			{{ form_row(QCM.question, {'label': 'Question', 'attr': {'style': 'width: 200px'} } ) }}
+			{{ form_row(QCM.rep1, {'label': 'Proposition 1', 'attr': {'style': 'width: 200px'} } ) }}
+			{{ form_row(QCM.rep2, {'label': 'Proposition 2', 'attr': {'style': 'width: 200px'} } ) }}
+			{{ form_row(QCM.rep3, {'label': 'Proposition 3', 'attr': {'style': 'width: 200px'} } ) }}
+			{{ form_row(QCM.rep4, {'label': 'Proposition 4', 'attr': {'style': 'width: 200px'} } ) }}
+			{{ form_row(QCM.bonneReponse, {'label': 'Numéro de la bonne réponse', 'attr': {'style': 'width: 200px'} } ) }}
+		</li>
+		<br/>
+	{% else %}
+		<li>Pas de questions trouvées.</li>
+	{% endfor %}
+	  
+	  
+    </ul>
+	
 
 	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
 	{{ form_widget(form.save, {'label':'Créer', 'attr': {'class': 'btn btn-primary'}}) }}
@@ -28,4 +50,71 @@
 
 	{# Fermeture de la balise <form> du formulaire HTML #}
 	{{ form_end(form) }}
+	
+	{{ form(form) }}
+	
 </div>
+
+{# On charge la bibliothèque jQuery. Ici, je la prends depuis le CDN google
+   mais si vous l'avez en local, changez simplement l'adresse. #}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+{# Voici le script en question : #}
+<script type="text/javascript">
+ // Récupère le div qui contient la collection de tags
+var collectionHolder = $('ul.QCMs');
+
+// ajoute un lien « add a tag »
+var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter une question</a>');
+var $newLinkLi = $('<li></li>').append($addTagLink);
+
+jQuery(document).ready(function() {
+    // ajoute l'ancre « ajouter un tag » et li à la balise ul
+    collectionHolder.append($newLinkLi);
+
+    $addTagLink.on('click', function(e) {
+        // empêche le lien de créer un « # » dans l'URL
+        e.preventDefault();
+
+        // ajoute un nouveau formulaire tag (voir le prochain bloc de code)
+        addTagForm(collectionHolder, $newLinkLi);
+    });
+});
+
+jQuery(document).ready(function() {
+    // ajoute un lien de suppression à tous les éléments li de
+    // formulaires de tag existants
+    collectionHolder.find('li.a').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // ... le reste du bloc vu plus haut
+});
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+    var prototype = collectionHolder.attr('data-prototype');
+
+    // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
+    // la longueur de la collection courante
+    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+    // Affiche le formulaire dans la page dans un li, avant le lien "ajouter un tag"
+    var $newFormLi = $('<li class="a"></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+	addTagFormDeleteLink($newFormLi);
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<a href="#">Supprimer cette question</a>');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // empêche le lien de créer un « # » dans l'URL
+        e.preventDefault();
+
+        // supprime l'élément li pour le formulaire de tag
+        $tagFormLi.remove();
+    });
+}
+</script>

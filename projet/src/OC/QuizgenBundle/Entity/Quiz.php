@@ -2,6 +2,7 @@
 
 namespace OC\QuizgenBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,15 +58,14 @@ class Quiz
     private $type;
 	
 	/**
-     * @var smallint
-     *
-     * @ORM\Column(name="nbQuestions", type="smallint")
-     */
-    private $nbQuestions;
+	 * @ORM\OneToMany(targetEntity="OC\QuizgenBundle\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
+	 */
+    private $QCMs;
 
     public function __construct()
     {
-    $this->date         = new \Datetime();
+		$this->date = new \Datetime();
+		$this->QCMs = new ArrayCollection();
     } 
 
     /**
@@ -214,5 +214,38 @@ class Quiz
     public function getNbQuestions()
     {
         return $this->nbQuestions;
+    }
+
+    /**
+     * Add QCMs
+     *
+     * @param \OC\QuizgenBundle\Entity\QCM $qCMs
+     * @return Quiz
+     */
+    public function addQCM(\OC\QuizgenBundle\Entity\QCM $QCM)
+    {
+        $this->QCMs[] = $QCM;
+		
+        return $this;
+    }
+
+    /**
+     * Remove QCMs
+     *
+     * @param \OC\QuizgenBundle\Entity\QCM $qCMs
+     */
+    public function removeQCM(\OC\QuizgenBundle\Entity\QCM $qCMs)
+    {
+        $this->QCMs->removeElement($qCMs);
+    }
+
+    /**
+     * Get QCMs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getQCMs()
+    {
+        return $this->QCMs;
     }
 }
