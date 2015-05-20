@@ -1,3 +1,7 @@
+oc_quizdis:
+    resource: "@OCQuizdisBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oc_quizgen:
     resource: "@OCQuizgenBundle/Resources/config/routing.yml"
     prefix:   /quiz
