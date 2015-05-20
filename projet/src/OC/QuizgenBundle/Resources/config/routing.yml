@@ -22,3 +22,13 @@ oc_quizgen_view:
     defaults: { _controller: OCQuizgenBundle:Default:view }
     requirements:
          id: \d+
+         
+login:
+    pattern:   /login
+    defaults:  { _controller: OCUserBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout         

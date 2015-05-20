@@ -3,7 +3,7 @@
 namespace OC\QuizdisBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use 
+
 
 class DefaultController extends Controller
 {
@@ -33,6 +33,6 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
-		$form = $this->createForm(new , $);
+		//$form = $this->createForm(new , $);
 	}
 }
