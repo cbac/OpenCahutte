@@ -69,7 +69,6 @@ class QCM
      */
     private $quiz;
 
-
     /**
      * Get id
      *
@@ -216,5 +215,28 @@ class QCM
     public function getBonneReponse()
     {
         return $this->bonneReponse;
+    }
+
+    /**
+     * Set quiz
+     *
+     * @param \OC\QuizgenBundle\Entity\Quiz $quiz
+     * @return QCM
+     */
+    public function setQuiz(\OC\QuizgenBundle\Entity\Quiz $quiz)
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    /**
+     * Get quiz
+     *
+     * @return \OC\QuizgenBundle\Entity\Quiz 
+     */
+    public function getQuiz()
+    {
+        return $this->quiz;
     }
 }

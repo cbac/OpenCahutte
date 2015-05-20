@@ -66,6 +66,9 @@ class DefaultController extends Controller
 			->getRepository('OCQuizgenBundle:Quiz')
 			->find($id)
 		;
+		if (null === $quiz) {
+			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
+		}
 		
 		$form = $this->createForm(new QuizType(), $quiz);
 		
