@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: 'C:\Users\Julien\Documents\GitHub\OpenCahutte\first_test\app/config/routing_dev.yml'

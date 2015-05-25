@@ -2,6 +2,11 @@
 
 namespace OC\QuizdisBundle\Controller;
 
+use OC\QuizgenBundle\Entity\Quiz;
+use OC\QuizgenBundle\Form\QuizType;
+use OC\QuizdisBundle\Entity\ReponseQuestion;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
@@ -13,10 +18,15 @@ class DefaultController extends Controller
 			->getDoctrine()
 			->getManager()
 			->getRepository('OCQuizgenBundle:Quiz')
-			->findAll()
+			->findBy(
+				array(),
+				array('id' => 'desc'),
+				$limit,
+				0
+			)
 		;
 
-		return $this->render('OCQuizgenBundle:Default:index.html.twig', array(
+		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
 		  'listQuizs' => $listQuizs
 		));
 	}
