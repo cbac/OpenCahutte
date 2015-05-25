@@ -1,0 +1,6 @@
+/vendor/*
+/first_test/*
+/test_mappy/*
+/projet/composer.lock
+/composer.lock
+/projet/composer.json
