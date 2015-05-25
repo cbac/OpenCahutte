@@ -24,23 +24,35 @@
         {% endfilter %}
 		<br/>
 	">
-	{% for QCM in form.QCMs %}
-		<li>
-			{{ form_row(QCM.question, {'label': 'Question', 'attr': {'style': 'width: 200px'} } ) }}
-			{{ form_row(QCM.rep1, {'label': 'Proposition 1', 'attr': {'style': 'width: 200px'} } ) }}
-			{{ form_row(QCM.rep2, {'label': 'Proposition 2', 'attr': {'style': 'width: 200px'} } ) }}
-			{{ form_row(QCM.rep3, {'label': 'Proposition 3', 'attr': {'style': 'width: 200px'} } ) }}
-			{{ form_row(QCM.rep4, {'label': 'Proposition 4', 'attr': {'style': 'width: 200px'} } ) }}
-			{{ form_row(QCM.bonneReponse, {'label': 'Numéro de la bonne réponse', 'attr': {'style': 'width: 200px'} } ) }}
-		</li>
-		<br/>
-	{% else %}
-		<li>Pas de questions trouvées.</li>
-	{% endfor %}
-	  
-	  
+		{% for QCM in form.QCMs %}
+			{{ form_row(QCM.question, {'label': 'Question', 'attr': {'style': 'width: 400px'} } ) }}
+			<table>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep1, {'label': 'Rép 1', 'attr': {'style': 'width: 400px'} } ) }}</td>
+				<td>{{ form_row(QCM.juste1, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep2, {'label': 'Rép 2', 'attr': {'style': 'width: 400px'} } ) }}</td>
+				<td>{{ form_row(QCM.juste2, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep3, {'label': 'Rép 3', 'attr': {'style': 'width: 400px'} } ) }}</td>
+				<td>{{ form_row(QCM.juste3, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep4, {'label': 'Rép 4', 'attr': {'style': 'width: 400px'} } ) }}</td>
+				<td>{{ form_row(QCM.juste4, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+			</tr>
+			
+			</table>
+		{% endfor %}
     </ul>
 	
+	{% do form.QCMs.setRendered %}
 
 	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
 	{{ form_widget(form.save, {'label':'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
@@ -51,7 +63,6 @@
 	{# Fermeture de la balise <form> du formulaire HTML #}
 	{{ form_end(form) }}
 	
-	{{ form(form) }}
 	
 </div>
 
@@ -106,7 +117,7 @@ function addTagForm(collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">Supprimer cette question</a>');
+    var $removeFormA = $('<a href="#">Supprimer cette question</a><br/><br/>');
     $tagFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

@@ -17,11 +17,34 @@ class QCMType extends AbstractType
 		$bonneReponseChoices=array(1,2,3,4);
         $builder
             ->add('question',		'text')
+			
             ->add('rep1',			'text')
+            ->add('juste1',			'choice', array( 
+				'choices' => array('vrai','faux'),
+				'expanded' => true,
+				'preferred_choices' => array('faux')
+			))
+			
             ->add('rep2',			'text')
+            ->add('juste2',			'choice', array( 
+				'choices' => array('vrai','faux'),
+				'expanded' => true,
+				'preferred_choices' => array('faux')
+			))
+			
             ->add('rep3',			'text')
+            ->add('juste3',			'choice', array( 
+				'choices' => array('vrai','faux'),
+				'expanded' => true,
+				'preferred_choices' => array('faux')
+			))
+			
             ->add('rep4',			'text')
-            ->add('bonneReponse',	'choice', array('choices' => $bonneReponseChoices))
+            ->add('juste4',			'choice', array( 
+				'choices' => array('vrai','faux'),
+				'expanded' => true,
+				'preferred_choices' => array('faux')
+			))
         ;
     }
     

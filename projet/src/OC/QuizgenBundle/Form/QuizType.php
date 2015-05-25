@@ -29,7 +29,6 @@ class QuizType extends AbstractType
 			->add('date',			'date')
 			->add('nom',			'text')
 			->add('author', 		'text')
-			->add('id',			'integer')
 			->add('category',		'choice', array('choices' => $categoryChoices ))
 			->add('type',			'choice', array('choices' => $typeChoices ))
 			->add('QCMs',			'collection', array(

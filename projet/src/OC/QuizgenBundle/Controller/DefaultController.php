@@ -73,6 +73,9 @@ class DefaultController extends Controller
 		$form = $this->createForm(new QuizType(), $quiz);
 		
 		if ($form->handleRequest($request)->isValid()) {
+			foreach ($quiz->getQCMs() as $QCM) {
+				$QCM->setQuiz($quiz);
+			}
 			$em->flush();
 			$request->getSession()->getFlashBag()->add('notice', 'Vous avez modifié un quiz avec succès.');
 			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
