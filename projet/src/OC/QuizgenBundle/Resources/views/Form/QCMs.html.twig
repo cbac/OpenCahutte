@@ -1,6 +1,24 @@
-    {{ form_row(form.question, {'label': 'Question', 'attr': {'style': 'width: 200px'} } ) }}
-    {{ form_row(form.rep1, {'label': 'Proposition 1', 'attr': {'style': 'width: 200px'} } ) }}
-    {{ form_row(form.rep2, {'label': 'Proposition 2', 'attr': {'style': 'width: 200px'} } ) }}
-    {{ form_row(form.rep3, {'label': 'Proposition 3', 'attr': {'style': 'width: 200px'} } ) }}
-    {{ form_row(form.rep4, {'label': 'Proposition 4', 'attr': {'style': 'width: 200px'} } ) }}
-    {{ form_row(form.bonneReponse, {'label': 'Numéro de la bonne réponse', 'attr': {'style': 'width: 200px'} } ) }}
+    {{ form_row(form.question, {'label': 'Question', 'attr': {'style': 'width: 400px'} } ) }}
+	<table>
+	
+	<tr>
+	<td>{{ form_row(form.rep1, {'label': 'Rép 1', 'attr': {'style': 'width: 400px'} } ) }}</td>
+    <td>{{ form_row(form.juste1, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+	</tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep2, {'label': 'Rép 2', 'attr': {'style': 'width: 400px'} } ) }}</td>
+    <td>{{ form_row(form.juste2, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+    </tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep3, {'label': 'Rép 3', 'attr': {'style': 'width: 400px'} } ) }}</td>
+    <td>{{ form_row(form.juste3, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+    </tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep4, {'label': 'Rép 4', 'attr': {'style': 'width: 400px'} } ) }}</td>
+    <td>{{ form_row(form.juste4, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+    </tr>
+	
+	</table>

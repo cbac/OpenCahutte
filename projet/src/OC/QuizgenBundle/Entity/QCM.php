@@ -56,12 +56,33 @@ class QCM
      */
     private $rep4;
 
-    /**
-     * @var integer
+	/**
+     * @var boolean
      *
-     * @ORM\Column(name="bonneReponse", type="smallint")
+     * @ORM\Column(name="juste1", type="boolean")
      */
-    private $bonneReponse;
+    private $juste1;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="juste2", type="boolean")
+     */
+    private $juste2;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="juste3", type="boolean")
+     */
+    private $juste3;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="juste4", type="boolean")
+     */
+    private $juste4;
 
     /**
      * @ORM\ManyToOne(targetEntity="OC\QuizgenBundle\Entity\Quiz", inversedBy="QCMs")
@@ -195,29 +216,6 @@ class QCM
     }
 
     /**
-     * Set bonneReponse
-     *
-     * @param integer $bonneReponse
-     * @return QCM
-     */
-    public function setBonneReponse($bonneReponse)
-    {
-        $this->bonneReponse = $bonneReponse;
-
-        return $this;
-    }
-
-    /**
-     * Get bonneReponse
-     *
-     * @return integer 
-     */
-    public function getBonneReponse()
-    {
-        return $this->bonneReponse;
-    }
-
-    /**
      * Set quiz
      *
      * @param \OC\QuizgenBundle\Entity\Quiz $quiz
@@ -238,5 +236,97 @@ class QCM
     public function getQuiz()
     {
         return $this->quiz;
+    }
+
+    /**
+     * Set juste1
+     *
+     * @param boolean $juste1
+     * @return QCM
+     */
+    public function setJuste1($juste1)
+    {
+        $this->juste1 = $juste1;
+
+        return $this;
+    }
+
+    /**
+     * Get juste1
+     *
+     * @return boolean 
+     */
+    public function getJuste1()
+    {
+        return $this->juste1;
+    }
+
+    /**
+     * Set juste2
+     *
+     * @param boolean $juste2
+     * @return QCM
+     */
+    public function setJuste2($juste2)
+    {
+        $this->juste2 = $juste2;
+
+        return $this;
+    }
+
+    /**
+     * Get juste2
+     *
+     * @return boolean 
+     */
+    public function getJuste2()
+    {
+        return $this->juste2;
+    }
+
+    /**
+     * Set juste3
+     *
+     * @param boolean $juste3
+     * @return QCM
+     */
+    public function setJuste3($juste3)
+    {
+        $this->juste3 = $juste3;
+
+        return $this;
+    }
+
+    /**
+     * Get juste3
+     *
+     * @return boolean 
+     */
+    public function getJuste3()
+    {
+        return $this->juste3;
+    }
+
+    /**
+     * Set juste4
+     *
+     * @param boolean $juste4
+     * @return QCM
+     */
+    public function setJuste4($juste4)
+    {
+        $this->juste4 = $juste4;
+
+        return $this;
+    }
+
+    /**
+     * Get juste4
+     *
+     * @return boolean 
+     */
+    public function getJuste4()
+    {
+        return $this->juste4;
     }
 }

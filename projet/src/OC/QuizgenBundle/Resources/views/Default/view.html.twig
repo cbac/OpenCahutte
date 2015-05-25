@@ -17,11 +17,10 @@
 	  {% for QCM in quiz.QCMs %}
 		<li>{{ QCM.question }}</li>
 		<ul>
-			<li>PROPOSITION 1 : {{QCM.rep1}}</li>
-			<li>PROPOSITION 2 : {{QCM.rep2}}</li>
-			<li>PROPOSITION 3 : {{QCM.rep3}}</li>
-			<li>PROPOSITION 4 : {{QCM.rep4}}</li>
-			<li>BONNE REPONSE : {{QCM.bonneReponse + 1}}</li>
+			<li>PROPOSITION 1 ({% if QCM.juste1 %}fausse{% else %}juste{% endif %}) : {{QCM.rep1}}</li>
+			<li>PROPOSITION 2 ({% if QCM.juste2 %}fausse{% else %}juste{% endif %}) : {{QCM.rep2}}</li>
+			<li>PROPOSITION 3 ({% if QCM.juste3 %}fausse{% else %}juste{% endif %}) : {{QCM.rep3}}</li>
+			<li>PROPOSITION 4 ({% if QCM.juste4 %}fausse{% else %}juste{% endif %}) : {{QCM.rep4}}</li>
 		</ul>
 	  {% else %}
 		<li>Pas de questions trouvées.</li>
