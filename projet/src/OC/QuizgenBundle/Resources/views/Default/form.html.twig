@@ -13,9 +13,7 @@
 	{# Génération du label + error + widget pour un champ #}
 	{{ form_row(form.nom, {'label': 'Titre du quiz', 'attr': {'style': 'width: 200px'} } ) }}
 	{{ form_row(form.category, {'label': 'Catégorie du quiz', 'attr': {'style': 'width: 200px'} } ) }}
-	{{ form_row(form.date, {'label': 'Date de création'} ) }}
 	{{ form_row(form.author, {'label': 'Auteur', 'attr': {'style': 'width: 200px'}} ) }} 
-	{{ form_row(form.type, {'label': 'Type de quiz', 'attr': {'style': 'width: 200px'}} ) }}
 	<h3>Questions</h3>
 	
     <ul class="QCMs" data-prototype="

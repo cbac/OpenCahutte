@@ -20,17 +20,11 @@ class QuizType extends AbstractType
 			'phys' => 'Physique', 
 			'hist' => 'Histoire'
 		);
-		$typeChoices=array(
-			'qcm' => 'QCM', 
-			'qo' => 'Questions ouvertes'
-		);
 		
         $builder
-			->add('date',			'date')
 			->add('nom',			'text')
 			->add('author', 		'text')
 			->add('category',		'choice', array('choices' => $categoryChoices ))
-			->add('type',			'choice', array('choices' => $typeChoices ))
 			->add('QCMs',			'collection', array(
 				'type'         => new QCMType(),
 				'allow_add'    => true,

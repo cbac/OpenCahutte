@@ -66,6 +66,7 @@ class Quiz
     {
 		$this->date = new \Datetime();
 		$this->QCMs = new ArrayCollection();
+		$this->type="qcm";
     } 
 
     /**
