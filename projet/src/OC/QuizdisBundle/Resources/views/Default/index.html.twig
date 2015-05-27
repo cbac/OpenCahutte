@@ -1,1 +1,27 @@
-Hello {{ name }}!
+{# src/OC/QuizgenBundle/Resources/views/Default/index.html.twig #}
+
+{% extends "OCQuizgenBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocquizgen_body %}
+
+  <h2>Liste des quizs</h2>
+
+  <ul>
+    {% for quiz in listQuizs %}
+      <li>
+        <a href="{{ path('oc_quizdis_play', {'id': quiz.id, 'q': 0}) }}">
+          {{ quiz.nom }}
+        </a>
+        par {{ quiz.author }},
+        le {{ quiz.date|date('d/m/Y') }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de quizs.</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

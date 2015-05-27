@@ -1,0 +1,35 @@
+{# src/OC/QuizgenBundle/Resources/views/Default/view.html.twig #}
+
+{% extends "OCQuizgenBundle::layout.html.twig" %}
+
+{% block title %}
+  Quiz disponibles - {{ parent() }}
+{% endblock %}
+
+{% block ocquizgen_body %}
+
+ 
+  <h2>{{ quiz.nom }}</h2>
+  <i>Par {{ quiz.author }}, le {{ quiz.date|date('d/m/Y') }}</i>
+
+  <div class="well">
+    <ul>
+	  {% for QCM in quiz.QCMs %}
+		<li>{{ QCM.question }}</li>
+		<ul>
+			{{ include("OCQuizdisBundle:Default:form.html.twig") }}
+		</ul>
+	  {% else %}
+		<li>Pas de réponses trouvées.</li>
+	  {% endfor %}
+	</ul>
+  </div>
+  
+   <p>
+    <a href="{{ path('oc_quizdis_select') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+  </p>
+
+{% endblock %}

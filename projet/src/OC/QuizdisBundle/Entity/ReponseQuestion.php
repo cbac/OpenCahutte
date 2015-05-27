@@ -20,7 +20,9 @@ class ReponseQuestion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+	
+    private $reponse;
+	
     /**
      * @var boolean
      *
@@ -35,7 +37,17 @@ class ReponseQuestion
      */
     private $temps;
 
+	public function getReponse()
+    {
+        return $this->reponse;
+    }
+	public function setReponse($reponse)
+    {
+        $this->reponse = $reponse;
 
+        return $this;
+    }
+	
     /**
      * Get id
      *

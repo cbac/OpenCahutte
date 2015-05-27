@@ -21,14 +21,14 @@ class DefaultController extends Controller
 		;
 
 		return $this->render('OCQuizgenBundle:Default:index.html.twig', array(
-		  'listQuizs' => $listQuizs
+			'listQuizs' => $listQuizs
 		));
 	}
 	
 	public function addAction(Request $request)
 	{
 	
-		 // On crée un objet Quiz
+		// On crée un objet Quiz
 		$quiz = new Quiz();
 		// On crée le FormBuilder grâce au service form factory
 		$form = $this->createForm(new QuizType(), $quiz);
