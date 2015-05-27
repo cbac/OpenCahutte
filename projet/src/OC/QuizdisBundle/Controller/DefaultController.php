@@ -43,15 +43,27 @@ class DefaultController extends Controller
 			->find($id)
 		;
 		
-		$reponse= new ReponseQuestion();
-		$form = $this->createForm(new PlayType(), $reponse);
-		
 		if (null === $quiz) {
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
+		
+		$QCM=$quiz->getQCMs()->get($q);
+		if (null === $QCM) {
+			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
+		}
+		$reponses=array(
+			$QCM->getRep1(),
+			$QCM->getRep2(),
+			$QCM->getRep3(),
+			$QCM->getRep4()
+		);
+		
+		$statReponse= new ReponseQuestion();
+		$form = $this->createForm(new PlayType( array('reponses'=>$reponses) ), $statReponse);
+		
 		if ($form->handleRequest($request)->isValid()) {
-			$em->persist($reponse);
+			$em->persist($statReponse);
 			
 			$em->flush();
 
@@ -60,8 +72,9 @@ class DefaultController extends Controller
 
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
-			'quest'	=> $q,
-			'reponse'	=> $reponse
+			'q'	=> $q,
+			'reponse'	=> $statReponse,
+			'form' => $form->createView()
 		));
 	}
 }

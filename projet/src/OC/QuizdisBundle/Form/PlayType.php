@@ -8,6 +8,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PlayType extends AbstractType
 {
+	public function __construct($options = null) {
+        $this->options = $options;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -16,7 +20,9 @@ class PlayType extends AbstractType
     {
 		$builder
             ->add('reponse', 'choice', array( 
-				'choices' => array('rep1','rep2','rep3','rep4'),
+				'label' => ' ', 
+				'attr' => array('style'=> 'width: 400px'),
+				'choices' => $this->options['reponses'],
 				'expanded' => true,
 				'multiple' => true
 			))

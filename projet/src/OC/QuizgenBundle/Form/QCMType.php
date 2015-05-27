@@ -14,37 +14,44 @@ class QCMType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$bonneReponseChoices=array(1,2,3,4);
+		$paramChoice = array( 
+			'label' => ' ', 
+			'attr' => array('style'=> 'width: 300px'),
+			'choices' => array('vrai','faux'),
+			'expanded' => true,
+			'preferred_choices' => array('faux')
+		);
+		$largeurChamps = array('style'=> 'width: 300px');
+		
         $builder
-            ->add('question',		'text')
-			
-            ->add('rep1',			'text')
-            ->add('juste1',			'choice', array( 
-				'choices' => array('vrai','faux'),
-				'expanded' => true,
-				'preferred_choices' => array('faux')
+            ->add('question','text', array(
+				'label' => 'Question', 
+				'attr' => $largeurChamps
 			))
 			
-            ->add('rep2',			'text')
-            ->add('juste2',			'choice', array( 
-				'choices' => array('vrai','faux'),
-				'expanded' => true,
-				'preferred_choices' => array('faux')
+            ->add('rep1','text', array(
+				'label' => 'A', 
+				'attr' => $largeurChamps
 			))
+            ->add('juste1',	'choice', $paramChoice)
 			
-            ->add('rep3',			'text')
-            ->add('juste3',			'choice', array( 
-				'choices' => array('vrai','faux'),
-				'expanded' => true,
-				'preferred_choices' => array('faux')
+            ->add('rep2','text', array(
+				'label' => 'B', 
+				'attr' => $largeurChamps
 			))
+            ->add('juste2',	'choice', $paramChoice)
 			
-            ->add('rep4',			'text')
-            ->add('juste4',			'choice', array( 
-				'choices' => array('vrai','faux'),
-				'expanded' => true,
-				'preferred_choices' => array('faux')
+            ->add('rep3','text', array(
+				'label' => 'C', 
+				'attr' => $largeurChamps
 			))
+            ->add('juste3',	'choice', $paramChoice)
+			
+            ->add('rep4','text', array(
+				'label' => 'D', 
+				'attr' => $largeurChamps
+			))
+            ->add('juste4',	'choice', $paramChoice)
         ;
     }
     

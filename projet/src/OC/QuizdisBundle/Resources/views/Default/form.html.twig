@@ -1,22 +1,17 @@
-<div class="well">
+{# Overture de la balise <form> du formulaire HTML #}
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-	{# Overture de la balise <form> du formulaire HTML #}
-	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
 
-    {# Les erreurs générales du formulaire. #}
-    {{ form_errors(form) }}
-	
-    
-	{{ form_row(form.reponse, {'label': ' ', 'attr': {'style': 'width: 400px'} } ) }}
-    
-	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-	{{ form_widget(form.save, {'label':'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
 
-	{# Génération automatique des champs pas encore écrits.#}
-	{{ form_rest(form) }}
+{{ form_row(form.reponse) }}
 
-	{# Fermeture de la balise <form> du formulaire HTML #}
-	{{ form_end(form) }}
-	
-	
-</div>
+{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+{{ form_widget(form.save, {'label':'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
+
+{# Génération automatique des champs pas encore écrits.#}
+{{ form_rest(form) }}
+
+{# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

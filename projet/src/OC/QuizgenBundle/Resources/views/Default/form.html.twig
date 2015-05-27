@@ -11,9 +11,9 @@
     {{ form_errors(form) }}
 
 	{# Génération du label + error + widget pour un champ #}
-	{{ form_row(form.nom, {'label': 'Titre du quiz', 'attr': {'style': 'width: 200px'} } ) }}
-	{{ form_row(form.category, {'label': 'Catégorie du quiz', 'attr': {'style': 'width: 200px'} } ) }}
-	{{ form_row(form.author, {'label': 'Auteur', 'attr': {'style': 'width: 200px'}} ) }} 
+	{{ form_row(form.nom) }}
+	{{ form_row(form.category) }}
+	{{ form_row(form.author) }} 
 	<h3>Questions</h3>
 	
     <ul class="QCMs" data-prototype="
@@ -23,30 +23,32 @@
 		<br/>
 	">
 		{% for QCM in form.QCMs %}
-			{{ form_row(QCM.question, {'label': 'Question', 'attr': {'style': 'width: 400px'} } ) }}
+		<li>
+			{{ form_row(QCM.question) }}
 			<table>
 			
 			<tr>
-				<td>{{ form_row(QCM.rep1, {'label': 'Rép 1', 'attr': {'style': 'width: 400px'} } ) }}</td>
-				<td>{{ form_row(QCM.juste1, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+				<td>{{ form_row(QCM.rep1) }}</td>
+				<td>{{ form_row(QCM.juste1) }}</td>
 			</tr>
 			
 			<tr>
-				<td>{{ form_row(QCM.rep2, {'label': 'Rép 2', 'attr': {'style': 'width: 400px'} } ) }}</td>
-				<td>{{ form_row(QCM.juste2, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+				<td>{{ form_row(QCM.rep2) }}</td>
+				<td>{{ form_row(QCM.juste2) }}</td>
 			</tr>
 			
 			<tr>
-				<td>{{ form_row(QCM.rep3, {'label': 'Rép 3', 'attr': {'style': 'width: 400px'} } ) }}</td>
-				<td>{{ form_row(QCM.juste3, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+				<td>{{ form_row(QCM.rep3) }}</td>
+				<td>{{ form_row(QCM.juste3) }}</td>
 			</tr>
 			
 			<tr>
-				<td>{{ form_row(QCM.rep4, {'label': 'Rép 4', 'attr': {'style': 'width: 400px'} } ) }}</td>
-				<td>{{ form_row(QCM.juste4, {'label': ' ', 'attr': {'style': 'width: 200px'} } ) }}</td>
+				<td>{{ form_row(QCM.rep4) }}</td>
+				<td>{{ form_row(QCM.juste4) }}</td>
 			</tr>
 			
 			</table>
+		</li>
 		{% endfor %}
     </ul>
 	

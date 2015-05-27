@@ -20,17 +20,28 @@ class QuizType extends AbstractType
 			'phys' => 'Physique', 
 			'hist' => 'Histoire'
 		);
+		$largeurChamps = array('style'=> 'width: 200px');
 		
         $builder
-			->add('nom',			'text')
-			->add('author', 		'text')
-			->add('category',		'choice', array('choices' => $categoryChoices ))
+			->add('nom',			'text', array(
+				'label' => 'Nom du quiz', 
+				'attr' => $largeurChamps
+			))
+			->add('author', 		'text', array(
+				'label' => 'Auteur du quiz', 
+				'attr' => $largeurChamps
+			))
+			->add('category',		'choice', array(
+				'choices' => $categoryChoices,
+				'label' => 'Catégorie', 
+				'attr' => $largeurChamps
+			))
 			->add('QCMs',			'collection', array(
 				'type'         => new QCMType(),
 				'allow_add'    => true,
 				'allow_delete' => true
 			))
-			->add('save',			'submit')
+			->add('save','submit')
         ;
     }
     
