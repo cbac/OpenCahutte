@@ -31,6 +31,7 @@
         <ul class="nav nav-pills nav-stacked">
           <li><a href="{{ path('oc_quizgen_homepage') }}">Accueil</a></li>
           <li><a href="{{ path('oc_quizgen_add') }}">Ajouter un quiz</a></li>
+          <li><a href="{{ path('oc_quizdis_select') }}">Participer à un quiz</a></li>
         </ul>
         <h4>Derniers quizs</h4>
         {{ render(controller("OCQuizgenBundle:Default:menu", {'limit': 3})) }}
