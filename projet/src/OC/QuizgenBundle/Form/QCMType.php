@@ -17,9 +17,8 @@ class QCMType extends AbstractType
 		$paramChoice = array( 
 			'label' => ' ', 
 			'attr' => array('style'=> 'width: 300px'),
-			'choices' => array('vrai','faux'),
-			'expanded' => true,
-			'preferred_choices' => array('faux')
+			'choices' => array(0=>'faux',1=>'vrai'),
+			'expanded' => true
 		);
 		$largeurChamps = array('style'=> 'width: 300px');
 		
@@ -33,25 +32,25 @@ class QCMType extends AbstractType
 				'label' => 'A', 
 				'attr' => $largeurChamps
 			))
-            ->add('juste1',	'choice', $paramChoice)
+            ->add('juste1','choice', $paramChoice)
 			
             ->add('rep2','text', array(
 				'label' => 'B', 
 				'attr' => $largeurChamps
 			))
-            ->add('juste2',	'choice', $paramChoice)
+            ->add('juste2','choice', $paramChoice)
 			
             ->add('rep3','text', array(
 				'label' => 'C', 
 				'attr' => $largeurChamps
 			))
-            ->add('juste3',	'choice', $paramChoice)
+            ->add('juste3','choice', $paramChoice)
 			
             ->add('rep4','text', array(
 				'label' => 'D', 
 				'attr' => $largeurChamps
 			))
-            ->add('juste4',	'choice', $paramChoice)
+            ->add('juste4','choice', $paramChoice)
         ;
     }
     
