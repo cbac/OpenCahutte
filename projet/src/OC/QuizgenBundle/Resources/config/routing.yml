@@ -9,7 +9,11 @@ oc_quizgen_add:
 oc_quizgen_edit: 
     path:    /edit/{id}
     defaults: { _controller: OCQuizgenBundle:Default:edit }
-    
+
+oc_quizgen_duplicate: 
+    path:    /duplicate/{id}
+    defaults: { _controller: OCQuizgenBundle:Default:duplicate }
+
 oc_quizgen_delete: 
     path:    /delete/{id}
     defaults: { _controller: OCQuizgenBundle:Default:delete }
