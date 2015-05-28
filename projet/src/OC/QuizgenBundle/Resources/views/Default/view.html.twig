@@ -37,6 +37,10 @@
       <i class="glyphicon glyphicon-edit"></i>
       Modifier le quiz
     </a>
+	<a href="{{ path('oc_quizgen_duplicate', {'id': quiz.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Dupliquer le quiz
+    </a>
     <a href="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
       Supprimer le quiz

@@ -152,5 +152,40 @@ class DefaultController extends Controller
 		  'form'    => $form->createView()
 		));
 	}
-  
+	
+	
+	public function duplicateAction($id, Request $request)
+	{	
+		$nQuiz = new Quiz();
+		
+		$em = $this->getDoctrine()->getManager();
+		//aQuiz pour ancien quiz
+		$aQuiz = $em
+			->getRepository('OCQuizgenBundle:Quiz')
+			->find($id)
+		;
+		if (null === $aQuiz) {
+			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
+		}
+		
+		
+		$nQuiz->setQuiz($aQuiz->getQuiz());
+		
+		$form = $this->createForm(new QuizType(), $nQuiz);
+		
+		if ($form->handleRequest($request)->isValid()) {
+			$em->persist($nQuiz);
+			
+			foreach ($nQuiz->getQCMs() as $QCM) {
+				$QCM->setQuiz($nQuiz);
+			}
+			$em->flush();
+			$request->getSession()->getFlashBag()->add('notice', 'Vous avez dupliqué un quiz avec succès.');
+			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $nQuiz->getId())));
+		}
+		return $this->render('OCQuizgenBundle:Default:duplicate.html.twig', array(
+			'form' => $form->createView(),
+		));
+	}
+	
 }
