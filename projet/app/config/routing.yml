@@ -25,9 +25,10 @@ fos_user_change_password:
 fos_user_security_login:
     pattern:  /login/
     defaults: { _controller: FOSUserBundle:Security:login }
+    
 
 fos_user_security_check:
-    pattern:  /login_check
+    pattern:  /login_check/
     defaults: { _controller: FOSUserBundle:Security:check }
 
 fos_user_security_logout:
