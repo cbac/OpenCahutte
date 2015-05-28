@@ -1,0 +1,35 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{# On affiche les messages flash que définissent les contrôleurs du bundle #}
+
+{% for key, message in app.session.flashbag.all() %}
+    <div class="alert alert-{{ key }}">
+      {{ 'registration.flash.user_created'|trans({}, 'FOSUserBundle') }}
+    </div>
+{% endfor %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+
+    {{ form_errors(form.email) }}
+    <label for="fos_user_registration_form_email">Adresse e-mail :</label>
+    <input id="fos_user_registration_form_email" type="text" name="fos_user_registration_form[email]" value=""{{ form.vars.value.email }}"" required="required" /><br><br>
+    
+    {{ form_errors(form.username) }}
+    <label for="fos_user_registration_form_username">Nom d'utilisateur :</label>
+    <input type="text" id="fos_user_registration_form_username" name="fos_user_registration_form[username]" value="{{ form.vars.value.username }}" required="required" /><br><br>
+    
+    {{ form_errors(form.plainPassword.first) }}
+    <label for="fos_user_registration_form_plainPassword_first">Mot de passe :</label>
+    <input id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]"/><br><br>
+
+    {{ form_errors(form.plainPassword.second) }}
+    <label for="fos_user_registration_form_plainPassword_second">Vérification :</label>
+    <input id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]"/><br><br>
+
+    {{ form_widget(form._token) }}
+    
+      
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class=" btn btn-primary" />
+    </div>
+</form>
