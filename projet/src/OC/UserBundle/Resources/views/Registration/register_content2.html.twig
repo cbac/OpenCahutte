@@ -1,0 +1,50 @@
+CHAT
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+</form>
+
+  
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+
+    <label for="email">{{ 'registration.register.email'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="text" id="email" name="_email" value="{{ last_email }}" required="required" /><br><br>
+    
+    <label for="username">{{ 'registration.register.username'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" /><br><br>
+    
+    <label for="form.password">{{ 'registration.register.password'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="password" id="password" name="_password" required="required" /><br><br>
+
+    <label for="fos_user_registration_form_plainPassword_first">{{ 'registration.register.plainPassword_first'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="password" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" />
+    
+    <input type="password" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" />
+    <label for="fos_user_registration_form_plainPassword_second">Confirmation</label>
+    
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                <input type="password" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" />
+            </div>
+    
+    
+     ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
+            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array('label' => 'form.password'),
+                'second_options' => array('label' => 'form.password_confirmation'),
+                'invalid_message' => 'fos_user.password.mismatch',
+            ))
+    
+    
+    
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" class=" btn btn-primary" />
+    </div>
+</form>
