@@ -264,4 +264,20 @@ class Quiz
     {
         return $this->QCMs;
     }
+	
+	//envoyer tout
+	public function getQuiz()
+	{
+		return array($this->nom, $this->author, $this->category, $this->type, $this->QCMs);
+	}
+	
+	//recevoir tout
+	public function setQuiz($tab)
+	{
+		$this->nom = $tab[0];
+		$this->author = $tab[1];
+		$this->category = $tab[2];
+		$this->type = $tab[3];
+		$this->QCMs = $tab[4];
+	}
 }
