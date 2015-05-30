@@ -12,6 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QCM
 {
+    public function __construct()
+    {/*
+		$this->setJuste1(false);
+		$this->setJuste2(false);
+		$this->setJuste3(false);
+		$this->setJuste4(false); */
+    } 
+	
     /**
      * @var integer
      *
@@ -329,4 +337,28 @@ class QCM
     {
         return $this->juste4;
     }
+	
+	public function getReponsesPossibles() {
+		return array(
+			1 => $this->getRep1(),
+			2 => $this->getRep2(),
+			3 => $this->getRep3(),
+			4 => $this->getRep4()
+		);
+	}
+	
+	public function getReponsesJustes() {
+		$reponsesJustes=array();
+		
+		if($this->getJuste1())
+			array_push($reponsesJustes,1);
+		if($this->getJuste2())
+			array_push($reponsesJustes,2);
+		if($this->getJuste3())
+			array_push($reponsesJustes,3);
+		if($this->getJuste4())
+			array_push($reponsesJustes,4);
+			
+		return $reponsesJustes;
+	}
 }
