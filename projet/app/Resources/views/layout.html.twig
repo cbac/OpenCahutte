@@ -25,11 +25,12 @@
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	
 	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_logout') }}">Déconnexion</a> -
-	Connecté en tant que {{ app.user.username }} - 
+	Connecté en tant que <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> - 
       {% else %}
 	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_login') }}">
           Connectez-vous »
-        </a>
+        </a><div><br>
+        <a href="{{ path('fos_user_registration_register') }}" class="btn btn-success btn-xs">Inscription</a></div>
       {% endif %} 
       
       

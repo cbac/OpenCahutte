@@ -1,0 +1,3 @@
+user_remove:
+    pattern:  /remove/
+    defaults: { _controller: OCUserBundle::removeAction }
