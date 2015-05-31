@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new OC\QuizgenBundle\OCQuizgenBundle(),
             new OC\QuizdisBundle\OCQuizdisBundle(),
             new OC\UserBundle\OCUserBundle(),
+            new OC\QuizlaunchBundle\OCQuizlaunchBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

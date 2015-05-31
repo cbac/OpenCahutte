@@ -1,0 +1,3 @@
+oc_quizlaunch_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OCQuizlaunchBundle:Default:index }
