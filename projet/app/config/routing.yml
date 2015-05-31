@@ -23,8 +23,7 @@ fos_user_resetting:
     prefix: /resetting
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /profile 
-
+    prefix: /profile
 
 fos_user_security_login:
     pattern:  /login/
@@ -38,3 +37,8 @@ fos_user_security_check:
 fos_user_security_logout:
     pattern:  /logout
     defaults: { _controller: FOSUserBundle:Security:logout }
+
+user_remove:
+    pattern:  /remove/
+    defaults: { _controller: OCUserBundle::removeAction }
+    

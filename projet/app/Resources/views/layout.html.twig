@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}OpenCahutte création de quizs en ligne{% endblock %}</title>
+  <title>{% block title %}OpenCahutte création de quiz en ligne{% endblock %}</title>
   {% block stylesheets %}
     {# On charge le CSS de bootstrap depuis le site directement #}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
@@ -15,28 +15,41 @@
     <div id="header" class="jumbotron">
 	
 	  <a href="{{path('oc_quizgen_homepage')}}"><img src="{{ asset('img/logo.png') }}" alt="logo"/></a>
-      <h1>Créer des quizs simplement </h1>
+      <h1>Créer des quiz simplement </h1>
+
+
       <p>
         Créez un quiz, ajoutez vos questions et testez-vous entre amis.
       </p>
-      <p>
-        <a class="btn btn-primary btn-lg" href="http://www.telecom-sudparis.fr">
+      
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	
+	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_logout') }}">Déconnexion</a> -
+	Connecté en tant que {{ app.user.username }} - 
+      {% else %}
+	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_login') }}">
           Connectez-vous »
         </a>
-      </p>
+      {% endif %} 
+      
+      
     </div>
     <div class="row">
       <div id="menu" class="col-md-3">
-        <h3>Les quizs proposés par d'autres utilisateurs</h3>
+        <h3>Les quiz proposés par d'autres utilisateurs</h3>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="{{ path('oc_quizgen_homepage') }}">Accueil</a></li>
           <li><a href="{{ path('oc_quizgen_add') }}">Ajouter un quiz</a></li>
+          <li><a href="{{ path('oc_quizdis_select') }}">Participer à un quiz</a></li>
         </ul>
-        <h4>Derniers quizs</h4>
+        <h4>Derniers quiz</h4>
         {{ render(controller("OCQuizgenBundle:Default:menu", {'limit': 3})) }}
       </div>
       <div id="content" class="col-md-9">
         {% block body %}
+          {% block fos_user_content %}
+	  {% endblock fos_user_content %}
+
         {% endblock %}
       </div>
     </div>

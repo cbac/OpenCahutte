@@ -24,9 +24,17 @@
    {% include "OCUserBundle:Registration:confirmed.html.twig" %}
    {% endif%}
    
+   {% if app.request.attributes.get('_route') == 'fos_user_profile_show' %}
+   {% include "OCUserBundle:Profile:show.html.twig" %}
+   {% endif%}
    
+   {% if app.request.attributes.get('_route') == 'fos_user_profile_edit' %}
+   {% include "OCUserBundle:Profile:edit.html.twig" %}
+   {% endif%}
    
-  
-   
+   {% if app.request.attributes.get('_route') == 'fos_user_change_password' %}
+   {% include "OCUserBundle:ChangePassword:changePassword.html.twig" %}
+   {% endif%}
  
-{% endblock %} 
+{% endblock body %} 
+   </body>

@@ -8,7 +8,7 @@
 
 {% block ocquizgen_body %}
 
-  <h2>Liste des quizs</h2>
+  <h2>Liste des quiz</h2>
 
   <ul>
     {% for quiz in listQuizs %}
@@ -20,7 +20,7 @@
         le {{ quiz.date|date('d/m/Y') }}
       </li>
     {% else %}
-      <li>Pas (encore !) de quizs.</li>
+      <li>Pas (encore !) de quiz.</li>
     {% endfor %}
   </ul>
 
