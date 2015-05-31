@@ -1,3 +1,7 @@
+oc_synchro:
+    resource: "@OCSynchroBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oc_quizdis:
     resource: "@OCQuizdisBundle/Resources/config/routing.yml"
     prefix:   /

@@ -1,0 +1,11 @@
+oc_synchro_homepage1:
+    path:     /hello1
+    defaults: { _controller: OCSynchroBundle:Default:index1 }
+
+oc_synchro_homepage2:
+    path:     /hello2
+    defaults: { _controller: OCSynchroBundle:Default:index2 }
+
+oc_synchro_homepage3:
+    path:     /hello3
+    defaults: { _controller: OCSynchroBundle:Default:index3 }

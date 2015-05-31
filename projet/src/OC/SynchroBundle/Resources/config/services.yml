@@ -1,0 +1,12 @@
+services:
+#    oc_synchro.example:
+#        class: OC\SynchroBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    oc_synchro.redirection_processor:
+        class:     OC\SynchroBundle\Synchro\RedirectionProcessor
+
+    oc_synchro.redirection_listener:
+        class:     OC\SynchroBundle\Synchro\RedirectionListener
+        tags:
+            - { name: kernel.event_listener, event: oc_synchro.synchro.click_button, method: redirect }

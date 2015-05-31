@@ -168,8 +168,8 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
-		
-		$nQuiz->setQuiz($aQuiz->getQuiz());
+		//$nQuiz->setQuiz(aQuiz->getQuiz());
+		$nQuiz = clone $aQuiz;
 		
 		$form = $this->createForm(new QuizType(), $nQuiz);
 		
