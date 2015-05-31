@@ -1,0 +1,14 @@
+{% extends "::layout.html.twig" %}
+{% block title %}
+  Supprimer son compte - {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+
+{{ $username }}, votre compte a bien été supprimé. 
+N'hésitez pas à revenir sur notre plateforme pour voir son évolution, ou jouer comme invité. 
+À bientôt !
+
+
+
+{% endblock fos_user_content %}

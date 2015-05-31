@@ -32,7 +32,9 @@
    {% include "OCUserBundle:Profile:edit.html.twig" %}
    {% endif%}
    
-  
-   
+   {% if app.request.attributes.get('_route') == 'fos_user_change_password' %}
+   {% include "OCUserBundle:ChangePassword:changePassword.html.twig" %}
+   {% endif%}
  
-{% endblock %} 
+{% endblock body %} 
+   </body>

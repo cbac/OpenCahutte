@@ -12,7 +12,7 @@
    
      
    {{ form_errors(form.current_password) }}
-    <label for="fos_user_form_email">{{ 'form.current_password'|trans({}, 'FOSUserBundle') }}</label>
+    <label for="fos_user_form_current_password">{{ 'form.current_password'|trans({}, 'FOSUserBundle') }}</label>
     <input id="fos_user_form_current_password" type="password" name="fos_user_profile_form[current_password]" required="required" /><br><br>
     	 
     {{ form_widget(form._token) }}
