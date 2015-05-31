@@ -24,7 +24,7 @@ class OCUserBundle extends Bundle
     // Pour supprimer un utilisateur
     $userManager->deleteUser($user);	
     
-    return $this->render('OCUserBundle:Action:remove.html.twig', array(
+    return $this->render('OCUserBundle::remove.html.twig', array(
 			'username' => $username,
 		));
   
