@@ -1,3 +1,7 @@
+oc_quizlaunch:
+    resource: "@OCQuizlaunchBundle/Resources/config/routing.yml"
+    prefix:   /
+
 oc_quizdis:
     resource: "@OCQuizdisBundle/Resources/config/routing.yml"
     prefix:   /
@@ -34,7 +38,10 @@ fos_user_security_logout:
     pattern:  /logout
     defaults: { _controller: FOSUserBundle:Security:logout }
 
+
 user_remove:
-    pattern:  /remove/
-    defaults: { _controller: OCUserBundle::removeAction }
-    
+    pattern:  /remove/{username}
+    defaults: { _controller: OCUserBundle:OCUserBundle:remove }
+    requirements:
+        username:   "[a-zA-Z0-9-]+"
+

@@ -12,22 +12,4 @@ class OCUserBundle extends Bundle
     return 'FOSUserBundle';
   }
   
-  public function removeAction($id){
-  
-      
-    // Pour récupérer le service UserManager du bundle
-    $userManager = $this->get('fos_user.user_manager');
-
-    // Pour charger un utilisateur
-    $user = $userManager->findUserBy(array('id' => '$id'));
-    
-    // Pour supprimer un utilisateur
-    $userManager->deleteUser($user);	
-    
-    return $this->render('OCUserBundle:Action:remove.html.twig', array(
-			'username' => $username,
-		));
-  
-  }
-  
 }

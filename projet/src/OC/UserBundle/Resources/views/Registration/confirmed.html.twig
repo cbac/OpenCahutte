@@ -1,8 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
+ {% extends "::layout.html.twig" %}
 
 {% block fos_user_content %}
     <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}
-      <a href="{{ path('') }}>Vers votre espace</a>
+      <a href="{{ path('fos_user_profile_edit') }}>Vers votre espace</a>
     </p>
     {% if app.session is not empty %}
         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}

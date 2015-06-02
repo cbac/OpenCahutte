@@ -5,5 +5,5 @@
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
     <a class="btn btn-primary" href="{{ path('fos_user_profile_edit') }}">Modifiez votre profil</a>
     <a class="btn btn-warning" href="{{ path('fos_user_change_password') }}">Modifiez votre mot de passe</a>
-    <a class="btn btn-danger" href="{{ path('user_remove') }}">Supprimez votre profil</a>
+    <a class="btn btn-danger" href="{{ path('user_remove', { 'username': user.username	} ) }}">Supprimez votre profil</a>
 </div>
