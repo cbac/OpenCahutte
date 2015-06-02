@@ -1,1 +1,25 @@
-Hello {{ name }}!
+{% extends "OCQuizgenBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocquizgen_body %}
+
+  <h2>Liste des quizs</h2>
+
+  <ul>
+    {% for quiz in listQuizs %}
+      <li>
+        <a href="{{ path('oc_quizlaunch_pick', {'id': quiz.id}) }}">
+          {{ quiz.nom }}
+        </a>
+        par {{ quiz.author }},
+        le {{ quiz.date|date('d/m/Y') }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de quiz.</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}
