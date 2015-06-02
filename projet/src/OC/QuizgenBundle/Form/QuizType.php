@@ -23,26 +23,29 @@ class QuizType extends AbstractType
 		$largeurChamps = array('style'=> 'width: 200px');
 		
         $builder
-			->add('nom',			'text', array(
+			->add('nom','text', array(
 				'label' => 'Nom du quiz', 
 				'attr' => $largeurChamps
 			))
-			->add('author', 		'text', array(
-				'label' => 'Auteur du quiz', 
-				'attr' => $largeurChamps
-			))
-			->add('category',		'choice', array(
+			->add('category','choice', array(
 				'choices' => $categoryChoices,
 				'label' => 'Catégorie', 
 				'attr' => $largeurChamps
 			))
-			->add('QCMs',			'collection', array(
+			->add('QCMs','collection', array(
 				'type'         => new QCMType(),
 				'allow_add'    => true,
 				'allow_delete' => true
 			))
 			->add('save','submit')
         ;
+		
+		if ($options['user'] == null) {
+			$builder->add('author','text', array(
+				'label' => 'Auteur du quiz', 
+				'attr' => $largeurChamps
+			));
+		}
     }
     
     /**
@@ -51,7 +54,8 @@ class QuizType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OC\QuizgenBundle\Entity\Quiz'
+            'data_class' => 'OC\QuizgenBundle\Entity\Quiz',
+			'user' => null
         ));
     }
 

@@ -30,9 +30,12 @@ class DefaultController extends Controller
 	
 		// On crée un objet Quiz
 		$quiz = new Quiz();
+		
+
+		
 		// On crée le FormBuilder grâce au service form factory
-		$form = $this->createForm(new QuizType(), $quiz);
-		// On ajoute les champs de l'entité que l'on veut à notre formulaire
+		$form = $this->createForm(new QuizType(), $quiz, array('user' => $this->getUser()));
+		
 		
 		// À partir de maintenant, la variable $quiz contient les valeurs entrées dans le formulaire par le visiteur
 		if ($form->handleRequest($request)->isValid()) {

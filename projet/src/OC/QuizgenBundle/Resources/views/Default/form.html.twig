@@ -10,10 +10,18 @@
     {# Les erreurs générales du formulaire. #}
     {{ form_errors(form) }}
 
+	
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		<h4 class="simili-form">Auteur {{ app.user.username }}</h4>
+	{% else %}
+		{{ form_row(form.author) }}
+    {% endif %}
+	
 	{# Génération du label + error + widget pour un champ #}
 	{{ form_row(form.nom) }}
 	{{ form_row(form.category) }}
-	{{ form_row(form.author) }} 
+	
+	
 	<h3>Questions</h3>
 	
     <ul class="QCMs" data-prototype="

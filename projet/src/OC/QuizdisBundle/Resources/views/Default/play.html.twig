@@ -1,12 +1,12 @@
 {# src/OC/QuizgenBundle/Resources/views/Default/view.html.twig #}
 
-{% extends "OCQuizgenBundle::layout.html.twig" %}
+{% extends "OCQuizdisBundle::layout.html.twig" %}
 
 {% block title %}
   Quiz disponibles - {{ parent() }}
 {% endblock %}
 
-{% block ocquizgen_body %}
+{% block ocquizdis_body %}
 
  
   <h2>{{ quiz.nom }}</h2>
@@ -16,7 +16,6 @@
     <ul>
 	  {% if quiz.QCMs[q] is defined %}
 		{% set QCM = quiz.QCMs[q] %}
-		<li>{{ QCM.question }}</li>
 		<ul>
 			{{ include("OCQuizdisBundle:Default:form.html.twig") }}
 		</ul>
@@ -24,27 +23,6 @@
 		<li>Pas de réponses trouvées.</li>
 	  {% endif %}
 	</ul>
-	<p>
-	{% if quiz.QCMs[q-1] is defined %}
-		<a href="{{ path('oc_quizdis_play', {'id': quiz.id, 'q': q-1}) }}" class="btn btn-default">
-		  <i class="glyphicon glyphicon-chevron-left"></i>
-		  Question Précédente
-		</a>
-	{% endif %}
-	{% if quiz.QCMs[q+1] is defined %}
-		<a href="{{ path('oc_quizdis_play', {'id': quiz.id, 'q': q+1}) }}" class="btn btn-default">
-		  Question suivante
-		  <i class="glyphicon glyphicon-chevron-right"></i>
-		</a>
-	{% endif %}
-	</p>
   </div>
-  
-   <p>
-    <a href="{{ path('oc_quizdis_select') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste
-    </a>
-  </p>
 
 {% endblock %}

@@ -12,42 +12,38 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ReponseQuestion
 {
-    /**
-     * @var integer
-     *
+	public function __construct()
+    {
+        $this->time = new \DateTime();
+    }
+ 
+	/**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 	
-    private $reponse;
+	/**
+     * @ORM\Column(type="integer")
+     */
+    private $gamepin;
+	
+	/**
+     * @ORM\Column(type="integer")
+     */
+    private $user;
 	
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="juste", type="boolean")
+     * @ORM\Column(type="datetime")
      */
-    private $juste;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="temps", type="float")
-     */
-    private $temps;
-
-	public function getReponse()
-    {
-        return $this->reponse;
-    }
-	public function setReponse($reponse)
-    {
-        $this->reponse = $reponse;
-
-        return $this;
-    }
+    private $time;
 	
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $reponseDonnee;
+
     /**
      * Get id
      *
@@ -59,48 +55,94 @@ class ReponseQuestion
     }
 
     /**
-     * Set juste
+     * Set gamepin
      *
-     * @param boolean $juste
+     * @param integer $gamepin
      * @return ReponseQuestion
      */
-    public function setJuste($juste)
+    public function setGamepin($gamepin)
     {
-        $this->juste = $juste;
+        $this->gamepin = $gamepin;
 
         return $this;
     }
 
     /**
-     * Get juste
+     * Get gamepin
      *
-     * @return boolean 
+     * @return integer 
      */
-    public function getJuste()
+    public function getGamepin()
     {
-        return $this->juste;
+        return $this->gamepin;
     }
 
     /**
-     * Set temps
+     * Set user
      *
-     * @param float $temps
+     * @param integer $user
      * @return ReponseQuestion
      */
-    public function setTemps($temps)
+    public function setUser($user)
     {
-        $this->temps = $temps;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get temps
+     * Get user
      *
-     * @return float 
+     * @return integer 
      */
-    public function getTemps()
+    public function getUser()
     {
-        return $this->temps;
+        return $this->user;
+    }
+
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return ReponseQuestion
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set reponseDonnee
+     *
+     * @param string $reponseDonnee
+     * @return ReponseQuestion
+     */
+    public function setReponseDonnee($reponseDonnee)
+    {
+        $this->reponseDonnee = $reponseDonnee;
+
+        return $this;
+    }
+
+    /**
+     * Get reponseDonnee
+     *
+     * @return string 
+     */
+    public function getReponseDonnee()
+    {
+        return $this->reponseDonnee;
     }
 }

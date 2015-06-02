@@ -54,29 +54,34 @@ class DefaultController extends Controller
 		}
 		
 		$statReponse= new ReponseQuestion();
-		$form = $this->createForm(new PlayType( array('reponses'=>$QCM->getReponsesPossibles()) ), $statReponse);
+		for ($i=0;$i<4;$i++) {
+			$form[$i] = $this->createForm(new PlayType( array('rep'=>chr(65+$i))));
 		
-		if ($form->handleRequest($request)->isValid()) {
+			if ($form[$i]->handleRequest($request)->isValid()) {
+				$statReponse->setGamepin($id);
+				$statReponse->setUser(8);
+				$statReponse->setReponseDonnee(chr(65+$i));
+				
+				$em->persist($statReponse);
+				$em->flush();
+				if (null != $quiz->getQCMs()->get($q+1))
+					return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q+1)));
+				else
+					return $this->redirect($this->generateUrl('oc_quizdis_select'));
+			}
 		
-			if( $statReponse->getReponse() === $QCM->getReponsesJustes() )
-				$statReponse->setJuste(true);
-			else
-				$statReponse->setJuste(false);
-			
-			$statReponse->setTemps(0);
-			$em->persist($statReponse);
-			$em->flush();
-			if (null != $quiz->getQCMs()->get($q+1))
-				return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q+1)));
-			else
-				return $this->redirect($this->generateUrl('oc_quizdis_select'));
 		}
 
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
 			'q'	=> $q,
 			'reponse'	=> $statReponse,
-			'form' => $form->createView()
+			'form' => array (
+				$form[0]->createView(),
+				$form[1]->createView(),
+				$form[2]->createView(),
+				$form[3]->createView()
+			)
 		));
 	}
 }
