@@ -48,18 +48,14 @@ class DefaultController extends Controller
 			// si le quiz d'id gamepin n'existe pas, erreur
 			$em = $this->getDoctrine()->getManager();
 			$quiz = $em
-				->getRepository('OCQuizgenBundle:Quiz')
-				->find($data['gamepin'])
+				->getRepository('OCQuizlaunchBundle:Timer')
+				->findByGamepin($data['gamepin'])
 			;
-			
-			
 			if (null === $quiz) {
 				throw new NotFoundHttpException("Le quiz d'id ".$data['gamepin']." n'existe pas.");
 			}
-		
-		
-			$request->getSession()->getFlashBag()->add('notice', 'Lancement du quiz');
-			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
+			
+			return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $data['gamepin'])));
 		}
 		
 		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
@@ -67,14 +63,21 @@ class DefaultController extends Controller
 		));
 	}
 	
-    public function playAction($id,Request $request)
+    public function playAction($gamepin,Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
+		$timers = $em
+			->getRepository('OCQuizlaunchBundle:Timer')
+			->findByGamepin($gamepin)
+		;
+		if (null == $timers) {
+			throw new NotFoundHttpException("Le gamepin ".$gamepin." n'existe pas.");
+		}
+		$id=$timers[0]->getQuizid();
 		$quiz = $em
 			->getRepository('OCQuizgenBundle:Quiz')
 			->find($id)
 		;
-		
 		if (null === $quiz) {
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
@@ -89,7 +92,7 @@ class DefaultController extends Controller
 			$rep=$request->get('oc_quizdisbundle_play')['reponseDonnee'];
 			$idRep=ord($rep) - 65;
 			
-			$statReponse->setGamepin($id);
+			$statReponse->setGamepin($gamepin);
 			$statReponse->setUser(8);
 			
 			$form[$idRep]->handleRequest($request);
@@ -97,7 +100,7 @@ class DefaultController extends Controller
 			if ($form[$idRep]->isValid()) {
 				$em->persist($statReponse);
 				$em->flush();
-				return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id)));
+				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
 			}
 		}
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(

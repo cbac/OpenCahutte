@@ -22,37 +22,29 @@ class VerifRepUniqueValidator extends ConstraintValidator
   
 	public function validate($reponseQuestion, Constraint $constraint)
 	{
-		if(1) {
-			$timers = $this
-					->em
-					->getRepository('OCQuizlaunchBundle:Timer')
-					->findBy(
-						array('gamepin' => $reponseQuestion->getGamepin()), // Critere
-						array('hfin' => 'asc'),        // Tri
-						1 								// on n'en prend qu'un
-					)
+		$timers = $this
+			->em
+			->getRepository('OCQuizlaunchBundle:Timer')
+			->findBy(
+				array('gamepin' => $reponseQuestion->getGamepin()), // Critere
+				array('hfin' => 'asc'),        // Tri
+				1 								// on n'en prend qu'un
+			)
+		;
+		if ($timers == NULL)
+			$this->context->addViolation("Quiz pas encore lancé !");
+		else {
+			$hfin=$timers[0]->getHfin();
+			$hdebut=$timers[0]->getHdebut();
+			$reponsesDejaEnregistrees = $this
+				->em
+				->getRepository('OCQuizdisBundle:ReponseQuestion')
+				->getReponsesUtilisateur($reponseQuestion->getGamepin(),$reponseQuestion->getUser(), $hdebut, $hfin)
 			;
-			if ($timers == NULL)
-				$this->context->addViolation("Quiz pas encore lancé !");
-			else {
-				$timediff=$reponseQuestion->getTime() - $timers[0]->getHfin();  // 1 si négatif, 0 si positif
-				if ($timediff > 0)
-					$this->context->addViolation("Temps écoulé !");
-				else {
-					$hfin=$timers[0]->getHfin();
-					$hdebut=$hfin-600;
-					dump($hdebut);
-					dump($hfin);
-					$reponsesDejaEnregistrees = $this
-							->em
-							->getRepository('OCQuizdisBundle:ReponseQuestion')
-							->getReponsesUtilisateur($reponseQuestion->getGamepin(),$reponseQuestion->getUser(), $hdebut, $hfin)
-					;
-					dump($reponsesDejaEnregistrees);
-					if($reponsesDejaEnregistrees != NULL)
-						$this->context->addViolation("Vous avez déjà répondu à la question actuelle !");
-				}
-			}
+			if($reponsesDejaEnregistrees != NULL)
+				$this->context->addViolation("Vous avez déjà répondu à la question actuelle !");
+			else if ($reponseQuestion->getTime() > $hfin)
+				$this->context->addViolation("Temps écoulé !");
 		}
 	}
 }
