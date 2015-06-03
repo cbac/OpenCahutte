@@ -13,16 +13,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
 	{	
-		$listQuizs = $this
-			->getDoctrine()
-			->getManager()
-			->getRepository('OCQuizgenBundle:Quiz')
-			->findAll()
-		;
-
-		return $this->render('OCQuizgenBundle:Default:index.html.twig', array(
-			'listQuizs' => $listQuizs
-		));
+		return $this->redirect($this->generateUrl('oc_quizdis_select'));
 	}
 	
 	public function addAction(Request $request)
@@ -180,7 +171,7 @@ class DefaultController extends Controller
 				$QCM->setQuiz($nQuiz);
 			}
 			$em->flush();
-			$request->getSession()->getFlashBag()->add('notice', 'Vous avez dupliqué un quiz avec succès.');
+			$request->getSession()->getFlashBag()->add('notice', 'Vous avez dupliqué un quiz avec succès');
 			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $nQuiz->getId())));
 		}
 		return $this->render('OCQuizgenBundle:Default:duplicate.html.twig', array(
