@@ -15,9 +15,16 @@ class PlayType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$rep=$options['rep'];
+		$class=$options['class'];
 		$builder
 			->add('reponseDonnee','hidden', array('data' => $rep))
-			->add('save','submit', array('label' => $rep))
+			->add('save','submit', array(
+				'label' => $rep, 
+				'attr' => array(
+					'style'=> 'width: 400px; height:200px;  margin:2px; font-size:60px;',
+					'class'=>$class
+				)
+			))
         ;
     }
     
@@ -28,7 +35,8 @@ class PlayType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'OC\QuizdisBundle\Entity\ReponseQuestion',
-			'rep' => null
+			'rep' => null,
+			'class' => 'btn btn-primary'
         ));
     }
 

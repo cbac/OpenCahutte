@@ -63,7 +63,7 @@
 	{% do form.QCMs.setRendered %}
 
 	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-	{{ form_widget(form.save, {'label':'Enregistrer', 'attr': {'class': 'btn btn-primary'}}) }}
+	{{ form_widget(form.save) }}
 
 	{# Génération automatique des champs pas encore écrits.#}
 	{{ form_rest(form) }}

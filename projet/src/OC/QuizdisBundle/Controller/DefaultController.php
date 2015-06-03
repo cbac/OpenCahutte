@@ -19,16 +19,21 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
 	{	
 
-		$largeurChamps = array('style'=> 'width: 400px');
+		$largeurChamps = 'width: 200px';
 
 		$form = $this->createFormBuilder()
 			->add('gamepin', 'integer', array(
 				'label' => ' Entrer le Gamepin', 
-				'attr' => $largeurChamps
+				'attr' => array(
+					'style'=> $largeurChamps,
+				)
 			))
 			->add('save', 'submit', array(
 				'label' => 'GO !', 
-				'attr' => $largeurChamps
+				'attr' => array(
+					'style'=> $largeurChamps,
+					'class'=> 'btn btn-primary'
+				)
 			))
 			->getForm();
 
@@ -62,7 +67,7 @@ class DefaultController extends Controller
 		));
 	}
 	
-    public function playAction($id,$q,Request $request)
+    public function playAction($id,Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$quiz = $em
@@ -74,14 +79,11 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
-		$QCM=$quiz->getQCMs()->get($q);
-		if (null === $QCM) {
-			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
-		}
 		
 		$statReponse= new ReponseQuestion();
+		$class=array("btn btn-primary","btn btn-success","btn btn-warning","btn btn-danger");
 		for ($i=0;$i<4;$i++) {
-			$form[$i] = $this->createForm(new PlayType(), $statReponse, array('rep' => chr(65+$i)));
+			$form[$i] = $this->createForm(new PlayType(), $statReponse, array('rep' => chr(65+$i), 'class' => $class[$i]));
 		}
 		if($request->isMethod('POST')) {
 			$rep=$request->get('oc_quizdisbundle_play')['reponseDonnee'];
@@ -95,15 +97,11 @@ class DefaultController extends Controller
 			if ($form[$idRep]->isValid()) {
 				$em->persist($statReponse);
 				$em->flush();
-				if (null != $quiz->getQCMs()->get($q+1))
-					return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q)));
-				else
-					return $this->redirect($this->generateUrl('oc_quizdis_select'));
+				return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id)));
 			}
 		}
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
-			'q'	=> $q,
 			'reponse'	=> $statReponse,
 			'form' => array (
 				$form[0]->createView(),
