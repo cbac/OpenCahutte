@@ -13,16 +13,7 @@
   <i>Par {{ quiz.author }}, le {{ quiz.date|date('d/m/Y') }}</i>
 
   <div class="well">
-    <ul>
-	  {% if quiz.QCMs[q] is defined %}
-		{% set QCM = quiz.QCMs[q] %}
-		<ul>
-			{{ include("OCQuizdisBundle:Default:form.html.twig") }}
-		</ul>
-	  {% else %}
-		<li>Pas de réponses trouvées.</li>
-	  {% endif %}
-	</ul>
+		{{ include("OCQuizdisBundle:Default:form.html.twig") }}
   </div>
 
 {% endblock %}

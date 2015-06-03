@@ -8,19 +8,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PlayType extends AbstractType
 {
-	public function __construct($options = null) {
-        $this->options = $options;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$rep=$this->options['rep'];
+		$rep=$options['rep'];
+		$class=$options['class'];
 		$builder
-			->add('save','submit', array('label' => $rep))
+			->add('reponseDonnee','hidden', array('data' => $rep))
+			->add('save','submit', array(
+				'label' => $rep, 
+				'attr' => array(
+					'style'=> 'width: 400px; height:200px;  margin:2px; font-size:60px;',
+					'class'=>$class
+				)
+			))
         ;
     }
     
@@ -30,7 +34,9 @@ class PlayType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OC\QuizdisBundle\Entity\ReponseQuestion'
+            'data_class' => 'OC\QuizdisBundle\Entity\ReponseQuestion',
+			'rep' => null,
+			'class' => 'btn btn-primary'
         ));
     }
 

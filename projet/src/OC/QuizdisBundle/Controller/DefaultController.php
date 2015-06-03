@@ -3,6 +3,7 @@
 namespace OC\QuizdisBundle\Controller;
 
 use OC\QuizgenBundle\Entity\Quiz;
+use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
 
 use OC\QuizdisBundle\Form\PlayType;
@@ -15,27 +16,58 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
 	{	
-		$limit=5;
-		$listQuizs = $this
-			->getDoctrine()
-			->getManager()
-			->getRepository('OCQuizgenBundle:Quiz')
-			->findBy(
-				array(),
-				array('id' => 'desc'),
-				$limit,
-				0
-			)
-		;
 
+		$largeurChamps = 'width: 200px';
+
+		$form = $this->createFormBuilder()
+			->add('gamepin', 'integer', array(
+				'label' => ' Entrer le Gamepin', 
+				'attr' => array(
+					'style'=> $largeurChamps,
+				)
+			))
+			->add('save', 'submit', array(
+				'label' => 'GO !', 
+				'attr' => array(
+					'style'=> $largeurChamps,
+					'class'=> 'btn btn-primary'
+				)
+			))
+			->getForm();
+
+		$form->handleRequest($request);
+		
+		$data = $form->getData();
+
+		if ($form->isValid()) {
+			// Les données sont un tableau avec la clé gamepin
+			
+			
+			// si le quiz d'id gamepin n'existe pas, erreur
+			$em = $this->getDoctrine()->getManager();
+			$quiz = $em
+				->getRepository('OCQuizgenBundle:Quiz')
+				->find($data['gamepin'])
+			;
+			
+			
+			if (null === $quiz) {
+				throw new NotFoundHttpException("Le quiz d'id ".$data['gamepin']." n'existe pas.");
+			}
+		
+		
+			$request->getSession()->getFlashBag()->add('notice', 'Lancement du quiz');
+			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
+		}
+		
 		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
-		  'listQuizs' => $listQuizs
+			'form' => $form->createView(),
 		));
 	}
 	
-    public function playAction($id,$q,Request $request)
+    public function playAction($id,Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$quiz = $em
@@ -48,33 +80,28 @@ class DefaultController extends Controller
 		}
 		
 		
-		$QCM=$quiz->getQCMs()->get($q);
-		if (null === $QCM) {
-			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
-		}
-		
 		$statReponse= new ReponseQuestion();
+		$class=array("btn btn-primary","btn btn-success","btn btn-warning","btn btn-danger");
 		for ($i=0;$i<4;$i++) {
-			$form[$i] = $this->createForm(new PlayType( array('rep'=>chr(65+$i))));
-		
-			if ($form[$i]->handleRequest($request)->isValid()) {
-				$statReponse->setGamepin($id);
-				$statReponse->setUser(8);
-				$statReponse->setReponseDonnee(chr(65+$i));
-				
+			$form[$i] = $this->createForm(new PlayType(), $statReponse, array('rep' => chr(65+$i), 'class' => $class[$i]));
+		}
+		if($request->isMethod('POST')) {
+			$rep=$request->get('oc_quizdisbundle_play')['reponseDonnee'];
+			$idRep=ord($rep) - 65;
+			
+			$statReponse->setGamepin($id);
+			$statReponse->setUser(8);
+			
+			$form[$idRep]->handleRequest($request);
+			
+			if ($form[$idRep]->isValid()) {
 				$em->persist($statReponse);
 				$em->flush();
-				if (null != $quiz->getQCMs()->get($q+1))
-					return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q+1)));
-				else
-					return $this->redirect($this->generateUrl('oc_quizdis_select'));
+				return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id)));
 			}
-		
 		}
-
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
-			'q'	=> $q,
 			'reponse'	=> $statReponse,
 			'form' => array (
 				$form[0]->createView(),

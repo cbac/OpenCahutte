@@ -37,7 +37,12 @@ class QuizType extends AbstractType
 				'allow_add'    => true,
 				'allow_delete' => true
 			))
-			->add('save','submit')
+			->add('save','submit', array(
+				'label' => 'Enregistrer', 
+				'attr' => array(
+					'class'=>'btn btn-primary'
+				)
+			))
         ;
 		
 		if ($options['user'] == null) {

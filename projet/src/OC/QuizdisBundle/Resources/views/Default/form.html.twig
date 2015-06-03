@@ -1,24 +1,17 @@
+{% for i in 0..3 %}
+	{{ form_errors(form[i]) }}
+{% endfor %}
 <table>
-	<tr>
-	{% for i in 0..1 %}
-		<td>
-		{{ form_start(form[i], {'attr': {'class': 'form-horizontal'}}) }}
-		{{ form_errors(form[i]) }}
-		{{ form_widget(form[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
-		{{ form_rest(form[i]) }}
-		{{ form_end(form[i]) }}
-		</td>
+	{% for j in 0..1 %}
+		<tr>
+			{% for i in [ 2*j , 2*j+1 ] %}
+				<td>
+					{{ form_start(form[i]) }}
+					{{ form_widget(form[i].save) }}
+					{{ form_rest(form[i]) }}
+					{{ form_end(form[i]) }}
+				</td>
+			{% endfor %}
+		</tr>
 	{% endfor %}
-	</tr>
-	<tr>
-	{% for i in 2..3 %}
-		<td>
-		{{ form_start(form[i], {'attr': {'class': 'form-horizontal'}}) }}
-		{{ form_errors(form[i]) }}
-		{{ form_widget(form[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
-		{{ form_rest(form[i]) }}
-		{{ form_end(form[i]) }}
-		</td>
-	{% endfor %}
-	</tr>
 </table>

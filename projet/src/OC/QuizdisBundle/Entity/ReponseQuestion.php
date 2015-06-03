@@ -3,18 +3,20 @@
 namespace OC\QuizdisBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OC\QuizdisBundle\Validator as OCQuizdisAssert;
 
 /**
  * ReponseQuestion
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="OC\QuizdisBundle\Entity\ReponseQuestionRepository")
+ * @OCQuizdisAssert\VerifRepUnique
  */
 class ReponseQuestion
 {
 	public function __construct()
     {
-        $this->time = new \DateTime();
+        $this->time = time();
     }
  
 	/**
@@ -35,7 +37,7 @@ class ReponseQuestion
     private $user;
 	
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
     private $time;
 	

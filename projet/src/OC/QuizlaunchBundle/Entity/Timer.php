@@ -45,9 +45,9 @@ class Timer
     private $question;
 
     /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="hfin", type="datetime")
+     * @ORM\Column(name="hfin", type="integer")
      */
     private $hfin;
 
