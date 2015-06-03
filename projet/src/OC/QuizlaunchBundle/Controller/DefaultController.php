@@ -72,7 +72,7 @@ class DefaultController extends Controller
     
     }
 
-    public function launchquestionAction($id,$gamepin,$idq){
+    public function launchquestionAction($id,$gamepin,$idq, Request $request){
     
       
     
@@ -105,18 +105,35 @@ class DefaultController extends Controller
       if (null !=  $repository->getQbyIdq($idq,$id) ){
 
        // timer
-      $hfin = time()+20; // on pose le temps de réponse à une question de 20s
+      $hdebut = time();
+      $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
       
-      $timer = new Timer; 
+      $timer = new Timer;
+      $timer->setHdebut($hdebut);
       $timer->setHfin($hfin);
       $timer->setGamepin($gamepin);
       $timer->setQuizId($id);
       $timer->setQuestion($idq);
-	
+      
+	// On récupère l'EntityManager
+      $em = $this->getDoctrine()->getManager();
+
+      // Étape 1 : On « persiste » l'entité
+      $em->persist($timer);
+
+      // Étape 2 : On « flush » tout ce qui a été persisté avant
+      $em->flush();
+
+      if ($request->isMethod('POST')) {
+	$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
+	}
+      
+      
+      
       // afficher horloge
       $date = 20;
 	
-      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array('quiz' => $quiz, 'idq' => $idq, 'gamepin' => $gamepin, 'id' => $id, 'texte' => $texte)	);
+      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array('quiz' => $quiz, 'idq' => $idq, 'gamepin' => $gamepin, 'id' => $id, 'texte' => $texte, 'question' => $question[0])	);
       }
       else {
       return $this->render('OCQuizlaunchBundle:Default:index.html.twig');

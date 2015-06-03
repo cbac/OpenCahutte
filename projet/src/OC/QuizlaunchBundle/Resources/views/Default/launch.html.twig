@@ -7,16 +7,23 @@
 
 {% block ocquizgen_body %}
 
- {# <h2>Question : {{ texte }} !</h2> #}
-  {% if quiz.QCMs[idq] is defined %}
-		{% set QCM = quiz.QCMs[idq] %}
-		<li>{{ QCM.question }}</li>
+  <h2>Q.{{ idq }} : {{ texte }}</h2> 
+  {% if question.idq is defined %}
 		
-		<ul>	{{ QCM.rep1 }}</ul>
-		<ul>	{{ QCM.rep2 }}</ul>
-		<ul>	{{ QCM.rep3 }}</ul>
-		<ul>	{{ QCM.rep4 }}
-		</ul>
+	<table>	
+	<tr>	
+	
+	    <td  style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-primary">	A : <br>{{ question.rep1 }} </td>
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-success">	B : <br>{{ question.rep2 }} </td>
+	</tr>
+	<tr>	
+	
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-warning">	C : <br>{{ question.rep3 }} </td>
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-danger">	D : <br>{{ question.rep4 }} </td>
+	</tr>		
+			
+	</table>
+		
 	  {% else %}
 		<li>Pas de réponses trouvées.</li>
 
@@ -35,8 +42,10 @@ $('#removeCountdown').click(function() {
 
 ?>
  
-  #}
-<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1}) }}">Question suivante</a>
+  #}<br><br><div align="right">
+
+<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
 
 
 {% endblock %}

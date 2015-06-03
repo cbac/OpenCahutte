@@ -54,7 +54,7 @@ class Timer
    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="hdebut", type="datetime")
+     * @ORM\Column(name="hdebut", type="integer")
      */
     private $hdebut;
     
@@ -164,10 +164,10 @@ class Timer
     /**
      * Set hdebut
      *
-     * @param \timestamp $hdebut
+     * @param \DateTime $hdebut
      * @return Timer
      */
-    public function setHdebut(\timestamp $hdebut)
+    public function setHdebut($hdebut)
     {
         $this->hdebut = $hdebut;
 
