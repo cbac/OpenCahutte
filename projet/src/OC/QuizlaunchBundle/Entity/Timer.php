@@ -51,7 +51,14 @@ class Timer
      */
     private $hfin;
 
-
+   /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hdebut", type="datetime")
+     */
+    private $hdebut;
+    
+    
     /**
      * Get id
      *
@@ -152,5 +159,28 @@ class Timer
     public function getQuizid()
     {
         return $this->quizid;
+    }
+
+    /**
+     * Set hdebut
+     *
+     * @param \timestamp $hdebut
+     * @return Timer
+     */
+    public function setHdebut(\timestamp $hdebut)
+    {
+        $this->hdebut = $hdebut;
+
+        return $this;
+    }
+
+    /**
+     * Get hdebut
+     *
+     * @return \timestamp 
+     */
+    public function getHdebut()
+    {
+        return $this->hdebut;
     }
 }

@@ -8,20 +8,35 @@
 
 {% block ocquizgen_body %}
 
-  <h2>Liste des quizs</h2>
+{# Overture de la balise <form> du formulaire HTML #}
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-  <ul>
-    {% for quiz in listQuizs %}
-      <li>
-        <a href="{{ path('oc_quizdis_play', {'id': quiz.id, 'q': 0}) }}">
-          {{ quiz.nom }}
-        </a>
-        par {{ quiz.author }},
-        le {{ quiz.date|date('d/m/Y') }}
-      </li>
-    {% else %}
-      <li>Pas (encore !) de quizs.</li>
-    {% endfor %}
-  </ul>
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
+
+  <h3>Gamepin</h3>
+
+		<table>
+		
+		<tr>
+			<td>{{ form_widget(form.gamepin) }}</td>
+		</tr>
+		
+		<tr>
+			<td>{{ form_widget(form.save) }}</td>
+		</tr>
+		
+		</table>
+		
+		  <p>
+		  
+{{ form_row(form.gamepin) }}
+		  
+{# Génération automatique des champs pas encore écrits.#}
+{{ form_rest(form) }}
+		  
+{# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}
+
 
 {% endblock %}

@@ -1,0 +1,9 @@
+diff a/projet/src/OC/QuizlaunchBundle/Entity/Timer.php b/projet/src/OC/QuizlaunchBundle/Entity/Timer.php	(rejected hunks)
+@@ -47,6 +47,7 @@
+     /**
+      * @var integer
+      *
++<<<<<<< HEAD
+      * @ORM\Column(name="hfin", type="integer")
+ >>>>>>> 4d9134625b3aec9d5dac7a74da40ee28f83844c2
+      */

@@ -3,8 +3,7 @@ oc_quizdis_select:
     defaults: { _controller: OCQuizdisBundle:Default:index }
 
 oc_quizdis_play:
-    path:     /play/{id}/{q}
+    path:     /play/{id}
     defaults: { _controller: OCQuizdisBundle:Default:play }
     requirements:
          id: \d+
-         q: \d+
