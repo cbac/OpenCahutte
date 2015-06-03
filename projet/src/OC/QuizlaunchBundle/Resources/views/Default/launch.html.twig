@@ -1,0 +1,36 @@
+
+{% extends "OCQuizgenBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocquizgen_body %}
+
+ {# <h2>Question : {{ texte }} !</h2> #}
+  {% if quiz.QCMs[q] is defined %}
+		{% set QCM = quiz.QCMs[q] %}
+		<li>{{ QCM.question }}</li>
+		<ul>
+			{{ include("OCQuizdisBundle:Default:form.html.twig") }}
+		</ul>
+	  {% else %}
+		<li>Pas de réponses trouvées.</li>
+	  {% endif %}
+<?php
+  var newYear = new Date(); 
+newYear = new Date(newYear.getFullYear() + 1, 1 - 1, 1); 
+$('#defaultCountdown').countdown({until: $date}); 
+ 
+$('#removeCountdown').click(function() { 
+    var destroy = $(this).text() === 'Remove'; 
+    $(this).text(destroy ? 'Re-attach' : 'Remove'); 
+    $('#defaultCountdown').countdown(destroy ? 'destroy' : {until: $date}); 
+});
+
+?>
+ 
+  
+  
+
+{% endblock %}

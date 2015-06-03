@@ -1,3 +1,18 @@
-oc_quizlaunch_homepage:
-    path:     /hello/{name}
+oc_quizlaunch_index:
+    path:     /launch/index
     defaults: { _controller: OCQuizlaunchBundle:Default:index }
+
+oc_quizlaunch_pick:
+    path:     /launch/pick/{id}
+    defaults: { _controller: OCQuizlaunchBundle:Default:pick }
+    requirements:
+        id:   \d+
+
+
+oc_quizlaunch_question:
+    path:     /launch/question/{id}/{gamepin}/{q}
+    defaults: { _controller: OCQuizlaunchBundle:Default:launchquestion }
+    requirements:
+        id:   \d+
+        gamepin:   \d+
+        q:   \d+

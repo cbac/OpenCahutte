@@ -18,15 +18,9 @@ class PlayType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		$rep=$this->options['rep'];
 		$builder
-            ->add('reponse', 'choice', array( 
-				'label' => ' ', 
-				'attr' => array('style'=> 'width: 400px'),
-				'choices' => $this->options['reponses'],
-				'expanded' => true,
-				'multiple' => true
-			))
-			->add('save',			'submit')
+			->add('save','submit', array('label' => $rep))
         ;
     }
     

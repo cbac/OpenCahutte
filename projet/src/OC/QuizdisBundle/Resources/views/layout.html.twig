@@ -1,20 +1,58 @@
 {# src/OC/QuizGen/Resources/views/layout.html.twig #}
 
-{% extends "::layout.html.twig" %}
-
-{% block title %}
-  Quizs - {{ parent() }}
-{% endblock %}
-
-{% block body %}
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-{% else %}
-    <a href="{{ path('fos_user_security_login') }}">Connexion</a>
-{% endif %} 
-  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
-  <h1>Quizs</h1>
-  {% block ocquizgen_body %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Quiz - Cahutte création de quiz en ligne{% endblock %}</title>
+  {% block stylesheets %}
+    {# On charge le CSS de bootstrap depuis le site directement #}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   {% endblock %}
+</head>
+<body>
+  <div class="container">
+    {# <div id="header" class="jumbotron">
+	
+	  <a href="{{path('oc_quizgen_homepage')}}"><img src="{{ asset('img/logo.png') }}" alt="logo"/></a>
+      <h1>Créer des quiz simplement </h1>
 
-{% endblock %}
+
+      <p>
+        Créez un quiz, ajoutez vos questions et testez-vous entre amis.
+      </p>
+      
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	
+	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_logout') }}">Déconnexion</a> -
+	Connecté en tant que {{ app.user.username }} - 
+      {% else %}
+	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_login') }}">
+          Connectez-vous »
+        </a>
+      {% endif %} 
+    </div> #}
+	
+    <div class="row">
+      <div id="content" class="col-md-9">
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+		{% else %}
+			<a href="{{ path('fos_user_security_login') }}">Connexion</a>
+		{% endif %} 
+		  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+		  {% block ocquizdis_body %}
+		  {% endblock %}
+      </div>
+    </div>
+    <hr>
+  </div>
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+</body>
+</html>
