@@ -6,8 +6,9 @@ namespace OC\QuizlaunchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Entity\QCM;
+use OC\QuizlaunchBundle\Entity\Timer;
 
-use OC\QuizdisBundle\Form\PlayType;
+//use OC\QuizdisBundle\Form\PlayType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -43,13 +44,20 @@ class DefaultController extends Controller
 			->getRepository('OCQuizgenBundle:Quiz')
 			->find($id)
 		;
-	
 		
 		if (null === $quiz) {
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 	
 	$name = $quiz->getNom();
+		
+	 /*$QCM=$quiz->getQCMs()->get($q);
+		if (null === $QCM) {
+			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
+		}*/
+		
+	//$idq = $QCM->getIdq();
+	
       $gamepin =  rand ( 1 , 999999 ); 
 	
 	
@@ -64,7 +72,7 @@ class DefaultController extends Controller
     
     }
 
-    public function launchquestionAction($id,$gamepin,$q){
+    public function launchquestionAction($id,$gamepin,$idq){
     
       
     
@@ -75,28 +83,40 @@ class DefaultController extends Controller
 			->find($id)
 		;
  	
-      $QCM=$quiz->getQCMs()->get($q);
+ 	
+ 	
+      $repository = $this
+	->getDoctrine()
+	->getManager()
+	->getRepository('OCQuizgenBundle:QCM')
+      ;
+      
+      $question = $repository->getQbyIdq($idq,$id); dump($question);
+      
+ 	
+     /* $QCM=$quiz->getQCMs()->get($q);
 		if (null === $QCM) {
 			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
 		}
-		
-	$texte = $q->getQuestion();	
+		*/
+	$texte = $question[0]->getQuestion(); dump($texte);
+	
       
-      if (null != $quiz->getQCMs()->get($q) ){
+      if (null !=  $repository->getQbyIdq($idq,$id) ){
 
        // timer
       $hfin = time()+20; // on pose le temps de réponse à une question de 20s
       
       $timer = new Timer; 
-      $timer->setHfin($hFin);
+      $timer->setHfin($hfin);
       $timer->setGamepin($gamepin);
-      $timer->setQuizId($quizid);
-      $timer->setQuestion($q);
+      $timer->setQuizId($id);
+      $timer->setQuestion($idq);
 	
       // afficher horloge
       $date = 20;
 	
-      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array('quiz' => $quiz, 'q' => $q, 'gamepin' => $gamepin, 'texte' => $texte)	);
+      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array('quiz' => $quiz, 'idq' => $idq, 'gamepin' => $gamepin, 'id' => $id, 'texte' => $texte)	);
       }
       else {
       return $this->render('OCQuizlaunchBundle:Default:index.html.twig');

@@ -28,19 +28,33 @@ class QCM
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    
+      /**
+     * @var integer
+     *
+     * @ORM\Column(name="idq", type="integer")
+     */
+    private $idq;
+    
 
     /**
      * @var string
      *
      * @ORM\Column(name="question", type="string", length=255)
      */
+    
+     
     private $question;
 
+    
+    
     /**
      * @var string
      *
      * @ORM\Column(name="rep1", type="string", length=255)
      */
+     
     private $rep1;
 
     /**
@@ -361,4 +375,27 @@ class QCM
 			
 		return $reponsesJustes;
 	}
+
+    /**
+     * Set idq
+     *
+     * @param integer $idq
+     * @return QCM
+     */
+    public function setIdq($idq)
+    {
+        $this->idq = $idq;
+
+        return $this;
+    }
+
+    /**
+     * Get idq
+     *
+     * @return integer 
+     */
+    public function getIdq()
+    {
+        return $this->idq;
+    }
 }

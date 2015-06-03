@@ -42,8 +42,11 @@ class DefaultController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($quiz);
 			
+			$i=1;
 			foreach ($quiz->getQCMs() as $QCM) {
+				$QCM->setIdq($i);
 				$QCM->setQuiz($quiz);
+				$i++;
 			}
 			
 			$em->flush();

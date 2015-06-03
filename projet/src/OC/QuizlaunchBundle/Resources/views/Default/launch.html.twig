@@ -8,15 +8,20 @@
 {% block ocquizgen_body %}
 
  {# <h2>Question : {{ texte }} !</h2> #}
-  {% if quiz.QCMs[q] is defined %}
-		{% set QCM = quiz.QCMs[q] %}
+  {% if quiz.QCMs[idq] is defined %}
+		{% set QCM = quiz.QCMs[idq] %}
 		<li>{{ QCM.question }}</li>
-		<ul>
-			{{ include("OCQuizdisBundle:Default:form.html.twig") }}
+		
+		<ul>	{{ QCM.rep1 }}</ul>
+		<ul>	{{ QCM.rep2 }}</ul>
+		<ul>	{{ QCM.rep3 }}</ul>
+		<ul>	{{ QCM.rep4 }}
 		</ul>
 	  {% else %}
 		<li>Pas de réponses trouvées.</li>
-	  {% endif %}
+
+		{% endif %}
+		{#
 <?php
   var newYear = new Date(); 
 newYear = new Date(newYear.getFullYear() + 1, 1 - 1, 1); 
@@ -30,7 +35,8 @@ $('#removeCountdown').click(function() {
 
 ?>
  
-  
-  
+  #}
+<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1}) }}">Question suivante</a>
+
 
 {% endblock %}

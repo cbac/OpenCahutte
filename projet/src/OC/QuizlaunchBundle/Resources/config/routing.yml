@@ -10,9 +10,9 @@ oc_quizlaunch_pick:
 
 
 oc_quizlaunch_question:
-    path:     /launch/question/{id}/{gamepin}/{q}
+    path:     /launch/question/{id}/{gamepin}/{idq}
     defaults: { _controller: OCQuizlaunchBundle:Default:launchquestion }
     requirements:
         id:   \d+
         gamepin:   \d+
-        q:   \d+
+        idq:   \d+

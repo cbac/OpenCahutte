@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class QCMRepository extends EntityRepository
 {
+
+public function getQbyIdq($idq,$quiz) {
+	
+		$question = $this->createQueryBuilder('q')
+			->where('q.idq=:idq')
+			->setParameter('idq', $idq)
+			->andWhere('q.quiz=:quiz')
+			->setParameter('quiz', $quiz)
+		;
+
+		return $question
+		  ->getQuery()
+		  ->getResult()
+		;
+	
+	}
 }
