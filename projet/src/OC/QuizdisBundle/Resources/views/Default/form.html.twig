@@ -1,9 +1,12 @@
+{{ form_errors(form[0]) }}
+{{ form_errors(form[1]) }}
+{{ form_errors(form[2]) }}
+{{ form_errors(form[3]) }}
 <table>
 	<tr>
 	{% for i in 0..1 %}
 		<td>
 		{{ form_start(form[i], {'attr': {'class': 'form-horizontal'}}) }}
-		{{ form_errors(form[i]) }}
 		{{ form_widget(form[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
 		{{ form_rest(form[i]) }}
 		{{ form_end(form[i]) }}
@@ -14,7 +17,6 @@
 	{% for i in 2..3 %}
 		<td>
 		{{ form_start(form[i], {'attr': {'class': 'form-horizontal'}}) }}
-		{{ form_errors(form[i]) }}
 		{{ form_widget(form[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
 		{{ form_rest(form[i]) }}
 		{{ form_end(form[i]) }}

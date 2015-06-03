@@ -47,7 +47,6 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
-		
 		$QCM=$quiz->getQCMs()->get($q);
 		if (null === $QCM) {
 			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
@@ -55,23 +54,26 @@ class DefaultController extends Controller
 		
 		$statReponse= new ReponseQuestion();
 		for ($i=0;$i<4;$i++) {
-			$form[$i] = $this->createForm(new PlayType( array('rep'=>chr(65+$i))));
-		
-			if ($form[$i]->handleRequest($request)->isValid()) {
-				$statReponse->setGamepin($id);
-				$statReponse->setUser(8);
-				$statReponse->setReponseDonnee(chr(65+$i));
-				
+			$form[$i] = $this->createForm(new PlayType(), $statReponse, array('rep' => chr(65+$i)));
+		}
+		if($request->isMethod('POST')) {
+			$rep=$request->get('oc_quizdisbundle_play')['reponseDonnee'];
+			$idRep=ord($rep) - 65;
+			
+			$statReponse->setGamepin($id);
+			$statReponse->setUser(8);
+			
+			$form[$idRep]->handleRequest($request);
+			
+			if ($form[$idRep]->isValid()) {
 				$em->persist($statReponse);
 				$em->flush();
 				if (null != $quiz->getQCMs()->get($q+1))
-					return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q+1)));
+					return $this->redirect($this->generateUrl('oc_quizdis_play', array('id' => $id, 'q' => $q)));
 				else
 					return $this->redirect($this->generateUrl('oc_quizdis_select'));
 			}
-		
 		}
-
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
 			'q'	=> $q,
