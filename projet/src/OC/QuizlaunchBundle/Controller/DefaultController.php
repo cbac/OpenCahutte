@@ -86,7 +86,7 @@ class DefaultController extends Controller
       
     
              
-      $em = $this->getDoctrine()->getManager();
+		$em = $this->getDoctrine()->getManager();
 		$quiz = $em
 			->getRepository('OCQuizgenBundle:Quiz')
 			->find($id)
@@ -94,79 +94,80 @@ class DefaultController extends Controller
  	
  	
  	
-      $repository = $this
-	->getDoctrine()
-	->getManager()
-	->getRepository('OCQuizgenBundle:QCM')
-      ;
+		$repository = $this
+		->getDoctrine()
+		->getManager()
+		->getRepository('OCQuizgenBundle:QCM')
+		  ;
       
-      $question = $repository->getQbyIdq($idq,$id); dump($question);
+		$question = $repository->getQbyIdq($idq,$id); dump($question);
       
  	
-     /* $QCM=$quiz->getQCMs()->get($q);
-		if (null === $QCM) {
-			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
-		}
-		*/
-	$texte = $question[0]->getQuestion(); dump($texte);
-	$nbqTot = $quiz->getNbQuestions();
-      
-      if (null !=  $repository->getQbyIdq($idq,$id)){
-
-	if ( $idq < $nbqTot ) {
-       // timer
-      $hdebut = time();
-      $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
-      
-      $timer = new Timer;
-      $timer->setHdebut($hdebut);
-      $timer->setHfin($hfin);
-      $timer->setGamepin($gamepin);
-      $timer->setQuizId($id);
-      $timer->setQuestion($idq);
-      
-	// On récupère l'EntityManager
-      $em = $this->getDoctrine()->getManager();
-
-      // Étape 1 : On « persiste » l'entité
-      $em->persist($timer);
-
-      // Étape 2 : On « flush » tout ce qui a été persisté avant
-      $em->flush();
-
-      if ($request->isMethod('POST')) {
-	$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
-	}
-      
-      // si idq == nbquestion
-      
-      // afficher horloge
-      $date = 20;
+		 /* $QCM=$quiz->getQCMs()->get($q);
+			if (null === $QCM) {
+				throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
+			}
+			*/
 		
-      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array(
-      'quiz' => $quiz,
-      'idq' => $idq,
-      'gamepin' => $gamepin,
-      'id' => $id,
-      'texte' => $texte,
-      'question' => $question[0],
-      ));
-      }
-      
-	else {
-	
-	  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig'); 
-	  
-	}
-	
-      }
-      else {
+		$nbqTot = $quiz->getNbQuestions();
+		
+      	if ( $idq <= $nbqTot ) {
+
+			//if (null !=  $repository->getQbyIdq($idq,$id)){
+
+				
+				$texte = $question[0]->getQuestion(); dump($texte);
+				
+				   // timer
+				  $hdebut = time();
+				  $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
+				  
+				  $timer = new Timer;
+				  $timer->setHdebut($hdebut);
+				  $timer->setHfin($hfin);
+				  $timer->setGamepin($gamepin);
+				  $timer->setQuizId($id);
+				  $timer->setQuestion($idq);
+				  
+				// On récupère l'EntityManager
+				  $em = $this->getDoctrine()->getManager();
+
+				  // Étape 1 : On « persiste » l'entité
+				  $em->persist($timer);
+
+				  // Étape 2 : On « flush » tout ce qui a été persisté avant
+				  $em->flush();
+
+				  if ($request->isMethod('POST')) {
+					$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
+				  }
+				  
+				  // si idq == nbquestion
+				  
+				  // afficher horloge
+				  $date = 20;
+					
+				  return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array(
+				  'quiz' => $quiz,
+				  'idq' => $idq,
+				  'gamepin' => $gamepin,
+				  'id' => $id,
+				  'texte' => $texte,
+				  'question' => $question[0],
+				  ));
+			}  
+      /*else {
       return $this->render('OCQuizlaunchBundle:Default:index.html.twig');
       
-      }
+      }*/
+		  
+		else /*( $idq == $nbqTot+1 )*/ {
+		
+		  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig'); 
+		  
+		}
+	}
       
-    }
-    
      
     
     public function showresultsAction($gamepin){

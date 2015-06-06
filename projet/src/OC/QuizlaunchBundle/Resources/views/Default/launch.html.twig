@@ -8,7 +8,7 @@
 {% block ocquizgen_body %}
 
   <h2>Q.{{ idq }} : {{ texte }}</h2> 
-  {% if question.idq is defined %}
+  {# if question.idq is defined #}
 		
 	<table>	
 	<tr>	
@@ -24,10 +24,9 @@
 			
 	</table>
 		
-	  {% else %}
-		<li>Pas de réponses trouvées.</li>
+	  
 
-		{% endif %}
+		{# endif #}
 		{#
 <?php
   var newYear = new Date(); 
