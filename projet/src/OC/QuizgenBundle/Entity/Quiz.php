@@ -56,6 +56,16 @@ class Quiz
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
+    
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbQuestions", type="integer")
+     */
+    private $nbQuestions;
+    
+    
+    
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="OC\QuizgenBundle\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
