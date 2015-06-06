@@ -38,7 +38,7 @@ class DefaultController extends Controller
     
     }
 
-    public function pickAction($id){
+    public function pickAction($id, Request $request){
       $em = $this->getDoctrine()->getManager();
 		$quiz = $em
 			->getRepository('OCQuizgenBundle:Quiz')
@@ -51,17 +51,26 @@ class DefaultController extends Controller
 	
 	$name = $quiz->getNom();
 		
-	 /*$QCM=$quiz->getQCMs()->get($q);
-		if (null === $QCM) {
-			throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
-		}*/
-		
-	//$idq = $QCM->getIdq();
-	
+			
+      /* gamepin ajouté dans la BD pour permettre la connexion des joueurs */
       $gamepin =  rand ( 1 , 999999 ); 
+      $timer = new Timer;
+      $timer->setGamepin($gamepin);
+      $timer->setQuizId($id);
+      $timer->setQuestion(0);
+      $timer->setHfin(0);
+      $timer->setHdebut(0);
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($timer);
+      $em->flush();
+      
+      if ($request->isMethod('POST')) {
+	$request->getSession()->getFlashBag()->add('notice', 'Début du quiz.');
+	}
 	
-	
-    /* affichage utilisateur */ 
+      
+    /* affichage utilisateurs */ 
 		
 		return $this->render('OCQuizlaunchBundle:Default:pick.html.twig', array(
 			'id'  => $id,
@@ -100,10 +109,11 @@ class DefaultController extends Controller
 		}
 		*/
 	$texte = $question[0]->getQuestion(); dump($texte);
-	
+	$nbqTot = $quiz->getNbQuestions();
       
-      if (null !=  $repository->getQbyIdq($idq,$id) ){
+      if (null !=  $repository->getQbyIdq($idq,$id)){
 
+	if ( $idq < $nbqTot ) {
        // timer
       $hdebut = time();
       $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
@@ -128,12 +138,27 @@ class DefaultController extends Controller
 	$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
 	}
       
-      
+      // si idq == nbquestion
       
       // afficher horloge
       $date = 20;
+		
+      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array(
+      'quiz' => $quiz,
+      'idq' => $idq,
+      'gamepin' => $gamepin,
+      'id' => $id,
+      'texte' => $texte,
+      'question' => $question[0],
+      ));
+      }
+      
+	else {
 	
-      return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array('quiz' => $quiz, 'idq' => $idq, 'gamepin' => $gamepin, 'id' => $id, 'texte' => $texte, 'question' => $question[0])	);
+	  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig'); 
+	  
+	}
+	
       }
       else {
       return $this->render('OCQuizlaunchBundle:Default:index.html.twig');

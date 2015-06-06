@@ -38,6 +38,8 @@ class DefaultController extends Controller
 				$i++;
 			}
 			
+			$quiz->setNbQuestions($i-1);
+			
 			$em->flush();
 
 			$request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un quiz avec succès.');
