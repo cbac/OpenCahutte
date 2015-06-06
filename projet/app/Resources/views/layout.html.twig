@@ -7,7 +7,7 @@
   {% block stylesheets %}
     {# On charge le CSS de bootstrap depuis le site directement #}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   {% endblock %}
 </head>
 <body>
@@ -37,11 +37,11 @@
     </div>
     <div class="row">
       <div id="menu" class="col-md-3">
-        <h3>Les quiz proposés par d'autres utilisateurs</h3>
+        <h3>Quizs</h3>
         <ul class="nav nav-pills nav-stacked">
-          <li><a href="{{ path('oc_quizgen_homepage') }}">Accueil</a></li>
-          <li><a href="{{ path('oc_quizgen_add') }}">Ajouter un quiz</a></li>
           <li><a href="{{ path('oc_quizdis_select') }}">Participer à un quiz</a></li>
+          <li><a href="{{ path('oc_quizgen_list') }}">Liste des quiz</a></li>
+          <li><a href="{{ path('oc_quizgen_add') }}">Ajouter un quiz</a></li>
         </ul>
         <h4>Derniers quiz</h4>
         {{ render(controller("OCQuizgenBundle:Default:menu", {'limit': 3})) }}

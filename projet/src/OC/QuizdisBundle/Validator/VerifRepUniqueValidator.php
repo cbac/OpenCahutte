@@ -27,12 +27,12 @@ class VerifRepUniqueValidator extends ConstraintValidator
 			->getRepository('OCQuizlaunchBundle:Timer')
 			->findBy(
 				array('gamepin' => $reponseQuestion->getGamepin()), // Critere
-				array('hfin' => 'asc'),        // Tri
+				array('question' => 'desc'),        // Tri
 				1 								// on n'en prend qu'un
 			)
 		;
-		if ($timers == NULL)
-			$this->context->addViolation("Quiz pas encore lancé !");
+		if ($timers == NULL || $timers[0]->getQuestion() == 0)
+			$this->context->addViolation(" Quiz pas encore lancé !");
 		else {
 			$hfin=$timers[0]->getHfin();
 			$hdebut=$timers[0]->getHdebut();
@@ -42,9 +42,9 @@ class VerifRepUniqueValidator extends ConstraintValidator
 				->getReponsesUtilisateur($reponseQuestion->getGamepin(),$reponseQuestion->getUser(), $hdebut, $hfin)
 			;
 			if($reponsesDejaEnregistrees != NULL)
-				$this->context->addViolation("Vous avez déjà répondu à la question actuelle !");
+				$this->context->addViolation(" Vous avez déjà répondu à la question actuelle !");
 			else if ($reponseQuestion->getTime() > $hfin)
-				$this->context->addViolation("Temps écoulé !");
+				$this->context->addViolation(" Temps écoulé !");
 		}
 	}
 }

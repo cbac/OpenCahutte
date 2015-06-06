@@ -33,12 +33,16 @@
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à la liste
     </a>
+    <a href="{{ path('oc_quizlaunch_pick', {'id': quiz.id}) }}" class="btn btn-success">
+      <i class="glyphicon glyphicon-play-circle"></i>
+      Lancer le quiz !
+    </a>
     <a href="{{ path('oc_quizgen_edit', {'id': quiz.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
       Modifier le quiz
     </a>
 	<a href="{{ path('oc_quizgen_duplicate', {'id': quiz.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
+      <i class="glyphicon glyphicon-duplicate"></i>
       Dupliquer le quiz
     </a>
     <a href="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" class="btn btn-danger">

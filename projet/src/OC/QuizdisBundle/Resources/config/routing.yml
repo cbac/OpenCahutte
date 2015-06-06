@@ -1,9 +1,9 @@
 oc_quizdis_select:
-    path:     /select
+    path:     /
     defaults: { _controller: OCQuizdisBundle:Default:index }
 
 oc_quizdis_play:
-    path:     /play/{gamepin}
+    path:     /{gamepin}
     defaults: { _controller: OCQuizdisBundle:Default:play }
     requirements:
          gamepin: \d+

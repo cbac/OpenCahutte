@@ -114,8 +114,24 @@ class DefaultController extends Controller
 				0
 			)
 		;
-
 		return $this->render('OCQuizgenBundle:Default:menu.html.twig', array(
+		  'listQuizs' => $listQuizs
+		));
+	}
+	
+	public function listAction()
+	{
+		$listQuizs = $this
+			->getDoctrine()
+			->getManager()
+			->getRepository('OCQuizgenBundle:Quiz')
+			->findBy(
+				array(),
+				array('id' => 'desc')
+			)
+		;
+
+		return $this->render('OCQuizgenBundle:Default:list.html.twig', array(
 		  'listQuizs' => $listQuizs
 		));
 	}
