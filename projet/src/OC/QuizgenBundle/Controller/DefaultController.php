@@ -150,6 +150,7 @@ class DefaultController extends Controller
 				array('id' => 'desc')
 			)
 		;
+		$listNoms=null;
 		foreach($listQuizs as $quiz) {
 			$idAuteur=$quiz->getAuthor();
 			if($idAuteur == 0)
