@@ -150,6 +150,7 @@ class DefaultController extends Controller
 				array('id' => 'desc')
 			)
 		;
+		$listNoms=null;
 		foreach($listQuizs as $quiz) {
 			$idAuteur=$quiz->getAuthor();
 			if($idAuteur == 0)
@@ -183,6 +184,8 @@ class DefaultController extends Controller
 			  'auteur' => $this->getUser()->getUsername()
 			));
 		}
+		else 
+			return $this->redirect($this->generateUrl('fos_user_registration_register'));
 	}
 	
 	public function deleteAction(Quiz $quiz)
