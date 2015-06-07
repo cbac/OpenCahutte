@@ -47,6 +47,11 @@ class ReponseQuestion
     private $reponseDonnee;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $question;
+	
+    /**
      * Get id
      *
      * @return integer 
@@ -146,5 +151,28 @@ class ReponseQuestion
     public function getReponseDonnee()
     {
         return $this->reponseDonnee;
+    }
+
+    /**
+     * Set question
+     *
+     * @param integer $question
+     * @return ReponseQuestion
+     */
+    public function setQuestion($question)
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return integer 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
     }
 }

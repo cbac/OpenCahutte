@@ -26,7 +26,7 @@ security:
                 default_target_path: oc_quizgen_homepage
             logout:
                 path:       fos_user_security_logout
-                target: /quiz/home
+                target: /
             remember_me:
                 key:    %secret% # %secret% est un paramètre de parameters.yml
 

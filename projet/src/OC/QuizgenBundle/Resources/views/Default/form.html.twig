@@ -12,11 +12,14 @@
 
 	
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-		<h4 class="simili-form">Auteur {{ app.user.username }}</h4>
+		<h4 class="simili-form">Auteur : <i>{{ app.user.username }}</i></h4>
+		<br/>
+		{{ form_row(form.acces) }}
 	{% else %}
-		{{ form_row(form.author) }}
+		<h4 class="simili-form">Auteur : <i>Anonyme</i></h4>
+		<h4 class="simili-form">Accès : <i>Public</i> (Connectez vous pour le passer en <i>Privé</i>)</h4>
+		<br/>
     {% endif %}
-	
 	{# Génération du label + error + widget pour un champ #}
 	{{ form_row(form.nom) }}
 	{{ form_row(form.category) }}

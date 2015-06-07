@@ -30,12 +30,15 @@ class Quiz
     private $nom;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="author", type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $acces;
+	
     /**
      * @var \DateTime
      *
@@ -282,4 +285,27 @@ class Quiz
 			$this->date = new \Datetime();
 		}
 	}
+
+    /**
+     * Set acces
+     *
+     * @param string $acces
+     * @return Quiz
+     */
+    public function setAcces($acces)
+    {
+        $this->acces = $acces;
+
+        return $this;
+    }
+
+    /**
+     * Get acces
+     *
+     * @return string 
+     */
+    public function getAcces()
+    {
+        return $this->acces;
+    }
 }

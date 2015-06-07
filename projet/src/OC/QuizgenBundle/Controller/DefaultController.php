@@ -25,28 +25,39 @@ class DefaultController extends Controller
 		// On crée le FormBuilder grâce au service form factory
 		$form = $this->createForm(new QuizType(), $quiz, array('user' => $this->getUser()));
 		
+		if($request->isMethod('POST')) {
 		
-		// À partir de maintenant, la variable $quiz contient les valeurs entrées dans le formulaire par le visiteur
-		if ($form->handleRequest($request)->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($quiz);
-			
-			$i=1;
-			foreach ($quiz->getQCMs() as $QCM) {
-				$QCM->setIdq($i);
-				$QCM->setQuiz($quiz);
-				$i++;
+			if ($this->getUser() == null) {
+				$quiz->setAuthor(0);
+				$quiz->setAcces('public');
+			}
+			else {
+				$quiz->setAuthor($this->getUser()->getId());
 			}
 			
-			$quiz->setNbQuestions($i-1);
-			
-			$em->flush();
+			$form->handleRequest($request);
+		
+			if ($form->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($quiz);
+				
+				$i=1;
+				foreach ($quiz->getQCMs() as $QCM) {
+					$QCM->setIdq($i);
+					$QCM->setQuiz($quiz);
+					$i++;
+				}
+				
+				$quiz->setNbQuestions($i-1);
+				
+				$em->flush();
 
-			$request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un quiz avec succès.');
+				$request->getSession()->getFlashBag()->add('notice', 'Vous avez créé un quiz avec succès.');
 
-			return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
+				return $this->redirect($this->generateUrl('oc_quizgen_view', array('id' => $quiz->getId())));
+			}
+		
 		}
-			 
 		// On passe la méthode createView() du formulaire à la vue
 		// afin qu'elle puisse afficher le formulaire toute seule
 		return $this->render('OCQuizgenBundle:Default:add.html.twig', array(
@@ -95,9 +106,18 @@ class DefaultController extends Controller
 		if (null === $quiz) {
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
-
+		
+		$idAuteur=$quiz->getAuthor();
+		if($idAuteur == 0)
+			$auteur= 'Anonyme';
+		else {
+			$userManager = $this->get('fos_user.user_manager');
+			$auteur = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
+		}
+		
 		return $this->render('OCQuizgenBundle:Default:view.html.twig', array(
-			'quiz'           => $quiz
+			'quiz'		=> $quiz,
+			'auteur'	=> $auteur
 		));
 	}
 	
@@ -126,14 +146,43 @@ class DefaultController extends Controller
 			->getManager()
 			->getRepository('OCQuizgenBundle:Quiz')
 			->findBy(
-				array(),
+				array('acces'=>'public'),
 				array('id' => 'desc')
 			)
 		;
-
+		foreach($listQuizs as $quiz) {
+			$idAuteur=$quiz->getAuthor();
+			if($idAuteur == 0)
+				$listNoms[$idAuteur]= 'Anonyme';
+			else {
+				$userManager = $this->get('fos_user.user_manager');
+				$listNoms[$idAuteur] = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
+			}
+		}
+		
 		return $this->render('OCQuizgenBundle:Default:list.html.twig', array(
-		  'listQuizs' => $listQuizs
+		  'listQuizs' => $listQuizs,
+		  'listNoms' => $listNoms
 		));
+	}
+	
+	public function mylistAction()
+	{
+		if($this->getUser() != NULL) {
+			$listQuizs = $this
+				->getDoctrine()
+				->getManager()
+				->getRepository('OCQuizgenBundle:Quiz')
+				->findBy(
+					array('author'=> $this->getUser()->getId()),
+					array('id' => 'desc')
+				)
+			;
+			return $this->render('OCQuizgenBundle:Default:mylist.html.twig', array(
+			  'listQuizs' => $listQuizs,
+			  'auteur' => $this->getUser()->getUsername()
+			));
+		}
 	}
 	
 	public function deleteAction(Quiz $quiz)

@@ -20,6 +20,10 @@ class QuizType extends AbstractType
 			'phys' => 'Physique', 
 			'hist' => 'Histoire'
 		);
+		$accesChoices=array(
+			'public'=>'public',
+			'privé'=>'privé'
+		);
 		$largeurChamps = array('style'=> 'width: 200px');
 		
         $builder
@@ -45,9 +49,10 @@ class QuizType extends AbstractType
 			))
         ;
 		
-		if ($options['user'] == null) {
-			$builder->add('author','text', array(
-				'label' => 'Auteur du quiz', 
+		if ($options['user'] != null) {
+			$builder->add('acces','choice', array(
+				'choices' => $accesChoices,
+				'label' => 'Acces', 
 				'attr' => $largeurChamps
 			));
 		}

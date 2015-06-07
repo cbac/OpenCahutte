@@ -82,6 +82,9 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
+		$idAuteur=$quiz->getAuthor();
+		$userManager = $this->get('fos_user.user_manager');
+		$auteur = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
 		
 		$statReponse= new ReponseQuestion();
 		$class=array("btn btn-primary","btn btn-success","btn btn-warning","btn btn-danger");
@@ -106,6 +109,7 @@ class DefaultController extends Controller
 		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
 			'quiz'  => $quiz,
 			'reponse'	=> $statReponse,
+			'auteur' => $auteur,
 			'form' => array (
 				$form[0]->createView(),
 				$form[1]->createView(),
