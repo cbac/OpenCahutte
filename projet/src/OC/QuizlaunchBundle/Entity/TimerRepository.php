@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class TimerRepository extends EntityRepository
 {
+	
+	public function getByGamepin($gamepin) {
+	
+		$qb = $this->createQueryBuilder('t')
+			->where('t.gamepin = :gamepin')
+				->setParameter('gamepin', $gamepin)
+		;
+		
+		return $qb
+		  ->getQuery()
+		  ->getResult()
+		;
+	
+	}
 }
