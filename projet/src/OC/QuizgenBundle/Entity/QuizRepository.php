@@ -16,7 +16,7 @@ class QuizRepository extends EntityRepository
 	
 		$qb = $this->createQueryBuilder('q')
 			->where('q.id=:id')
-			->setParameter('id', $id)
+				->setParameter('id', $id)
 		;
 
 
