@@ -31,7 +31,7 @@ fos_user_security_check:
     pattern:  /login_check/
     defaults: { _controller: FOSUserBundle:Security:check }
 fos_user_security_logout:
-    pattern:  /logout
+    pattern:  /logout/
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 user_remove:
