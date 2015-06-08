@@ -15,3 +15,12 @@ oc_quizlaunch_question:
         id:   \d+
         gamepin:   \d+
         idq:   \d+
+
+oc_quizlaunch_score:
+    path:     /score/{id}/{gamepin}/{idq}
+    defaults: { _controller: OCQuizlaunchBundle:Default:resQuestion }
+    requirements:
+        id:   \d+
+        gamepin:   \d+
+        idq:   \d+
+
