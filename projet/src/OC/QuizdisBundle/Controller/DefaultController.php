@@ -5,6 +5,7 @@ namespace OC\QuizdisBundle\Controller;
 use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
+use OC\QuizlaunchBundle\Entity\Session;
 
 use OC\QuizdisBundle\Form\PlayType;
 
@@ -23,7 +24,6 @@ class DefaultController extends Controller
 
 		$form = $this->createFormBuilder()
 			->add('gamepin', 'integer', array(
-				'label' => ' Entrer le Gamepin', 
 				'attr' => array(
 					'style'=> $largeurChamps,
 				)
@@ -42,10 +42,6 @@ class DefaultController extends Controller
 		$data = $form->getData();
 
 		if ($form->isValid()) {
-			// Les données sont un tableau avec la clé gamepin
-			
-			
-			// si le quiz d'id gamepin n'existe pas, erreur
 			$em = $this->getDoctrine()->getManager();
 			$quiz = $em
 				->getRepository('OCQuizlaunchBundle:Timer')
@@ -55,10 +51,44 @@ class DefaultController extends Controller
 				throw new NotFoundHttpException("Le quiz d'id ".$data['gamepin']." n'existe pas.");
 			}
 			
-			return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $data['gamepin'])));
+			return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array('gamepin' => $data['gamepin'])));
 		}
 		
 		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
+			'form' => $form->createView(),
+		));
+	}
+	
+	public function pseudoAction(Request $request, $gamepin)
+	{
+		$largeurChamps = 'width: 200px';
+		$form = $this->createFormBuilder()
+			->add('pseudojoueur', 'text', array(
+				'attr' => array(
+					'style'=> $largeurChamps,
+				)
+			))
+			->add('save', 'submit', array(
+				'label' => 'GO !', 
+				'attr' => array(
+					'style'=> $largeurChamps,
+					'class'=> 'btn btn-primary'
+				)
+			))
+			->getForm();
+		$form->handleRequest($request);
+		$data = $form->getData();
+		if ($form->isValid()) {
+			$session = new Session();
+			$session->setQuizid(0);
+			$session->setIdq(0);
+			$session->setGamepin($gamepin);
+			$session->setIdcreateur($this->getUser());
+			$session->setNomjoueur($data['pseudojoueur']);
+			
+			return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
+		}
+		return $this->render('OCQuizdisBundle:Default:pseudo.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}

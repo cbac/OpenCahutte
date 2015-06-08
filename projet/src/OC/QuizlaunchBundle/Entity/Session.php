@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\SessionRepository")
+ * @OCQuizlaunchAssert\VerifPseudoUnique
  */
 class Session
 {

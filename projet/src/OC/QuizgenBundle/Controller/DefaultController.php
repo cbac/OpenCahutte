@@ -18,11 +18,8 @@ class DefaultController extends Controller
 	
 	public function addAction(Request $request)
 	{
-	
-		// On crée un objet Quiz
 		$quiz = new Quiz();
 		
-		// On crée le FormBuilder grâce au service form factory
 		$form = $this->createForm(new QuizType(), $quiz, array('user' => $this->getUser()));
 		
 		if($request->isMethod('POST')) {
