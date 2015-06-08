@@ -7,6 +7,7 @@ use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
 use OC\QuizlaunchBundle\Entity\Session;
 
+use OC\QuizdisBundle\Form\PseudoType;
 use OC\QuizdisBundle\Form\PlayType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -61,32 +62,26 @@ class DefaultController extends Controller
 	
 	public function pseudoAction(Request $request, $gamepin)
 	{
-		$largeurChamps = 'width: 200px';
-		$form = $this->createFormBuilder()
-			->add('pseudojoueur', 'text', array(
-				'attr' => array(
-					'style'=> $largeurChamps,
-				)
-			))
-			->add('save', 'submit', array(
-				'label' => 'GO !', 
-				'attr' => array(
-					'style'=> $largeurChamps,
-					'class'=> 'btn btn-primary'
-				)
-			))
-			->getForm();
-		$form->handleRequest($request);
-		$data = $form->getData();
-		if ($form->isValid()) {
-			$session = new Session();
+		$session = new Session();
+		
+		$form = $this->createForm(new PseudoType(), $session);
+		
+		if($request->isMethod('POST')) {
 			$session->setQuizid(0);
 			$session->setIdq(0);
 			$session->setGamepin($gamepin);
-			$session->setIdcreateur($this->getUser());
-			$session->setNomjoueur($data['pseudojoueur']);
+			$session->setIdcreateur(0);
+			$session->setPointqx(0);
 			
-			return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
+			$form->handleRequest($request);
+			
+			if ($form->isValid()) {				
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($session);
+				$em->flush();
+				
+				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
+			}
 		}
 		return $this->render('OCQuizdisBundle:Default:pseudo.html.twig', array(
 			'form' => $form->createView(),
@@ -126,7 +121,7 @@ class DefaultController extends Controller
 			$idRep=ord($rep) - 65;
 			
 			$statReponse->setGamepin($gamepin);
-			$statReponse->setUser(8);
+			$statReponse->setUser(8); /// ??????????????????????????????
 			
 			$form[$idRep]->handleRequest($request);
 			

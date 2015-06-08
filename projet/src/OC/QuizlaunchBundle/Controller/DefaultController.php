@@ -210,7 +210,7 @@ class DefaultController extends Controller
 			$session[$i]->setGamepin($reponseQuestionTimer->getGamepin());
 			$session[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
 			$session[$i]->setIdcreateur(0);
-			$session[$i]->setIdjoueur($reponseQuestionTimer->getUser());
+			$session[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
 			$session[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
 		
 			$reponseDonnee = $reponseQuestionTimer->getReponseDonnee();

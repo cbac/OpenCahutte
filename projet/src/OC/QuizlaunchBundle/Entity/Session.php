@@ -52,9 +52,9 @@ class Session
     private $idcreateur;
 
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="string", length=255)
      */
-    private $idjoueur;
+    private $pseudojoueur;
 
     /**
      * @var integer
@@ -233,5 +233,28 @@ class Session
     public function getIdjoueur()
     {
         return $this->idjoueur;
+    }
+
+    /**
+     * Set pseudojoueur
+     *
+     * @param integer $pseudojoueur
+     * @return Session
+     */
+    public function setPseudojoueur($pseudojoueur)
+    {
+        $this->pseudojoueur = $pseudojoueur;
+
+        return $this;
+    }
+
+    /**
+     * Get pseudojoueur
+     *
+     * @return integer 
+     */
+    public function getPseudojoueur()
+    {
+        return $this->pseudojoueur;
     }
 }

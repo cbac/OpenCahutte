@@ -19,18 +19,15 @@ class VerifPseudoUniqueValidator extends ConstraintValidator
 		$this->em           = $em;
 	}
   
-	public function validate($reponseQuestion, Constraint $constraint)
+	public function validate($session, Constraint $constraint)
 	{
-		
-		$sessionjoueur = $em
+		$sessionjoueur = $this->em
 			->getRepository('OCQuizlaunchBundle:Session')
-			->findByGamepin($data['gamepin'])
 			->findBy(
-				array('gamepin'=>$data['gamepin'], 'idq'=>0, 'pseudojoueur'=$data['pseudojoueur'] )
+				array('gamepin'=>$session->getGamepin(), 'idq'=>0, 'pseudojoueur'=>$session->getPseudojoueur() )
 			)
 		;
-			
-		if ($sessionjoueur == null)
+		if ($sessionjoueur != null)
 			$this->context->addViolation(" Pseudo déjà utilisé");
 	}
 }
