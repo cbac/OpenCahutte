@@ -3,6 +3,7 @@
 namespace OC\QuizdisBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ReponseQuestionRepository
@@ -23,6 +24,39 @@ class ReponseQuestionRepository extends EntityRepository
 				->setParameter('hfin', $hfin)
 			->andWhere('r.time > :hdebut')
 				->setParameter('hdebut', $hdebut)
+		;
+		
+		return $qb
+		  ->getQuery()
+		  ->getResult()
+		;
+	
+	}
+	
+	public function getByGamepin($gamepin) {
+	
+		$qb = $this->createQueryBuilder('r')
+			->where('r.gamepin = :gamepin')
+				->setParameter('gamepin', $gamepin)
+		;
+		
+		return $qb
+		  ->getQuery()
+		  ->getResult()
+		;
+	
+	}
+	
+	
+	public function getReponseQuestionTimer($gamepin, $question) {
+	
+		$qb = $this->createQueryBuilder('rq')
+			->join('rq.timer', 't')
+			->addselect('t')
+			->where('rq.gamepin = :gamepin')
+				->setParameter('gamepin', $gamepin)
+			->andWhere('t.question = :question')
+				->setParameter('question', $question)
 		;
 		
 		return $qb
