@@ -51,11 +51,9 @@ class Session
     private $idcreateur;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nomjoueur", type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
-    private $nomjoueur;
+    private $idjoueur;
 
     /**
      * @var integer
@@ -211,5 +209,28 @@ class Session
     public function getPointqx()
     {
         return $this->pointqx;
+    }
+
+    /**
+     * Set idjoueur
+     *
+     * @param integer $idjoueur
+     * @return Session
+     */
+    public function setIdjoueur($idjoueur)
+    {
+        $this->idjoueur = $idjoueur;
+
+        return $this;
+    }
+
+    /**
+     * Get idjoueur
+     *
+     * @return integer 
+     */
+    public function getIdjoueur()
+    {
+        return $this->idjoueur;
     }
 }
