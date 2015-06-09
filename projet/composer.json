@@ -6,8 +6,24 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
+"repositories": [  
+        {  
+            "type": "package",  
+            "package": {  
+                "name": "jquery/jquery",  
+                "version": "2.1.1",  
+                "source":{  
+                    "url":"https://github.com/jquery/jquery.git",  
+                    "type":"git",  
+                    "reference":"2.1.1"  
+                }  
+            }  
+        }  
+    ],
+
     "require": {
-        "php": ">=5.3.3",
+        "jquery/jquery": "2.*",
+	"php": ">=5.3.3",
         "symfony/symfony": "2.6.*",
 	"friendsofsymfony/user-bundle": "dev-master",
 	"hwi/oauth-bundle": "0.4.*@dev",
@@ -28,6 +44,7 @@
         "sensio/generator-bundle": "~2.3"
     },
     "scripts": {
+        "pre-install-cmd":  "cd vendor/jquery/jquery && npm install -g grunt-cli",
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
         ],
@@ -38,7 +55,9 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "cd vendor/jquery/jquery && npm install",  
+            "cd vendor/jquery/jquery && grunt dist:../../../app/Resources/public/js/"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -47,7 +66,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "cd vendor/jquery/jquery && grunt dist:../../../app/Resources/public/js/"
         ]
     },
     "config": {

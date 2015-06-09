@@ -5,12 +5,29 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
+ 
 {% block ocquizgen_body %}
+<table style="width: 810px">
 
-  <h2>Q.{{ idq }} : {{ texte }}</h2> 
-  
-  
-  
+	<tr>
+	
+		<td style="width: 90%">  <h2>Q.{{ idq }} : {{ texte }}</h2><br> </td>
+		<td>
+	
+			 {% javascripts '@OCQuizlaunchBundle/Resources/public/js/countdown_v5.0/countdown.js' %}
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+
+			<script>
+			var myCountdown1 = new Countdown({time:20, width:"100", rangeHi:"second", hideLabels:"true"});
+			</script>  
+
+			{% endjavascripts %} 
+			<br><br>
+			
+		</td>
+	</tr>
+</table>
+			
   {# if question.idq is defined #}
 		
 	<table>	
@@ -28,23 +45,12 @@
 	</table>
 		
 	  
+<br><br><div align="right">
 
-		{# endif #}
-		{#
-<?php
-  var newYear = new Date(); 
-newYear = new Date(newYear.getFullYear() + 1, 1 - 1, 1); 
-$('#defaultCountdown').countdown({until: $date}); 
- 
-$('#removeCountdown').click(function() { 
-    var destroy = $(this).text() === 'Remove'; 
-    $(this).text(destroy ? 'Re-attach' : 'Remove'); 
-    $('#defaultCountdown').countdown(destroy ? 'destroy' : {until: $date}); 
-});
-
-?>
- 
-  #}<br><br><div align="right">
+{#
+<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1, 'idcreateur' : idcreateur}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+#}
+<br><br><div align="right">
 
 <a href="{{ path('oc_quizlaunch_score', {'id': id, 'gamepin' : gamepin, 'idq': idq}) }}" class="btn btn-default btn-lg">Scores   <i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>

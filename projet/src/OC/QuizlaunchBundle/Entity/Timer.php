@@ -35,6 +35,12 @@ class Timer
      */
     private $quizid;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idcreateur", type="integer")
+     */
+    private $idcreateur;
     
 
     /**
@@ -182,5 +188,28 @@ class Timer
     public function getHdebut()
     {
         return $this->hdebut;
+    }
+
+    /**
+     * Set idcreateur
+     *
+     * @param integer $idcreateur
+     * @return Timer
+     */
+    public function setIdcreateur($idcreateur)
+    {
+        $this->idcreateur = $idcreateur;
+
+        return $this;
+    }
+
+    /**
+     * Get idcreateur
+     *
+     * @return integer 
+     */
+    public function getIdcreateur()
+    {
+        return $this->idcreateur;
     }
 }
