@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use OC\QuizlaunchBundle\Validator as OCQuizlaunchAssert;
 
 /**
- * Session
+ * PointQuestion
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\SessionRepository")
+ * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\PointQuestionRepository")
  * @OCQuizlaunchAssert\VerifPseudoUnique
  */
-class Session
+class PointQuestion
 {
     /**
      * @var integer
@@ -78,7 +78,7 @@ class Session
      * Set quizid
      *
      * @param integer $quizid
-     * @return Session
+     * @return PointQuestion
      */
     public function setQuizid($quizid)
     {
@@ -101,7 +101,7 @@ class Session
      * Set idq
      *
      * @param integer $idq
-     * @return Session
+     * @return PointQuestion
      */
     public function setIdq($idq)
     {
@@ -124,7 +124,7 @@ class Session
      * Set gamepin
      *
      * @param integer $gamepin
-     * @return Session
+     * @return PointQuestion
      */
     public function setGamepin($gamepin)
     {
@@ -147,7 +147,7 @@ class Session
      * Set idcreateur
      *
      * @param integer $idcreateur
-     * @return Session
+     * @return PointQuestion
      */
     public function setIdcreateur($idcreateur)
     {
@@ -170,7 +170,7 @@ class Session
      * Set nomjoueur
      *
      * @param string $nomjoueur
-     * @return Session
+     * @return PointQuestion
      */
     public function setNomjoueur($nomjoueur)
     {
@@ -193,7 +193,7 @@ class Session
      * Set pointqx
      *
      * @param integer $pointqx
-     * @return Session
+     * @return PointQuestion
      */
     public function setPointqx($pointqx)
     {
@@ -216,7 +216,7 @@ class Session
      * Set idjoueur
      *
      * @param integer $idjoueur
-     * @return Session
+     * @return PointQuestion
      */
     public function setIdjoueur($idjoueur)
     {
@@ -239,7 +239,7 @@ class Session
      * Set pseudojoueur
      *
      * @param integer $pseudojoueur
-     * @return Session
+     * @return PointQuestion
      */
     public function setPseudojoueur($pseudojoueur)
     {

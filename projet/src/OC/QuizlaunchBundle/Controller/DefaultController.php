@@ -282,19 +282,33 @@ class DefaultController extends Controller
      
     public function showfinalAction($gamepin,$quiz,$idcreateur){
     
-    $session = new Session(); 
-    
-    $repository = $this
-		->getDoctrine()
-		->getManager()
-		->getRepository('OCQuizlaunchBundle:Session')
-		  ;
+      $sessions = new Session(); 
       
-    $session = $repository->getQbyIdq($gamepin); 
-    dump($session);
-    
-    
-    
+      $stats = new Stats(); 
+      
+      $repository = $this
+		  ->getDoctrine()
+		  ->getManager()
+		  ->getRepository('OCQuizlaunchBundle:Session')
+		    ;
+	
+       // récupérer toutes les sessions associées au gamepin
+
+      $session = $repository->getSessionByGamepin($gamepin); 
+      dump($session);
+      
+      
+      // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
+      
+      foreach ( ){
+      
+      
+      }
+      
+      
+      return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
+
+      ));
     
     }
     

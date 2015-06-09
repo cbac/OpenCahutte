@@ -17,7 +17,7 @@ oc_quizlaunch_question:
         idcreateur: \d+
         idq:   \d+
 
-oc_quizlaunch_index_stats:
+oc_quizlaunch_stats:
     path:     /stats/{id}/{gamepin}/{idcreateur}/
     defaults: { _controller: OCQuizlaunchBundle:Default:showfinal }
     requirements:
