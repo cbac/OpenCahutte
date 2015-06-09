@@ -71,7 +71,6 @@ class DefaultController extends Controller
 			$pointQuestion->setQuizid(0);
 			$pointQuestion->setIdq(0);
 			$pointQuestion->setGamepin($gamepin);
-			$pointQuestion->setIdcreateur(0);
 			$pointQuestion->setPointqx(0);
 			
 			$form->handleRequest($request);

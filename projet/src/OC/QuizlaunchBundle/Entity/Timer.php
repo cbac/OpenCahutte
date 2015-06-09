@@ -35,14 +35,6 @@ class Timer
      */
     private $quizid;
 
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idcreateur", type="integer")
-     */
-    private $idcreateur;
-    
-
     /**
      * @var integer
      *
