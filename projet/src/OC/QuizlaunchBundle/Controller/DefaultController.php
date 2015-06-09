@@ -8,7 +8,9 @@ use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Entity\QCM;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
 use OC\QuizlaunchBundle\Entity\Timer;
-use OC\QuizlaunchBundle\Entity\Session;
+use OC\QuizlaunchBundle\Entity\PointQuestion;
+use OC\QuizlaunchBundle\Entity\Stats;
+
 
 //use OC\QuizdisBundle\Form\PlayType;
 
@@ -280,29 +282,36 @@ class DefaultController extends Controller
     }
     
      
-    public function showfinalAction($gamepin,$quiz,$idcreateur){
+    public function showfinalAction($gamepin,$idcreateur){
     
-      $sessions = new Session(); 
+      //$idquiz = 1; 
+      
+      $pointsQ = new PointQuestion(); 
       
       $stats = new Stats(); 
       
       $repository = $this
 		  ->getDoctrine()
 		  ->getManager()
-		  ->getRepository('OCQuizlaunchBundle:Session')
+		  ->getRepository('OCQuizlaunchBundle:PointQuestion')
 		    ;
 	
        // récupérer toutes les sessions associées au gamepin
 
-      $session = $repository->getSessionByGamepin($gamepin); 
-      dump($session);
+      $pointsQ = $repository->getSessionByGamepin($gamepin); 
+      dump($pointsQ);
       
       
       // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
       
-      foreach ( ){
+      foreach ( $pointsQ as $pseudojoueur ){
       
-      
+	/*foreach ( $pointsQ->getPointsqxByPseudojoueur() ){
+	
+	
+	
+	}*/
+	      
       }
       
       

@@ -15,21 +15,19 @@ class SessionRepository extends EntityRepository
 {
 
 
-      public function getSessionByGamepin($gamepin) {
+      public function getPointsQuestionByGamepin($gamepin) {
 	      
-		      $session = $this->createQueryBuilder('s')
+		      $pointsq = $this->createQueryBuilder('s')
 			      ->where('s.gamepin=:gamepin')
 			      ->setParameter('gamepin', $gamepin)
 			     
 		      ;
 
-		      return $session
+		      return $pointsq
 			->getQuery()
 			->getResult()
 		      ;
 	      
 	      }
-
-
-
+	      
 }

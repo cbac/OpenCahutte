@@ -27,10 +27,10 @@ oc_quizlaunch_stats:
     
 
 oc_quizlaunch_score:
-    path:     /score/{id}/{gamepin}/{idq}
+    path:     /score/{idquiz}/{gamepin}/{idq}
     defaults: { _controller: OCQuizlaunchBundle:Default:resQuestion }
     requirements:
-        id:   \d+
+        idquiz:   \d+
         gamepin:   \d+
         idq:   \d+
 
