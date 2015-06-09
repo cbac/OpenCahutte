@@ -9,23 +9,33 @@
 {% endfor %}
 
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-
+<table>
+  <tr>
     {{ form_errors(form.email) }}
-    <label for="fos_user_registration_form_email">Adresse e-mail :</label>
-    <input id="fos_user_registration_form_email" type="text" name="fos_user_registration_form[email]" value=""{{ form.vars.value.email }}"" required="required" /><br><br>
-    
+    <td height="40px" width="200px"><label for="fos_user_registration_form_email">Adresse e-mail :</label>
+    <td height="40px" width="200px"><input id="fos_user_registration_form_email" type="text" name="fos_user_registration_form[email]" value=""{{ form.vars.value.email }}"" required="required" /><br><br>
+  </tr> 
+   
+  <tr> 
     {{ form_errors(form.username) }}
-    <label for="fos_user_registration_form_username">Nom d'utilisateur :</label>
-    <input type="text" id="fos_user_registration_form_username" name="fos_user_registration_form[username]" value="{{ form.vars.value.username }}" required="required" /><br><br>
-    
+    <td height="40px" width="200px"><label for="fos_user_registration_form_username">Nom d'utilisateur :</label></td>
+    <td height="40px" width="200px"><input type="text" id="fos_user_registration_form_username" name="fos_user_registration_form[username]" value="{{ form.vars.value.username }}" required="required" /></td><br><br>
+  </tr>
+  
+  <tr>  
     {{ form_errors(form.plainPassword.first) }}
-    <label for="fos_user_registration_form_plainPassword_first">Mot de passe :</label>
-    <input id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]"/><br><br>
-
+    <td height="40px" width="200px"><label for="fos_user_registration_form_plainPassword_first">Mot de passe :</label></td>
+    <td height="40px" width="200px"><input id="fos_user_registration_form_plainPassword_first" type="password" required="required" name="fos_user_registration_form[plainPassword][first]"/></td><br><br>
+  </tr>
+  
+  <tr>  
     {{ form_errors(form.plainPassword.second) }}
-    <label for="fos_user_registration_form_plainPassword_second">Vérification :</label>
-    <input id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]"/><br><br>
-
+    <td height="40px" width="200px"><label for="fos_user_registration_form_plainPassword_second">Vérification :</label></td>
+    <td height="40px" width="200px"><input id="fos_user_registration_form_plainPassword_second" type="password" required="required" name="fos_user_registration_form[plainPassword][second]"/></td><br><br>
+  </tr>
+  
+</table>    
+    
     {{ form_widget(form._token) }}
     
       
