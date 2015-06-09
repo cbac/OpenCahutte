@@ -54,26 +54,20 @@ class DefaultController extends Controller
 	
 	$name = $quiz->getNom();
 	
-	
-	
-	// Récupérer l'id de l'utilisateur qui a lancé la session de quiz
-	$userManager = $this->get('fos_user.user_manager'); 
-	$utilisateur = $this->container->get('security.context')->getToken()->getUser();
-	if ($utilisateur == "anon.")
-		$idcreateur = 0;
-	else
-		$idcreateur = $utilisateur->getId(); 
 		
 			
       /* gamepin ajouté dans la BD pour permettre la connexion des joueurs */
       $gamepin =  rand ( 1 , 999999 ); 
+
+	  $session = $request->getSession();
+	  $session->set('creatorGamepin', $gamepin);
+	  
       $timer = new Timer;
       $timer->setGamepin($gamepin);
       $timer->setQuizId($id);
       $timer->setQuestion(0);
       $timer->setHfin(0);
       $timer->setHdebut(0);
-      $timer->setIdcreateur($idcreateur);
 
       $em = $this->getDoctrine()->getManager();
       $em->persist($timer);
@@ -89,220 +83,217 @@ class DefaultController extends Controller
 		return $this->render('OCQuizlaunchBundle:Default:pick.html.twig', array(
 			'id'  => $id,
 			'gamepin' => $gamepin,
-			'name' => $name,
-			'idcreateur' => $idcreateur
+			'name' => $name
 		));
 	
     
     }
 
-    public function launchquestionAction($id,$gamepin,$idq, $idcreateur, Request $request){
+    public function launchquestionAction($id,$gamepin,$idq, Request $request){
     
-      
-    
-             
-		$em = $this->getDoctrine()->getManager();
-		$quiz = $em
-			->getRepository('OCQuizgenBundle:Quiz')
-			->find($id)
-		;
- 	
- 	
- 	
-		$question = $this
-			->getDoctrine()
-			->getManager()
-			->getRepository('OCQuizgenBundle:QCM')
-			->getQbyIdq($idq,$id)
-		;
-      
- 	
-		 /* $QCM=$quiz->getQCMs()->get($q);
-			if (null === $QCM) {
-				throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
-			}
-			*/
+		$session = $request->getSession();
+		if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {
 		
-		$nbqTot = $quiz->getNbQuestions();
+			$em = $this->getDoctrine()->getManager();
+			$quiz = $em
+				->getRepository('OCQuizgenBundle:Quiz')
+				->find($id)
+			;
 		
-      	if ( $idq <= $nbqTot ) {
+			$question = $this
+				->getDoctrine()
+				->getManager()
+				->getRepository('OCQuizgenBundle:QCM')
+				->getQbyIdq($idq,$id)
+			;
+		  
+		
+			 /* $QCM=$quiz->getQCMs()->get($q);
+				if (null === $QCM) {
+					throw new NotFoundHttpException("La question d'id ".$q." n'existe pas.");
+				}
+				*/
+			
+			$nbqTot = $quiz->getNbQuestions();
+			
+			if ( $idq <= $nbqTot ) {
 
-			//if (null !=  $repository->getQbyIdq($idq,$id)){
+				//if (null !=  $repository->getQbyIdq($idq,$id)){
 
-				
-				$texte = $question[0]->getQuestion();
-				
-				   // timer
-				  $hdebut = time();
-				  $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
-				  
-				  $timer = new Timer;
-				  $timer->setHdebut($hdebut);
-				  $timer->setHfin($hfin);
-				  $timer->setGamepin($gamepin);
-				  $timer->setQuizId($id);
-				  $timer->setQuestion($idq);
-				  $timer->setIdcreateur($idcreateur);
-				  
-				// On récupère l'EntityManager
-				  $em = $this->getDoctrine()->getManager();
-
-				  // Étape 1 : On « persiste » l'entité
-				  $em->persist($timer);
-
-				  // Étape 2 : On « flush » tout ce qui a été persisté avant
-				  $em->flush();
-
-				  if ($request->isMethod('POST')) {
-					$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
-				  }
-				  
-				  // si idq == nbquestion
-				  
-				  // afficher horloge
-				  $date = 20;
 					
-				  return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array(
-				  'quiz' => $quiz,
-				  'idq' => $idq,
-				  'gamepin' => $gamepin,
-				  'id' => $id,
-				  'texte' => $texte,
-				  'question' => $question[0],
-				  'idcreateur' => $idcreateur
-				  ));
-			}  
-      /*else {
-      return $this->render('OCQuizlaunchBundle:Default:index.html.twig');
-      
-      }*/
+					$texte = $question[0]->getQuestion();
+					
+					   // timer
+					  $hdebut = time();
+					  $hfin = $hdebut +20; // on pose le temps de réponse à une question de 20s
+					  
+					  $timer = new Timer;
+					  $timer->setHdebut($hdebut);
+					  $timer->setHfin($hfin);
+					  $timer->setGamepin($gamepin);
+					  $timer->setQuizId($id);
+					  $timer->setQuestion($idq);
+					  
+					// On récupère l'EntityManager
+					  $em = $this->getDoctrine()->getManager();
+
+					  // Étape 1 : On « persiste » l'entité
+					  $em->persist($timer);
+
+					  // Étape 2 : On « flush » tout ce qui a été persisté avant
+					  $em->flush();
+
+					  if ($request->isMethod('POST')) {
+						$request->getSession()->getFlashBag()->add('notice', 'Début de la question.');
+					  }
+					  
+					  // si idq == nbquestion
+					  
+					  // afficher horloge
+					  $date = 20;
+						
+					  return $this->render('OCQuizlaunchBundle:Default:launch.html.twig', array(
+					  'quiz' => $quiz,
+					  'idq' => $idq,
+					  'gamepin' => $gamepin,
+					  'id' => $id,
+					  'texte' => $texte,
+					  'question' => $question[0]
+					  ));
+				}  
+		  /*else {
+		  return $this->render('OCQuizlaunchBundle:Default:index.html.twig');
 		  
-		else /*( $idq == $nbqTot+1 )*/ {
-		
-		  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
-		    'gamepin' => $gamepin,
-		    'quiz' => $quiz,
-		    'idcreateur' => $idcreateur
-		    )); 
-		  
+		  }*/
+			  
+			else /*( $idq == $nbqTot+1 )*/ {
+			
+			  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
+				'gamepin' => $gamepin,
+				'quiz' => $quiz
+				)); 
+			  
+			}
 		}
+		
+		else
+			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
 	}
 	
 	
 	
 	
 	public function resQuestionAction($id, $idq, $gamepin, Request $request) {
-		
-		$em = $this->getDoctrine()->getManager();
-		
-		$reponsesQuestionsTimers = $em
-			->getRepository('OCQuizdisBundle:ReponseQuestion')
-			->getReponseQuestionTimer($gamepin, $idq)
-		;		
-		
-		$QCMs = $em
-			->getRepository('OCQuizgenBundle:Quiz')
-			->find($id)
-			->getQCMs()
-		;
-
-		$qcm = $QCMs
-			->get($idq-1)
-		;		
-
-
-		$qcm0 = $em
-			->getRepository('OCQuizlaunchBundle:PointQuestion')
-			->findBy(array('gamepin'=>$gamepin, 'idq'=>0))
-		;		
-		
-		
-		
-		
-		dump($qcm0);
-		
-		
-		
-		
-		$nbJoueurs = 0;
-		$allPlayers = array();
-		
-		foreach ($qcm0 as $ligne) {
-			$allPlayers[$nbJoueurs] = $qcm0[$nbJoueurs]->getPseudoJoueur();
-			$nbJoueurs ++;
-		}
-
-		
-		$i = 0;
-		$pseudos = array();
-		
-		foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
+		$session = $request->getSession();
+		if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {
+			$em = $this->getDoctrine()->getManager();
 			
-			$pseudos[$i] = $reponseQuestionTimer->getUser();
+			$reponsesQuestionsTimers = $em
+				->getRepository('OCQuizdisBundle:ReponseQuestion')
+				->getReponseQuestionTimer($gamepin, $idq)
+			;		
 			
-			$pointQuestion[$i] = new PointQuestion();
-			$em->persist($pointQuestion[$i]);
-			$pointQuestion[$i]->setGamepin($reponseQuestionTimer->getGamepin());
-			$pointQuestion[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
-			$pointQuestion[$i]->setIdcreateur(0);
-			$pointQuestion[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
-			$pointQuestion[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
-		
-			$reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
+			$QCMs = $em
+				->getRepository('OCQuizgenBundle:Quiz')
+				->find($id)
+				->getQCMs()
+			;
 
+			$qcm = $QCMs
+				->get($idq-1)
+			;		
+
+
+			$qcm0 = $em
+				->getRepository('OCQuizlaunchBundle:PointQuestion')
+				->findBy(array('gamepin'=>$gamepin, 'idq'=>0))
+			;		
 			
-			$reponseJuste = false;
-			if(($reponseDonnee == 'A' && $qcm->getJuste1())
-					|| ($reponseDonnee == 'B' && $qcm->getJuste2())
-					|| ($reponseDonnee == 'C' && $qcm->getJuste3())
-					|| ($reponseDonnee == 'D' && $qcm->getJuste4())
-			){
-				$reponseJuste = true;
+			
+			
+			
+			dump($qcm0);
+			
+			
+			
+			
+			$nbJoueurs = 0;
+			$allPlayers = array();
+			
+			foreach ($qcm0 as $ligne) {
+				$allPlayers[$nbJoueurs] = $qcm0[$nbJoueurs]->getPseudoJoueur();
+				$nbJoueurs ++;
 			}
+
 			
-			if($reponseJuste) {
-				$hfin = $reponseQuestionTimer->getTimer()->getHfin();
-				$hdebut = $reponseQuestionTimer->getTimer()->getHdebut();
-				$time = $reponseQuestionTimer->getTime();
-				$tempsDeReponse = $time - $hdebut;
-				$score = 500 - 400*$tempsDeReponse/($hfin - $hdebut);
+			$i = 0;
+			$pseudos = array();
+			
+			foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
 				
-				$pointQuestion[$i]->setPointqx($score);
-			} else
-				$pointQuestion[$i]->setPointqx(0);
-			
-			$em->flush($pointQuestion[$i]);
-			$i++;
-			
-		}
-		
-		foreach($allPlayers as $player) {
-			if (!in_array($player, $pseudos)) {
+				$pseudos[$i] = $reponseQuestionTimer->getUser();
+				
 				$pointQuestion[$i] = new PointQuestion();
 				$em->persist($pointQuestion[$i]);
-				$pointQuestion[$i]->setGamepin($gamepin);
-				$pointQuestion[$i]->setQuizid($id);
-				$pointQuestion[$i]->setIdcreateur(0);
-				$pointQuestion[$i]->setPseudojoueur($player);
-				$pointQuestion[$i]->setIdq($idq);	
-				$pointQuestion[$i]->setPointqx(0);
+				$pointQuestion[$i]->setGamepin($reponseQuestionTimer->getGamepin());
+				$pointQuestion[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
+				$pointQuestion[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
+				$pointQuestion[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
+			
+				$reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
+
+				
+				$reponseJuste = false;
+				if(($reponseDonnee == 'A' && $qcm->getJuste1())
+						|| ($reponseDonnee == 'B' && $qcm->getJuste2())
+						|| ($reponseDonnee == 'C' && $qcm->getJuste3())
+						|| ($reponseDonnee == 'D' && $qcm->getJuste4())
+				){
+					$reponseJuste = true;
+				}
+				
+				if($reponseJuste) {
+					$hfin = $reponseQuestionTimer->getTimer()->getHfin();
+					$hdebut = $reponseQuestionTimer->getTimer()->getHdebut();
+					$time = $reponseQuestionTimer->getTime();
+					$tempsDeReponse = $time - $hdebut;
+					$score = 500 - 400*$tempsDeReponse/($hfin - $hdebut);
+					
+					$pointQuestion[$i]->setPointqx($score);
+				} else
+					$pointQuestion[$i]->setPointqx(0);
+				
 				$em->flush($pointQuestion[$i]);
 				$i++;
+				
 			}
+			
+			foreach($allPlayers as $player) {
+				if (!in_array($player, $pseudos)) {
+					$pointQuestion[$i] = new PointQuestion();
+					$em->persist($pointQuestion[$i]);
+					$pointQuestion[$i]->setGamepin($gamepin);
+					$pointQuestion[$i]->setQuizid($id);
+					$pointQuestion[$i]->setPseudojoueur($player);
+					$pointQuestion[$i]->setIdq($idq);	
+					$pointQuestion[$i]->setPointqx(0);
+					$em->flush($pointQuestion[$i]);
+					$i++;
+				}
+			}
+
+		
+
+			return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
+					'id'  => $id,
+					'idq' => $idq,
+					'gamepin' => $gamepin,
+					'pointQuestion' => $pointQuestion
+				));
+	
 		}
-
-	
-
-		return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
-				'id'  => $id,
-				'idq' => $idq,
-				'gamepin' => $gamepin,
-				'pointQuestion' => $pointQuestion,
-				'idcreateur' => 0
-			));
-	
-		
-		
+		else
+			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
 	}
       
      
@@ -314,46 +305,51 @@ class DefaultController extends Controller
     }
     
      
-    public function showfinalAction($gamepin,$idcreateur){
+    public function showfinalAction($gamepin){
     
-      //$idquiz = 1; 
-      
-      $pointsQs = new PointQuestion(); 
-      
-      $stats = new Stats(); 
-      
-      $repository = $this
-		  ->getDoctrine()
-		  ->getManager()
-		  ->getRepository('OCQuizlaunchBundle:PointQuestion')
-		    ;
-	
-       // récupérer toutes les sessions associées au gamepin
+		$session = $request->getSession();
+		if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {
+			  //$idquiz = 1; 
+			  
+			  $pointsQs = new PointQuestion(); 
+			  
+			  $stats = new Stats(); 
+			  
+			  $repository = $this
+				  ->getDoctrine()
+				  ->getManager()
+				  ->getRepository('OCQuizlaunchBundle:PointQuestion')
+					;
+			
+			   // récupérer toutes les sessions associées au gamepin
 
-      $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
-      dump($pointsQs);
-      
-      // initialiser tableau 
-      
-      $allPlayers;
-      $pointsTot = 100; 
-      
-      
-      // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
-      
-      foreach ( $pointsQs as $pointsQ ){
-      
-	$pointsTot[$pointsQ->getPseudojoueur()]+= $pointsQ->getPointqx();
-	      
-      }
-      
-      
-      
-      return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
-			'pointsTot' => $pointsTot,
-			'allPlayers' => $allPlayers
-			 ));
+			  $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
+			  dump($pointsQs);
+			  
+			  // initialiser tableau 
+			  
+			  $allPlayers;
+			  $pointsTot = 100; 
+			  
+			  
+			  // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
+			  
+			  foreach ( $pointsQs as $pointsQ ){
+			  
+			$pointsTot[$pointsQ->getPseudojoueur()]+= $pointsQ->getPointqx();
+				  
+			  }
+			  
+			  
+			  
+			  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
+					'pointsTot' => $pointsTot,
+					'allPlayers' => $allPlayers
+					 ));
+			
+		}
+		else
+			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
     
-    }
-    
+	}
 }

@@ -45,13 +45,6 @@ class PointQuestion
     private $gamepin;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idcreateur", type="integer")
-     */
-    private $idcreateur;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $pseudojoueur;
