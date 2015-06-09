@@ -18,6 +18,13 @@ class ReponseQuestion
     {
         $this->time = time();
     }
+		
+	/**
+	 * @ORM\ManyToOne(targetEntity="OC\QuizlaunchBundle\Entity\Timer")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $timer;
+
  
 	/**
      * @ORM\Column(name="id", type="integer")
@@ -45,11 +52,6 @@ class ReponseQuestion
      * @ORM\Column(type="string", length=1)
      */
     private $reponseDonnee;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $question;
 	
     /**
      * Get id
@@ -154,24 +156,25 @@ class ReponseQuestion
     }
 
     /**
-     * Set question
+     * Set timer
      *
-     * @param integer $question
+     * @param \OC\QuizlaunchBundle\Entity\Timer $timer
      * @return ReponseQuestion
      */
-    public function setQuestion($question)
+    public function setTimer(\OC\QuizlaunchBundle\Entity\Timer $timer)
     {
-        $this->question = $question;
+        $this->timer = $timer;
+
         return $this;
     }
 
     /**
-     * Get question
+     * Get timer
      *
-     * @return integer 
+     * @return \OC\QuizlaunchBundle\Entity\Timer 
      */
-    public function getQuestion()
+    public function getTimer()
     {
-        return $this->question;
+        return $this->timer;
     }
 }

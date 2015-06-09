@@ -16,7 +16,7 @@ oc_quizlaunch_question:
         gamepin:   \d+
         idcreateur: \d+
         idq:   \d+
-        
+
 oc_quizlaunch_index_stats:
     path:     /stats/{id}/{gamepin}/{idcreateur}/
     defaults: { _controller: OCQuizlaunchBundle:Default:showfinal }
@@ -25,4 +25,13 @@ oc_quizlaunch_index_stats:
         gamepin:   \d+
         idcreateur: \d+
     
+
+oc_quizlaunch_score:
+    path:     /score/{id}/{gamepin}/{idq}
+    defaults: { _controller: OCQuizlaunchBundle:Default:resQuestion }
+    requirements:
+        id:   \d+
+        gamepin:   \d+
+        idq:   \d+
+
 

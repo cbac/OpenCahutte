@@ -6,7 +6,9 @@ namespace OC\QuizlaunchBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Entity\QCM;
+use OC\QuizdisBundle\Entity\ReponseQuestion;
 use OC\QuizlaunchBundle\Entity\Timer;
+use OC\QuizlaunchBundle\Entity\Session;
 
 //use OC\QuizdisBundle\Form\PlayType;
 
@@ -105,13 +107,12 @@ class DefaultController extends Controller
  	
  	
  	
-		$repository = $this
-		->getDoctrine()
-		->getManager()
-		->getRepository('OCQuizgenBundle:QCM')
-		  ;
-      
-		$question = $repository->getQbyIdq($idq,$id); dump($question);
+		$question = $this
+			->getDoctrine()
+			->getManager()
+			->getRepository('OCQuizgenBundle:QCM')
+			->getQbyIdq($idq,$id)
+		;
       
  	
 		 /* $QCM=$quiz->getQCMs()->get($q);
@@ -127,7 +128,7 @@ class DefaultController extends Controller
 			//if (null !=  $repository->getQbyIdq($idq,$id)){
 
 				
-				$texte = $question[0]->getQuestion(); dump($texte);
+				$texte = $question[0]->getQuestion();
 				
 				   // timer
 				  $hdebut = time();
@@ -183,6 +184,91 @@ class DefaultController extends Controller
 		    )); 
 		  
 		}
+	}
+	
+	
+	
+	
+	public function resQuestionAction($id, $idq, $gamepin, Request $request) {
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$reponsesQuestionsTimers = $this
+			->getDoctrine()
+			->getManager()
+			->getRepository('OCQuizdisBundle:ReponseQuestion')
+			->getReponseQuestionTimer($gamepin, $idq)
+		;		
+		
+		$QCMs = $em
+			->getRepository('OCQuizgenBundle:Quiz')
+			->find($id)
+			->getQCMs()
+		;
+		
+		$qcm = $QCMs
+			->get($idq-1)
+		;
+			
+
+			
+		dump($QCMs);
+		
+		
+		
+		$i = 0;
+		
+		foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
+			
+			$pseudos[$i] = $reponseQuestionTimer->getUser();
+			
+			$session[$i] = new Session();
+			$em->persist($session[$i]);
+			$session[$i]->setGamepin($reponseQuestionTimer->getGamepin());
+			$session[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
+			$session[$i]->setIdcreateur(0);
+			$session[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
+			$session[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
+		
+			$reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
+
+			
+			$reponseJuste = false;
+			if(($reponseDonnee == 'A' && $qcm->getJuste1())
+					|| ($reponseDonnee == 'B' && $qcm->getJuste2())
+					|| ($reponseDonnee == 'C' && $qcm->getJuste3())
+					|| ($reponseDonnee == 'D' && $qcm->getJuste4())
+			){
+				$reponseJuste = true;
+			}
+			
+			if($reponseJuste) {
+				$hfin = $reponseQuestionTimer->getTimer()->getHfin();
+				$hdebut = $reponseQuestionTimer->getTimer()->getHdebut();
+				$time = $reponseQuestionTimer->getTime();
+				$tempsDeReponse = $time - $hdebut;
+				$score = 500 - 400*$tempsDeReponse/($hfin - $hdebut);
+				
+				$session[$i]->setPointqx($score);
+			} else
+				$session[$i]->setPointqx(0);
+			dump($session);
+			
+			$em->flush($session[$i]);
+			$i++;
+			
+		}
+		
+
+	return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
+			'id'  => $id,
+			'idq' => $idq,
+			'gamepin' => $gamepin,
+			'session' => $session
+		));
+	
+		
+		
 	}
       
      

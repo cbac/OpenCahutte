@@ -5,7 +5,9 @@ namespace OC\QuizdisBundle\Controller;
 use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
+use OC\QuizlaunchBundle\Entity\Session;
 
+use OC\QuizdisBundle\Form\PseudoType;
 use OC\QuizdisBundle\Form\PlayType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,6 @@ class DefaultController extends Controller
 
 		$form = $this->createFormBuilder()
 			->add('gamepin', 'integer', array(
-				'label' => ' Entrer le Gamepin', 
 				'attr' => array(
 					'style'=> $largeurChamps,
 				)
@@ -42,10 +43,6 @@ class DefaultController extends Controller
 		$data = $form->getData();
 
 		if ($form->isValid()) {
-			// Les données sont un tableau avec la clé gamepin
-			
-			
-			// si le quiz d'id gamepin n'existe pas, erreur
 			$em = $this->getDoctrine()->getManager();
 			$quiz = $em
 				->getRepository('OCQuizlaunchBundle:Timer')
@@ -55,10 +52,38 @@ class DefaultController extends Controller
 				throw new NotFoundHttpException("Le quiz d'id ".$data['gamepin']." n'existe pas.");
 			}
 			
-			return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $data['gamepin'])));
+			return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array('gamepin' => $data['gamepin'])));
 		}
 		
 		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
+			'form' => $form->createView(),
+		));
+	}
+	
+	public function pseudoAction(Request $request, $gamepin)
+	{
+		$session = new Session();
+		
+		$form = $this->createForm(new PseudoType(), $session);
+		
+		if($request->isMethod('POST')) {
+			$session->setQuizid(0);
+			$session->setIdq(0);
+			$session->setGamepin($gamepin);
+			$session->setIdcreateur(0);
+			$session->setPointqx(0);
+			
+			$form->handleRequest($request);
+			
+			if ($form->isValid()) {				
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($session);
+				$em->flush();
+				
+				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
+			}
+		}
+		return $this->render('OCQuizdisBundle:Default:pseudo.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
@@ -96,7 +121,7 @@ class DefaultController extends Controller
 			$idRep=ord($rep) - 65;
 			
 			$statReponse->setGamepin($gamepin);
-			$statReponse->setUser(8);
+			$statReponse->setUser(8); /// ??????????????????????????????
 			
 			$form[$idRep]->handleRequest($request);
 			

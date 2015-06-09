@@ -3,12 +3,14 @@
 namespace OC\QuizlaunchBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OC\QuizlaunchBundle\Validator as OCQuizlaunchAssert;
 
 /**
  * Session
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\SessionRepository")
+ * @OCQuizlaunchAssert\VerifPseudoUnique
  */
 class Session
 {
@@ -50,11 +52,9 @@ class Session
     private $idcreateur;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nomjoueur", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
-    private $nomjoueur;
+    private $pseudojoueur;
 
     /**
      * @var integer
@@ -210,5 +210,51 @@ class Session
     public function getPointqx()
     {
         return $this->pointqx;
+    }
+
+    /**
+     * Set idjoueur
+     *
+     * @param integer $idjoueur
+     * @return Session
+     */
+    public function setIdjoueur($idjoueur)
+    {
+        $this->idjoueur = $idjoueur;
+
+        return $this;
+    }
+
+    /**
+     * Get idjoueur
+     *
+     * @return integer 
+     */
+    public function getIdjoueur()
+    {
+        return $this->idjoueur;
+    }
+
+    /**
+     * Set pseudojoueur
+     *
+     * @param integer $pseudojoueur
+     * @return Session
+     */
+    public function setPseudojoueur($pseudojoueur)
+    {
+        $this->pseudojoueur = $pseudojoueur;
+
+        return $this;
+    }
+
+    /**
+     * Get pseudojoueur
+     *
+     * @return integer 
+     */
+    public function getPseudojoueur()
+    {
+        return $this->pseudojoueur;
     }
 }
