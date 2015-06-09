@@ -195,9 +195,7 @@ class DefaultController extends Controller
 		
 		$em = $this->getDoctrine()->getManager();
 		
-		$reponsesQuestionsTimers = $this
-			->getDoctrine()
-			->getManager()
+		$reponsesQuestionsTimers = $em
 			->getRepository('OCQuizdisBundle:ReponseQuestion')
 			->getReponseQuestionTimer($gamepin, $idq)
 		;		
@@ -207,18 +205,36 @@ class DefaultController extends Controller
 			->find($id)
 			->getQCMs()
 		;
-		
+
 		$qcm = $QCMs
 			->get($idq-1)
 		;
-			
 
-			
-		dump($QCMs);
+
+		$qcm0 = $em
+			->getRepository('OCQuizlaunchBundle:PointQuestion')
+			->findBy(array('gamepin'=>$gamepin, 'idq'=>0))
+		;		
 		
 		
+		
+		
+		dump($qcm0);
+		
+		
+		
+		
+		$nbJoueurs = 0;
+		$allPlayers = array();
+		
+		foreach ($qcm0 as $ligne) {
+			$allPlayers[$nbJoueurs] = $qcm0[$nbJoueurs]->getPseudoJoueur();
+			$nbJoueurs ++;
+		}
+
 		
 		$i = 0;
+		$pseudos = array();
 		
 		foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
 			
@@ -260,14 +276,30 @@ class DefaultController extends Controller
 			
 		}
 		
+		foreach($allPlayers as $player) {
+			if (!in_array($player, $pseudos)) {
+				$pointQuestion[$i] = new PointQuestion();
+				$em->persist($pointQuestion[$i]);
+				$pointQuestion[$i]->setGamepin($gamepin);
+				$pointQuestion[$i]->setQuizid($id);
+				$pointQuestion[$i]->setIdcreateur(0);
+				$pointQuestion[$i]->setPseudojoueur($player);
+				$pointQuestion[$i]->setIdq($idq);	
+				$pointQuestion[$i]->setPointqx(0);
+				$em->flush($pointQuestion[$i]);
+				$i++;
+			}
+		}
 
-	return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
-			'id'  => $id,
-			'idq' => $idq,
-			'gamepin' => $gamepin,
-			'pointQuestion' => $pointQuestion,
-			'idcreateur' => 0
-		));
+	
+
+		return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
+				'id'  => $id,
+				'idq' => $idq,
+				'gamepin' => $gamepin,
+				'pointQuestion' => $pointQuestion,
+				'idcreateur' => 0
+			));
 	
 		
 		
