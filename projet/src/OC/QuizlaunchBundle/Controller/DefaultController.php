@@ -50,6 +50,15 @@ class DefaultController extends Controller
 		}
 	
 	$name = $quiz->getNom();
+	
+	
+	
+	// Récupérer l'id de l'utilisateur qui a lancé la session de quiz
+	$userManager = $this->get('fos_user.user_manager'); 
+	$utilisateur = $this->container->get('security.context')->getToken()->getUser();
+	
+	$idcreateur = $utilisateur->getId(); 
+	
 		
 			
       /* gamepin ajouté dans la BD pour permettre la connexion des joueurs */
@@ -60,6 +69,7 @@ class DefaultController extends Controller
       $timer->setQuestion(0);
       $timer->setHfin(0);
       $timer->setHdebut(0);
+      $timer->setIdcreateur($idcreateur);
 
       $em = $this->getDoctrine()->getManager();
       $em->persist($timer);
@@ -75,13 +85,14 @@ class DefaultController extends Controller
 		return $this->render('OCQuizlaunchBundle:Default:pick.html.twig', array(
 			'id'  => $id,
 			'gamepin' => $gamepin,
-			'name' => $name
+			'name' => $name,
+			'idcreateur' => $idcreateur
 		));
 	
     
     }
 
-    public function launchquestionAction($id,$gamepin,$idq, Request $request){
+    public function launchquestionAction($id,$gamepin,$idq, $idcreateur, Request $request){
     
       
     
@@ -128,6 +139,7 @@ class DefaultController extends Controller
 				  $timer->setGamepin($gamepin);
 				  $timer->setQuizId($id);
 				  $timer->setQuestion($idq);
+				  $timer->setIdcreateur($idcreateur);
 				  
 				// On récupère l'EntityManager
 				  $em = $this->getDoctrine()->getManager();
@@ -154,6 +166,7 @@ class DefaultController extends Controller
 				  'id' => $id,
 				  'texte' => $texte,
 				  'question' => $question[0],
+				  'idcreateur' => $idcreateur
 				  ));
 			}  
       /*else {
@@ -163,7 +176,11 @@ class DefaultController extends Controller
 		  
 		else /*( $idq == $nbqTot+1 )*/ {
 		
-		  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig'); 
+		  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
+		    'gamepin' => $gamepin,
+		    'quiz' => $quiz,
+		    'idcreateur' => $idcreateur
+		    )); 
 		  
 		}
 	}
@@ -173,6 +190,25 @@ class DefaultController extends Controller
     public function showresultsAction($gamepin){
     
    
+    
+    }
+    
+     
+    public function showfinalAction($gamepin,$quiz,$idcreateur){
+    
+    $session = new Session(); 
+    
+    $repository = $this
+		->getDoctrine()
+		->getManager()
+		->getRepository('OCQuizlaunchBundle:Session')
+		  ;
+      
+    $session = $repository->getQbyIdq($gamepin); 
+    dump($session);
+    
+    
+    
     
     }
     

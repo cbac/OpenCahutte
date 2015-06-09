@@ -9,9 +9,20 @@ oc_quizlaunch_pick:
         id:   \d+
 
 oc_quizlaunch_question:
-    path:     /question/{id}/{gamepin}/{idq}
+    path:     /question/{id}/{gamepin}/{idcreateur}/{idq}
     defaults: { _controller: OCQuizlaunchBundle:Default:launchquestion }
     requirements:
         id:   \d+
         gamepin:   \d+
+        idcreateur: \d+
         idq:   \d+
+        
+oc_quizlaunch_index_stats:
+    path:     /stats/{id}/{gamepin}/{idcreateur}/
+    defaults: { _controller: OCQuizlaunchBundle:Default:showfinal }
+    requirements:
+        id:   \d+
+        gamepin:   \d+
+        idcreateur: \d+
+    
+

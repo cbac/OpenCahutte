@@ -11,5 +11,25 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class SessionRepository extends EntityRepository
+
 {
+
+
+      public function getSessionByGamepin($gamepin) {
+	      
+		      $session = $this->createQueryBuilder('s')
+			      ->where('s.gamepin=:gamepin')
+			      ->setParameter('gamepin', $gamepin)
+			     
+		      ;
+
+		      return $session
+			->getQuery()
+			->getResult()
+		      ;
+	      
+	      }
+
+
+
 }
