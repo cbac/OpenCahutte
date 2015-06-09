@@ -210,13 +210,7 @@ class DefaultController extends Controller
 		
 		$qcm = $QCMs
 			->get($idq-1)
-		;
-			
-
-			
-		dump($QCMs);
-		
-		
+		;		
 		
 		$i = 0;
 		
