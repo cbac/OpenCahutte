@@ -286,7 +286,7 @@ class DefaultController extends Controller
     
       //$idquiz = 1; 
       
-      $pointsQ = new PointQuestion(); 
+      $pointsQs = new PointQuestion(); 
       
       $stats = new Stats(); 
       
@@ -298,26 +298,29 @@ class DefaultController extends Controller
 	
        // récupérer toutes les sessions associées au gamepin
 
-      $pointsQ = $repository->getSessionByGamepin($gamepin); 
-      dump($pointsQ);
+      $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
+      dump($pointsQs);
+      
+      // initialiser tableau 
+      
+      $allPlayers;
+      $pointsTot = 100; 
       
       
       // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
       
-      foreach ( $pointsQ as $pseudojoueur ){
+      foreach ( $pointsQs as $pointsQ ){
       
-	/*foreach ( $pointsQ->getPointsqxByPseudojoueur() ){
-	
-	
-	
-	}*/
+	$pointsTot[$pointsQ->getPseudojoueur()]+= $pointsQ->getPointqx();
 	      
       }
       
       
+      
       return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
-
-      ));
+			'pointsTot' => $pointsTot,
+			'allPlayers' => $allPlayers
+			 ));
     
     }
     

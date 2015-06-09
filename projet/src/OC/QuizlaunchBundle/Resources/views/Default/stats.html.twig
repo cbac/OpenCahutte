@@ -1,5 +1,5 @@
 
-{% extends "OCQuizgenBundle::layout.html.twig" %}
+{# extends "OCQuizgenBundle::layout.html.twig" #}
 
 {% block title %}
   Accueil - {{ parent() }}
@@ -7,5 +7,10 @@
 
 {% block ocquizlaunch_body %}
 
-  
+{% for user in allPlayers %}
+
+  <li>
+      {{ allPlayers[user] }} : {{ pointsTot[user] }} 
+  </li>
+
 {% endblock ocquizlaunch_body %}

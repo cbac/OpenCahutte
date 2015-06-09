@@ -15,7 +15,7 @@ class PointQuestionRepository extends EntityRepository
 {
 
 
-      public function getPointsQuestionByGamepin($gamepin) {
+      public function getPointQuestionByGamepin($gamepin) {
 	      
 		      $pointsq = $this->createQueryBuilder('s')
 			      ->where('s.gamepin=:gamepin')
