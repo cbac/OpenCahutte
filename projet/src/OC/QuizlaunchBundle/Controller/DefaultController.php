@@ -8,7 +8,7 @@ use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Entity\QCM;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
 use OC\QuizlaunchBundle\Entity\Timer;
-use OC\QuizlaunchBundle\Entity\Session;
+use OC\QuizlaunchBundle\Entity\PointQuestion;
 
 //use OC\QuizdisBundle\Form\PlayType;
 
@@ -58,9 +58,10 @@ class DefaultController extends Controller
 	// Récupérer l'id de l'utilisateur qui a lancé la session de quiz
 	$userManager = $this->get('fos_user.user_manager'); 
 	$utilisateur = $this->container->get('security.context')->getToken()->getUser();
-	
-	$idcreateur = $utilisateur->getId(); 
-	
+	if ($utilisateur == "anon.")
+		$idcreateur = 0;
+	else
+		$idcreateur = $utilisateur->getId(); 
 		
 			
       /* gamepin ajouté dans la BD pour permettre la connexion des joueurs */
@@ -222,13 +223,13 @@ class DefaultController extends Controller
 			
 			$pseudos[$i] = $reponseQuestionTimer->getUser();
 			
-			$session[$i] = new Session();
-			$em->persist($session[$i]);
-			$session[$i]->setGamepin($reponseQuestionTimer->getGamepin());
-			$session[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
-			$session[$i]->setIdcreateur(0);
-			$session[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
-			$session[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
+			$pointQuestion[$i] = new PointQuestion();
+			$em->persist($pointQuestion[$i]);
+			$pointQuestion[$i]->setGamepin($reponseQuestionTimer->getGamepin());
+			$pointQuestion[$i]->setQuizid($reponseQuestionTimer->getTimer()->getQuizid());
+			$pointQuestion[$i]->setIdcreateur(0);
+			$pointQuestion[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
+			$pointQuestion[$i]->setIdq($reponseQuestionTimer->getTimer()->getQuestion());
 		
 			$reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
 
@@ -249,12 +250,11 @@ class DefaultController extends Controller
 				$tempsDeReponse = $time - $hdebut;
 				$score = 500 - 400*$tempsDeReponse/($hfin - $hdebut);
 				
-				$session[$i]->setPointqx($score);
+				$pointQuestion[$i]->setPointqx($score);
 			} else
-				$session[$i]->setPointqx(0);
-			dump($session);
+				$pointQuestion[$i]->setPointqx(0);
 			
-			$em->flush($session[$i]);
+			$em->flush($pointQuestion[$i]);
 			$i++;
 			
 		}
@@ -264,7 +264,8 @@ class DefaultController extends Controller
 			'id'  => $id,
 			'idq' => $idq,
 			'gamepin' => $gamepin,
-			'session' => $session
+			'pointQuestion' => $pointQuestion,
+			'idcreateur' => 0
 		));
 	
 		
@@ -300,10 +301,6 @@ class DefaultController extends Controller
       
       // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
       
-      foreach ( ){
-      
-      
-      }
       
       
       return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(

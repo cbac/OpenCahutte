@@ -12,6 +12,7 @@ use OC\QuizdisBundle\Form\PlayType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -75,7 +76,10 @@ class DefaultController extends Controller
 			
 			$form->handleRequest($request);
 			
-			if ($form->isValid()) {				
+			if ($form->isValid()) {
+				$session = $request->getSession();
+				$session->set('pseudo', $pointQuestion->getPseudojoueur());
+				
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($pointQuestion);
 				$em->flush();
@@ -121,7 +125,8 @@ class DefaultController extends Controller
 			$idRep=ord($rep) - 65;
 			
 			$statReponse->setGamepin($gamepin);
-			$statReponse->setUser(8); /// ??????????????????????????????
+			$session = $request->getSession();
+			$statReponse->setUser($session->get('pseudo'));
 			
 			$form[$idRep]->handleRequest($request);
 			
