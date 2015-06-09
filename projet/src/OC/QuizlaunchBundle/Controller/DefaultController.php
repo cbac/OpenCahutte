@@ -161,19 +161,15 @@ class DefaultController extends Controller
 					  'question' => $question[0]
 					  ));
 				}  
-		  /*else {
-		  return $this->render('OCQuizlaunchBundle:Default:index.html.twig');
 		  
-		  }*/
-			  
-			else /*( $idq == $nbqTot+1 )*/ {
 			
-			  return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
-				'gamepin' => $gamepin,
-				'quiz' => $quiz
-				)); 
-			  
-			}
+		  else /*if( idq > nbqTot)*/ {
+		return $this->redirect($this->generateUrl('oc_quizlaunch_stats', array(
+					  'gamepin' => $gamepin,
+					  'id' => $id)));
+					 
+		      
+		  }
 		}
 		
 		else
@@ -209,13 +205,17 @@ class DefaultController extends Controller
 				->findBy(array('gamepin'=>$gamepin, 'idq'=>0))
 			;		
 			
+			$quiz = $em
+				->getRepository('OCQuizgenBundle:Quiz')
+				->find($id)
+			;
+			$nbqTot = $quiz->getNbQuestions();
+
 			
 			
 			
-			dump($qcm0);
 			
-			
-			
+			//return $this->redirect($this->generateUrl('fos_user_profile_show'));
 			
 			$nbJoueurs = 0;
 			$allPlayers = array();
@@ -290,13 +290,20 @@ class DefaultController extends Controller
 					'gamepin' => $gamepin,
 					'pointQuestion' => $pointQuestion
 				));
+				
+				
+			
+				  
 	
 		}
-		else
-			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
+		else{		
+		      return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
+		}
+		
+	    
 	}
         
-    public function showfinalAction($gamepin,$idcreateur){
+    public function showfinalAction($gamepin){
     
       //$idquiz = 1; 
       $em = $this->getDoctrine()->getManager();
@@ -313,7 +320,6 @@ class DefaultController extends Controller
        // récupérer toutes les sessions associées au gamepin
 
       $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
-      dump($pointsQs);
       
       // initialiser tableau 
       // recupérer tous les joueurs associés au gamepin 
@@ -335,7 +341,6 @@ class DefaultController extends Controller
 	
       }
 
-     dump($allPlayers);
      
       // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
       
@@ -345,7 +350,6 @@ class DefaultController extends Controller
 	      
       }
       
-      dump($pointsTot);
       
       return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
 			'pointsTot' => $pointsTot,
@@ -354,13 +358,7 @@ class DefaultController extends Controller
     
     }
 
-     
-    
-    public function showresultsAction($gamepin){
-    
-   
-    
-    }
+     /*
     
      
     public function showfinalAction($gamepin){
@@ -409,5 +407,5 @@ class DefaultController extends Controller
 		else
 			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
     
-	}
+	}*/
 }
