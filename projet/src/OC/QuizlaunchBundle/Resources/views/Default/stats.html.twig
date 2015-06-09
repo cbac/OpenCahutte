@@ -1,16 +1,17 @@
 
-{# extends "OCQuizgenBundle::layout.html.twig" #}
+{% extends "OCQuizgenBundle::layout.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocquizlaunch_body %}
+{% block ocquizgen_body %}
 
-{% for user in allPlayers %}
+{% for key in allPlayers %}
 
   <li>
-      {{ allPlayers[user] }} : {{ pointsTot[user] }} 
+      {{ key }} : {{ pointsTot[key] }} 
   </li>
-
-{% endblock ocquizlaunch_body %}
+{% endfor %}  
+  
+{% endblock ocquizgen_body %}

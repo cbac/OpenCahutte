@@ -289,7 +289,65 @@ class DefaultController extends Controller
 		else
 			return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
 	}
+        
+    public function showfinalAction($gamepin,$idcreateur){
+    
+      //$idquiz = 1; 
+      $em = $this->getDoctrine()->getManager();
+      $pointsQs = new PointQuestion(); 
       
+      $stats = new Stats(); 
+      
+      $repository = $this
+		  ->getDoctrine()
+		  ->getManager()
+		  ->getRepository('OCQuizlaunchBundle:PointQuestion')
+		    ;
+	
+       // récupérer toutes les sessions associées au gamepin
+
+      $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
+      dump($pointsQs);
+      
+      // initialiser tableau 
+      // recupérer tous les joueurs associés au gamepin 
+      $nbJoueurs = 0;
+      $allPlayers = array(); 
+      $pointsTot = array();
+      
+      $pointQuestion0 = $em
+			->getRepository('OCQuizlaunchBundle:PointQuestion')
+			->findBy(array('gamepin'=>$gamepin, 'idq'=>0))
+		;
+      
+      
+      foreach ($pointQuestion0 as $ligne) {
+	  
+	$allPlayers[$nbJoueurs] = $pointQuestion0[$nbJoueurs]->getPseudoJoueur();
+	$pointsTot[$pointQuestion0[$nbJoueurs]->getPseudoJoueur()] =0;
+	$nbJoueurs ++;
+	
+      }
+
+     dump($allPlayers);
+     
+      // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
+      
+      foreach ( $pointsQs as $pointsQ ){
+      
+	$pointsTot[$pointsQ->getPseudojoueur()]+= $pointsQ->getPointqx();
+	      
+      }
+      
+      dump($pointsTot);
+      
+      return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
+			'pointsTot' => $pointsTot,
+			'allPlayers' => $allPlayers
+			 ));
+    
+    }
+
      
     
     public function showresultsAction($gamepin){
