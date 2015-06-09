@@ -5,7 +5,7 @@ namespace OC\QuizdisBundle\Controller;
 use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
-use OC\QuizlaunchBundle\Entity\Session;
+use OC\QuizlaunchBundle\Entity\PointQuestion;
 
 use OC\QuizdisBundle\Form\PseudoType;
 use OC\QuizdisBundle\Form\PlayType;
@@ -62,22 +62,22 @@ class DefaultController extends Controller
 	
 	public function pseudoAction(Request $request, $gamepin)
 	{
-		$session = new Session();
+		$pointQuestion = new PointQuestion();
 		
-		$form = $this->createForm(new PseudoType(), $session);
+		$form = $this->createForm(new PseudoType(), $pointQuestion);
 		
 		if($request->isMethod('POST')) {
-			$session->setQuizid(0);
-			$session->setIdq(0);
-			$session->setGamepin($gamepin);
-			$session->setIdcreateur(0);
-			$session->setPointqx(0);
+			$pointQuestion->setQuizid(0);
+			$pointQuestion->setIdq(0);
+			$pointQuestion->setGamepin($gamepin);
+			$pointQuestion->setIdcreateur(0);
+			$pointQuestion->setPointqx(0);
 			
 			$form->handleRequest($request);
 			
 			if ($form->isValid()) {				
 				$em = $this->getDoctrine()->getManager();
-				$em->persist($session);
+				$em->persist($pointQuestion);
 				$em->flush();
 				
 				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
