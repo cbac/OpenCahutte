@@ -365,13 +365,13 @@ class QCM
 		$reponsesJustes=array();
 		
 		if($this->getJuste1())
-			array_push($reponsesJustes,1);
+			array_push($reponsesJustes,"A");
 		if($this->getJuste2())
-			array_push($reponsesJustes,2);
+			array_push($reponsesJustes,"B");
 		if($this->getJuste3())
-			array_push($reponsesJustes,3);
+			array_push($reponsesJustes,"C");
 		if($this->getJuste4())
-			array_push($reponsesJustes,4);
+			array_push($reponsesJustes,"D");
 			
 		return $reponsesJustes;
 	}

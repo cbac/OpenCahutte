@@ -182,6 +182,7 @@ class DefaultController extends Controller
 	public function resQuestionAction($id, $idq, $gamepin, Request $request) {
 		$session = $request->getSession();
 		if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {
+		
 			$em = $this->getDoctrine()->getManager();
 			
 			$reponsesQuestionsTimers = $em
@@ -211,11 +212,7 @@ class DefaultController extends Controller
 			;
 			$nbqTot = $quiz->getNbQuestions();
 
-			
-			
-			
-			
-			//return $this->redirect($this->generateUrl('fos_user_profile_show'));
+				
 			
 			$nbJoueurs = 0;
 			$allPlayers = array();
@@ -267,7 +264,7 @@ class DefaultController extends Controller
 				$i++;
 				
 			}
-			
+			$pointQuestion= array();
 			foreach($allPlayers as $player) {
 				if (!in_array($player, $pseudos)) {
 					$pointQuestion[$i] = new PointQuestion();
@@ -288,7 +285,8 @@ class DefaultController extends Controller
 					'id'  => $id,
 					'idq' => $idq,
 					'gamepin' => $gamepin,
-					'pointQuestion' => $pointQuestion
+					'pointQuestion' => $pointQuestion,
+					'reponsesJustes' => $qcm->getReponsesJustes()
 				));
 				
 				
