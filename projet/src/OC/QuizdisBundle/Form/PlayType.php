@@ -21,7 +21,7 @@ class PlayType extends AbstractType
 			->add('save','submit', array(
 				'label' => $rep, 
 				'attr' => array(
-					'style'=> 'width: 400px; height:200px;  margin:2px; font-size:60px;',
+					'style'=> 'width: 100%; height:100%;  margin:2px; font-size:60px;',
 					'class'=>$class
 				)
 			))

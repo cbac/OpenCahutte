@@ -1,11 +1,11 @@
 {% for i in 0..3 %}
 	{{ form_errors(form[i]) }}
 {% endfor %}
-<table>
+<table style="width: 100%;">
 	{% for j in 0..1 %}
 		<tr>
 			{% for i in [ 2*j , 2*j+1 ] %}
-				<td>
+				<td style="width: 50%;" >
 					{{ form_start(form[i]) }}
 					{{ form_widget(form[i].save) }}
 					{{ form_rest(form[i]) }}
@@ -15,3 +15,5 @@
 		</tr>
 	{% endfor %}
 </table>
+
+		
