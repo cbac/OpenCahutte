@@ -6,7 +6,9 @@ use OC\QuizgenBundle\Entity\Quiz;
 use OC\QuizgenBundle\Form\QuizType;
 use OC\QuizdisBundle\Entity\ReponseQuestion;
 use OC\QuizlaunchBundle\Entity\PointQuestion;
+use OC\QuizdisBundle\Entity\Gamepin;
 
+use OC\QuizdisBundle\Form\GamepinType;
 use OC\QuizdisBundle\Form\PseudoType;
 use OC\QuizdisBundle\Form\PlayType;
 
@@ -24,36 +26,19 @@ class DefaultController extends Controller
 
 		$largeurChamps = 'width: 200px';
 
-		$form = $this->createFormBuilder()
-			->add('gamepin', 'integer', array(
-				'attr' => array(
-					'style'=> $largeurChamps,
-				)
-			))
-			->add('save', 'submit', array(
-				'label' => 'GO !', 
-				'attr' => array(
-					'style'=> $largeurChamps,
-					'class'=> 'btn btn-primary'
-				)
-			))
-			->getForm();
+		$gamepin = new Gamepin();
+		
+		$form = $this->createForm(new GamepinType(), $gamepin);
+		
+
 
 		$form->handleRequest($request);
 		
-		$data = $form->getData();
+
 
 		if ($form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$quiz = $em
-				->getRepository('OCQuizlaunchBundle:Timer')
-				->findByGamepin($data['gamepin'])
-			;
-			if (null === $quiz) {
-				throw new NotFoundHttpException("Le quiz d'id ".$data['gamepin']." n'existe pas.");
-			}
-			
-			return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array('gamepin' => $data['gamepin'])));
+		
+			return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array('gamepin' => $gamepin->getGamepin())));
 		}
 		
 		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
