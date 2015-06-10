@@ -33,7 +33,7 @@
           Connectez-vous »
         </a>
       {% endif %} 
-    </div> #}
+    </div>
 	
     <div class="row">
       <div id="content" class="col-md-9">
@@ -41,7 +41,7 @@
 			Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
 		{% else %}
 			<a href="{{ path('fos_user_security_login') }}">Connexion</a>
-		{% endif %} 
+		{% endif %}  #}
 		  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
 		  {% block ocquizdis_body %}
 		  {% endblock %}
