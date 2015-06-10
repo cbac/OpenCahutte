@@ -166,7 +166,8 @@ class DefaultController extends Controller
 		  else /*if( idq > nbqTot)*/ {
 		return $this->redirect($this->generateUrl('oc_quizlaunch_stats', array(
 					  'gamepin' => $gamepin,
-					  'id' => $id)));
+					  'id' => $id,
+					  'quiz' => $quiz)));
 					 
 		      
 		  }
@@ -278,7 +279,7 @@ class DefaultController extends Controller
 					$i++;
 				}
 			}
-
+			dump($pointQuestion);
 		
 
 			return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
@@ -301,10 +302,15 @@ class DefaultController extends Controller
 	    
 	}
         
-    public function showfinalAction($gamepin){
+    public function showfinalAction($gamepin,$id){
     
-      //$idquiz = 1; 
       $em = $this->getDoctrine()->getManager();
+      
+      $quiz = $em
+				->getRepository('OCQuizgenBundle:Quiz')
+				->find($id)
+			;      
+      
       $pointsQs = new PointQuestion(); 
       
       $stats = new Stats(); 
@@ -351,7 +357,8 @@ class DefaultController extends Controller
       
       return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
 			'pointsTot' => $pointsTot,
-			'allPlayers' => $allPlayers
+			'allPlayers' => $allPlayers,
+			'quiz' => $quiz
 			 ));
     
     }

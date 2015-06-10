@@ -7,10 +7,11 @@
 
 {% block ocquizgen_body %}
 
+<h2>Résultats du quiz "{{ quiz.nom }}" :</h2>
 {% for key in allPlayers %}
 
   <li>
-      {{ key }} : {{ pointsTot[key] }} 
+      {{ key }} : {{ pointsTot[key] }} points
   </li>
 {% endfor %}  
   
