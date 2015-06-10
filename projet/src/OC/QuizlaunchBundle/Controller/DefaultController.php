@@ -225,6 +225,7 @@ class DefaultController extends Controller
 			
 			$i = 0;
 			$pseudos = array();
+			$pointQuestion= array();
 			
 			foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
 				
@@ -264,7 +265,7 @@ class DefaultController extends Controller
 				$i++;
 				
 			}
-			$pointQuestion= array();
+			
 			foreach($allPlayers as $player) {
 				if (!in_array($player, $pseudos)) {
 					$pointQuestion[$i] = new PointQuestion();
