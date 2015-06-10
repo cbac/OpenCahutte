@@ -37,6 +37,14 @@ class QCM
      */
     private $idq;
     
+    
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="temps", type="integer")
+     */
+    private $temps;
+    
 
     /**
      * @var string
@@ -397,5 +405,28 @@ class QCM
     public function getIdq()
     {
         return $this->idq;
+    }
+
+    /**
+     * Set temps
+     *
+     * @param integer $temps
+     * @return QCM
+     */
+    public function setTemps($temps)
+    {
+        $this->temps = $temps;
+
+        return $this;
+    }
+
+    /**
+     * Get temps
+     *
+     * @return integer 
+     */
+    public function getTemps()
+    {
+        return $this->temps;
     }
 }

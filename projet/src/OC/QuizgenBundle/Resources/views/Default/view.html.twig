@@ -21,7 +21,9 @@
 			<li>PROPOSITION 2 ({% if QCM.juste2 %}juste{% else %}fausse{% endif %}) : {{QCM.rep2}}</li>
 			<li>PROPOSITION 3 ({% if QCM.juste3 %}juste{% else %}fausse{% endif %}) : {{QCM.rep3}}</li>
 			<li>PROPOSITION 4 ({% if QCM.juste4 %}juste{% else %}fausse{% endif %}) : {{QCM.rep4}}</li>
+			<li>Temps de réponse : {{ QCM.temps }} secondes</li>
 		</ul>
+		
 	  {% else %}
 		<li>Pas de questions trouvées.</li>
 	  {% endfor %}
