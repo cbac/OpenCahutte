@@ -22,8 +22,6 @@
     ],
 
     "require": {
-	"coresphere/console-bundle": "dev-master",
-        "jquery/jquery": "2.*",
 	"php": ">=5.3.3",
         "symfony/symfony": "2.6.*",
 	"friendsofsymfony/user-bundle": "dev-master",

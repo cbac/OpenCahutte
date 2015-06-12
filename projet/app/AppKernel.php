@@ -21,7 +21,8 @@ class AppKernel extends Kernel
             new OC\QuizgenBundle\OCQuizgenBundle(),
             new OC\QuizdisBundle\OCQuizdisBundle(),
             new OC\UserBundle\OCUserBundle(),
-            new OC\QuizlaunchBundle\OCQuizlaunchBundle(),
+	    new OC\QuizlaunchBundle\OCQuizlaunchBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -29,8 +30,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
-        }
+	}
 
         return $bundles;
     }

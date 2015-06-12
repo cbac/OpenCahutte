@@ -75,7 +75,7 @@ class DefaultController extends Controller
 			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
 		}
 		
-		$form = $this->createForm(new QuizType(), $quiz);
+		$form = $this->createForm(new QuizType(), $quiz, array('user' => $this->getUser()));
 		
 		if ($form->handleRequest($request)->isValid()) {
 			foreach ($quiz->getQCMs() as $QCM) {
@@ -105,6 +105,7 @@ class DefaultController extends Controller
 		}
 		
 		$idAuteur=$quiz->getAuthor();
+		$acces=$quiz->getAcces();
 		if($idAuteur == 0)
 			$auteur= 'Anonyme';
 		else {
@@ -112,10 +113,20 @@ class DefaultController extends Controller
 			$auteur = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
 		}
 		
-		return $this->render('OCQuizgenBundle:Default:view.html.twig', array(
-			'quiz'		=> $quiz,
-			'auteur'	=> $auteur
-		));
+		
+		if(($idAuteur != 0) && ($this->getUser() != null) && $idAuteur == $this->getUser()->getId())
+			return $this->render('OCQuizgenBundle:Default:view.html.twig', array(
+				'quiz'		=> $quiz,
+				'auteur'	=> $auteur
+			));
+		else if ($acces == 'public')
+			return $this->render('OCQuizgenBundle:Default:viewpublic.html.twig', array(
+				'quiz'		=> $quiz,
+				'auteur'	=> $auteur
+			));
+		else
+			throw new NotFoundHttpException("Vous n'avez pas accès au quiz d'id ".$id);
+		
 	}
 	
 	public function menuAction($limit)
@@ -125,7 +136,7 @@ class DefaultController extends Controller
 			->getManager()
 			->getRepository('OCQuizgenBundle:Quiz')
 			->findBy(
-				array(),
+				array('acces' => 'public'),
 				array('id' => 'desc'),
 				$limit,
 				0
@@ -233,7 +244,7 @@ class DefaultController extends Controller
 		//$nQuiz->setQuiz(aQuiz->getQuiz());
 		$nQuiz = clone $aQuiz;
 		
-		$form = $this->createForm(new QuizType(), $nQuiz);
+		$form = $this->createForm(new QuizType(), $nQuiz, array('user' => $this->getUser()));
 		
 		if ($form->handleRequest($request)->isValid()) {
 			$em->persist($nQuiz);

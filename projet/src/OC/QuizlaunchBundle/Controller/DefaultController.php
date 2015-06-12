@@ -280,7 +280,7 @@ class DefaultController extends Controller
 					$i++;
 				}
 			}
-			dump($pointQuestion);
+
 		
 
 			return $this->render('OCQuizlaunchBundle:Default:tempresult.html.twig', array(
@@ -386,7 +386,7 @@ class DefaultController extends Controller
 			   // récupérer toutes les sessions associées au gamepin
 
 			  $pointsQs = $repository->getPointQuestionByGamepin($gamepin); 
-			  dump($pointsQs);
+
 			  
 			  // initialiser tableau 
 			  
