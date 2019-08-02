@@ -1,1 +1,0 @@
-php projet/app/console server:run

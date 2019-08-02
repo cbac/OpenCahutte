@@ -1,1 +1,0 @@
-php Symfony/app/console server:run

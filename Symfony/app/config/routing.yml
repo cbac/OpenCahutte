@@ -1,3 +1,0 @@
-jul_test:
-    resource: "@JulTestBundle/Resources/config/routing.yml"
-    prefix:   /platform/
