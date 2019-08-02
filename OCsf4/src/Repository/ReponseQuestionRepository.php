@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
+// use Doctrine\ORM\QueryBuilder;
 
 /**
  * ReponseQuestionRepository
@@ -11,8 +11,9 @@ use Doctrine\ORM\QueryBuilder;
  */
 class ReponseQuestionRepository extends EntityRepository
 {
-	public function getReponsesUtilisateur($gamepin,$user,$hdebut,$hfin) {
-	
+	public function getReponsesUtilisateur($gamepin,$user,$hdebut,$hfin)
+	{
+	 
 		$qb = $this->createQueryBuilder('r')
 			->where('r.gamepin = :gamepin')
 				->setParameter('gamepin', $gamepin)

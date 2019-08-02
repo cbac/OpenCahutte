@@ -2,7 +2,7 @@
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Validator as OCQuizdisAssert;
+use App\Validator as OCQuizdisAssert;
 
 /**
  * Gamepin
