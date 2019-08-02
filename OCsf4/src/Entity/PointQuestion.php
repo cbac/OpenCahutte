@@ -1,9 +1,9 @@
 <?php
 
-namespace OC\QuizlaunchBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use OC\QuizlaunchBundle\Validator as OCQuizlaunchAssert;
+use App\Validator as OCQuizlaunchAssert;
 
 /**
  * PointQuestion

@@ -1,6 +1,6 @@
 <?php
 
-namespace OC\QuizlaunchBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
