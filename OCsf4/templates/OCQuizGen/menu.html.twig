@@ -1,0 +1,11 @@
+{# src/templates/OCQuizGen/menu.html.twig #}
+
+<ul class="nav nav-pills nav-stacked">
+  {% for quiz in listQuizs %}
+    <li>
+      <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
+        {{ quiz.nom }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

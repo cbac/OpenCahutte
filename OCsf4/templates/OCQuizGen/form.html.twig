@@ -1,0 +1,141 @@
+{# src/templates/OCQuizGen/edit.html.twig #}
+
+<h3>Formulaire de création de Quiz </h3>
+
+<div class="well">
+
+	{# Overture de la balise <form> du formulaire HTML #}
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+	
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		<h4 class="simili-form">Auteur : <i>{{ app.user.username }}</i></h4>
+		<br/>
+		{{ form_row(form.acces) }}
+	{% else %}
+		<h4 class="simili-form">Auteur : <i>Anonyme</i></h4>
+		<h4 class="simili-form">Accès : <i>Public</i> (Connectez vous pour le passer en <i>Privé</i>)</h4>
+		<br/>
+    {% endif %}
+	{# Génération du label + error + widget pour un champ #}
+	{{ form_row(form.nom) }}
+	{{ form_row(form.category) }}
+	
+	
+	<h3>Questions</h3>
+	
+    <ul class="QCMs" data-prototype="
+		{% filter escape %}
+            {{ include('OCQuizgenBundle:Form:QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
+        {% endfilter %}
+		<br/>
+	">
+		{% for QCM in form.QCMs %}
+		<li>
+			{{ form_row(QCM.question) }}
+			<table>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep1) }}</td>
+				<td>{{ form_row(QCM.juste1) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep2) }}</td>
+				<td>{{ form_row(QCM.juste2) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep3) }}</td>
+				<td>{{ form_row(QCM.juste3) }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ form_row(QCM.rep4) }}</td>
+				<td>{{ form_row(QCM.juste4) }}</td>
+			</tr>
+			
+			</table>
+		</li>
+		{% endfor %}
+    </ul>
+	
+	{% do form.QCMs.setRendered %}
+
+	{# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+	{{ form_widget(form.save) }}
+
+	{# Génération automatique des champs pas encore écrits.#}
+	{{ form_rest(form) }}
+
+	{# Fermeture de la balise <form> du formulaire HTML #}
+	{{ form_end(form) }}
+	
+	
+</div>
+
+{% block customPageScript %}
+
+{# Voici le script en question : #}
+<script type="text/javascript">
+ // Récupère le div qui contient la collection de tags
+var collectionHolder = $('ul.QCMs');
+
+// ajoute un lien « add a tag »
+var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter une question</a>');
+var $newLinkLi = $('<li></li>').append($addTagLink);
+
+jQuery(document).ready(function() {
+    // ajoute l'ancre « ajouter un tag » et li à la balise ul
+    collectionHolder.append($newLinkLi);
+
+    $addTagLink.on('click', function(e) {
+        // empêche le lien de créer un « # » dans l'URL
+        e.preventDefault();
+
+        // ajoute un nouveau formulaire tag (voir le prochain bloc de code)
+        addTagForm(collectionHolder, $newLinkLi);
+    });
+});
+
+jQuery(document).ready(function() {
+    // ajoute un lien de suppression à tous les éléments li de
+    // formulaires de tag existants
+    collectionHolder.find('li.a').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // ... le reste du bloc vu plus haut
+});
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Récupère l'élément ayant l'attribut data-prototype comme expliqué plus tôt
+    var prototype = collectionHolder.attr('data-prototype');
+
+    // Remplace '__name__' dans le HTML du prototype par un nombre basé sur
+    // la longueur de la collection courante
+    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+    // Affiche le formulaire dans la page dans un li, avant le lien "ajouter un tag"
+    var $newFormLi = $('<li class="a"></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+	addTagFormDeleteLink($newFormLi);
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<a href="#">Supprimer cette question</a><br/><br/>');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // empêche le lien de créer un « # » dans l'URL
+        e.preventDefault();
+
+        // supprime l'élément li pour le formulaire de tag
+        $tagFormLi.remove();
+    });
+}
+</script>
+{% endblock %}

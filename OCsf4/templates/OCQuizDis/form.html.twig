@@ -1,0 +1,21 @@
+<div class="well" style="width: 100%; max-width:800px">
+{% for i in 0..3 %}
+	{{ form_errors(form[i]) }}
+{% endfor %}
+<table style="width: 100%;">
+	{% for j in 0..1 %}
+		<tr>
+			{% for i in [ 2*j , 2*j+1 ] %}
+				<td style="width: 50%;" >
+					{{ form_start(form[i]) }}
+					{{ form_widget(form[i].save) }}
+					{{ form_rest(form[i]) }}
+					{{ form_end(form[i]) }}
+				</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</table>
+</div>
+
+		

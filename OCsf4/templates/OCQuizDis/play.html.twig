@@ -1,0 +1,17 @@
+{# src/templates/templates/QuizDis/play.html.twig #}
+
+{% extends "OCQuizDis/layout.html.twig" %}
+
+{% block title %}
+  Quiz disponibles - {{ parent() }}
+{% endblock %}
+
+{% block ocquizdis_body %}
+
+ 
+  <h2>{{ quiz.nom }}</h2>
+  <i>Par {{ auteur }}, le {{ quiz.date|date('d/m/Y') }}</i>
+
+	{{ include("OCQuizDis/form.html.twig") }}
+
+{% endblock %}

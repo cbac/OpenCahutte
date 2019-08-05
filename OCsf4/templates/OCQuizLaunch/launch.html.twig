@@ -1,0 +1,59 @@
+
+{% extends "OCQuizgenBundle/layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+ 
+{% block ocquizgen_body %}
+<table style="width: 810px">
+
+	<tr>
+	
+		<td style="width: 90%">  <h2>Q.{{ idq }} : {{ texte }}</h2><br> </td>
+		<td>
+	
+			 {% javascripts '@OCQuizlaunchBundle/Resources/public/js/countdown_v5.0/countdown.js' %}
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+
+			<script>
+			var myCountdown1 = new Countdown({time:{{tempsrep}}, width:"100", rangeHi:"second", hideLabels:"true"});
+			</script>  
+
+			{% endjavascripts %} 
+			<br><br>
+			
+		</td>
+	</tr>
+</table>
+			
+  {# if question.idq is defined #}
+		
+	<table>	
+	<tr>	
+	
+	    <td  style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-primary">	A : <br>{{ question.rep1 }} </td>
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-success">	B : <br>{{ question.rep2 }} </td>
+	</tr>
+	<tr>	
+	
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-warning">	C : <br>{{ question.rep3 }} </td>
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-danger">	D : <br>{{ question.rep4 }} </td>
+	</tr>		
+			
+	</table>
+		
+	  
+<br><br><div align="right">
+
+{#
+<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+#}
+<br><br><div align="right">
+
+<a href="{{ path('oc_quizlaunch_score', {'id': id, 'gamepin' : gamepin, 'idq': idq}) }}" class="btn btn-default btn-lg">Scores   <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+
+
+{% endblock %}

@@ -15,36 +15,41 @@ use App\Form\PlayType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
+/**
+ * @Route("/quizdis")
+ */
 class QuizDisController extends Controller
 {
+    /**
+     * Lists all quizs
+     *
+     * @Route("/", name="oc_quizdis_select")
+     * @Method("GET", "POST")
+     */
     public function indexAction(Request $request)
 	{	
-
-		$largeurChamps = 'width: 200px';
-
 		$gamepin = new Gamepin();
-		
 		$form = $this->createForm(new GamepinType(), $gamepin);
-		
-
-
 		$form->handleRequest($request);
-		
 
-
-		if ($form->isValid()) {
-		
+		if ($form->isSubmitted() && $form->isValid()) {
 			return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array('gamepin' => $gamepin->getGamepin())));
 		}
-		
-		return $this->render('OCQuizdisBundle:Default:index.html.twig', array(
+		return $this->render('OCQuizdis\index.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
+	/**
+	 * 
+	 *
+	 * @Route("/pseudo/{gamepin}", name="oc_quizdis_pseudo",requirements={
+     * "gamepin": "\d+" })
+	 * @Method("GET", "POST")
+	 */
 	
 	public function pseudoAction(Request $request, $gamepin)
 	{
@@ -60,7 +65,7 @@ class QuizDisController extends Controller
 			
 			$form->handleRequest($request);
 			
-			if ($form->isValid()) {
+			if ($form->isSubmitted() && $form->isValid()) {
 				$session = $request->getSession();
 				$session->set('pseudo', $pointQuestion->getPseudojoueur());
 				
@@ -71,16 +76,23 @@ class QuizDisController extends Controller
 				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
 			}
 		}
-		return $this->render('OCQuizdisBundle:Default:pseudo.html.twig', array(
+		return $this->render('OCQuizdis\pseudo.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
 	
-    public function playAction($gamepin,Request $request)
+	/**
+	 * Play quiz
+	 *
+	 * @Route("/{gamepin}", name="oc_quizdis_play",requirements={
+	 * "gamepin": "\d+" })
+	 * @Method("GET, POST")
+	 */
+	public function playAction(Request $request, $gamepin)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$timers = $em
-			->getRepository('OCQuizlaunchBundle:Timer')
+			->getRepository('Timer')
 			->findByGamepin($gamepin)
 		;
 		if (null == $timers) {
@@ -88,7 +100,7 @@ class QuizDisController extends Controller
 		}
 		$id=$timers[0]->getQuizid();
 		$quiz = $em
-			->getRepository('OCQuizgenBundle:Quiz')
+			->getRepository('Quiz')
 			->find($id)
 		;
 		if (null === $quiz) {
@@ -110,6 +122,7 @@ class QuizDisController extends Controller
 		
 		$statReponse= new ReponseQuestion();
 		$class=array("btn btn-primary","btn btn-success","btn btn-warning","btn btn-danger");
+		$form=array();
 		for ($i=0;$i<4;$i++) {
 			$form[$i] = $this->createForm(new PlayType(), $statReponse, array('rep' => chr(65+$i), 'class' => $class[$i]));
 		}
@@ -129,7 +142,7 @@ class QuizDisController extends Controller
 				return $this->redirect($this->generateUrl('oc_quizdis_play', array('gamepin' => $gamepin)));
 			}
 		}
-		return $this->render('OCQuizdisBundle:Default:play.html.twig', array(
+		return $this->render('OCQuizdis\play.html.twig', array(
 			'quiz'  => $quiz,
 			'reponse'	=> $statReponse,
 			'auteur' => $auteur,

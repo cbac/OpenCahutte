@@ -24,7 +24,7 @@ class VerifRepUniqueValidator extends ConstraintValidator
 	{
 		$timers = $this
 			->em
-			->getRepository('OCQuizlaunchBundle:Timer')
+			->getRepository('Timer')
 			->findBy(
 				array('gamepin' => $reponseQuestion->getGamepin()), // Critere
 				array('question' => 'desc'),        // Tri

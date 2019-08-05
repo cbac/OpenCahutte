@@ -6,9 +6,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class VerifGamepinExistsValidator extends ConstraintValidator
+class VerifPseudoUniqueValidator extends ConstraintValidator
 {
-
 	private $requestStack;
 	private $em;
 
@@ -20,15 +19,15 @@ class VerifGamepinExistsValidator extends ConstraintValidator
 		$this->em           = $em;
 	}
   
-	public function validate($gamepin, Constraint $constraint)
+	public function validate($pointQuestion, Constraint $constraint)
 	{
-		$quiz = $this->em
-			->getRepository('Timer')
-			->findByGamepin($gamepin->getGamepin())
+		$sessionjoueur = $this->em
+			->getRepository('PointQuestion')
+			->findBy(
+				array('gamepin'=>$pointQuestion->getGamepin(), 'idq'=>0, 'pseudojoueur'=>$pointQuestion->getPseudojoueur() )
+			)
 		;
-
-		if (null == $quiz) {
-			$this->context->addViolation(" Ce gamepin n'existe pas");
-		}
+		if ($sessionjoueur != null)
+			$this->context->addViolation(" Pseudo déjà utilisé");
 	}
 }

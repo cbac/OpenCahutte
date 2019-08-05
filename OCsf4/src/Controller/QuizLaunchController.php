@@ -10,23 +10,30 @@ use App\Entity\ReponseQuestion;
 use App\Entity\Timer;
 use App\Entity\PointQuestion;
 use App\Entity\Stats;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 //use OC\QuizdisBundle\Form\PlayType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
-
-
+/**
+ * @Route("/quizlaunch")
+ */
 class QuizLaunchController extends Controller
 {
+    /**
+     * Lists all quizs
+     *
+     * @Route("/", name="oc_quizlaunch_index")
+     * @Method("GET")
+     */
     public function indexAction(){
       $limit=1000;
 		$listQuizs = $this
 			->getDoctrine()
 			->getManager()
-			->getRepository('OCQuizgenBundle:Quiz')
+			->getRepository('Quiz::class')
 			->findBy(
 				array(),
 				array('id' => 'desc'),
@@ -35,28 +42,27 @@ class QuizLaunchController extends Controller
 			)
 		;
 
-		return $this->render('OCQuizlaunchBundle:Default:index.html.twig', array(
+		return $this->render('OCQuizlaunch\index.html.twig', array(
 		  'listQuizs' => $listQuizs
 		));
     
     }
-
-    public function pickAction($id, Request $request){
-      $em = $this->getDoctrine()->getManager();
-		$quiz = $em
-			->getRepository('OCQuizgenBundle:Quiz')
-			->find($id)
-		;
-		
+    /**
+     * Pick a quiz
+     *
+     * @Route("/{id}", name="oc_quizlaunch_pick", requirements={
+     * "id": "\d+" }))
+     * @Method("GET")
+     */
+    public function pickAction(Request $request, Quiz $quiz){
 		if (null === $quiz) {
-			throw new NotFoundHttpException("Le quiz d'id ".$id." n'existe pas.");
+			throw new NotFoundHttpException("Le quiz n'existe pas.");
 		}
 	
 		$name = $quiz->getNom();
-	
-		
 			
       /* gamepin ajouté dans la BD pour permettre la connexion des joueurs */
+		/** TODO check uniqueness of gamepin **/
       $gamepin =  rand ( 1 , 999999 ); 
 
 	  $session = $request->getSession();
@@ -64,7 +70,7 @@ class QuizLaunchController extends Controller
 	  
       $timer = new Timer;
       $timer->setGamepin($gamepin);
-      $timer->setQuizId($id);
+      $timer->setQuizId($quiz->getId());
       $timer->setQuestion(0);
       $timer->setHfin(0);
       $timer->setHdebut(0);
@@ -76,20 +82,23 @@ class QuizLaunchController extends Controller
       if ($request->isMethod('POST')) {
 	$request->getSession()->getFlashBag()->add('notice', 'Début du quiz.');
 	}
-	
-      
+	      
     /* affichage utilisateurs */ 
 		
-		return $this->render('OCQuizlaunchBundle:Default:pick.html.twig', array(
-			'id'  => $id,
+		return $this->render('OCQuizlaunch\pick.html.twig', array(
+			'id'  => $quiz->getId(),
 			'gamepin' => $gamepin,
 			'name' => $name
-		));
-	
-    
+		)); 
     }
-
-    public function launchquestionAction($id,$gamepin,$idq, Request $request){
+    /**
+     * Launch one question:
+     *
+     * @Route("/question/{id}/{gamepin}/{idq}", name="oc_quizlaunch_question", requirements={
+     * "id": "\d+", "gamepin": "\d+", "idq": "\d+" }))
+     * @Method("GET")
+     */
+    public function launchquestionAction(Request $request, $id, $gamepin, $idq ){
     
 		$session = $request->getSession();
 		if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {

@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use OC\QuizdisBundle\Validator as OCQuizdisAssert;
+use App\Validator as OCQuizdisAssert;
 
 /**
  * ReponseQuestion
@@ -157,10 +157,10 @@ class ReponseQuestion
     /**
      * Set timer
      *
-     * @param \OC\QuizlaunchBundle\Entity\Timer $timer
+     * @param \AppEntity\Timer $timer
      * @return ReponseQuestion
      */
-    public function setTimer(\OC\QuizlaunchBundle\Entity\Timer $timer)
+    public function setTimer(\App\Entity\Timer $timer)
     {
         $this->timer = $timer;
 
@@ -170,7 +170,7 @@ class ReponseQuestion
     /**
      * Get timer
      *
-     * @return \OC\QuizlaunchBundle\Entity\Timer 
+     * @return \App\Entity\Timer 
      */
     public function getTimer()
     {

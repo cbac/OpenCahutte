@@ -1,0 +1,21 @@
+{% extends "OCQuizgenBundle/layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocquizgen_body %}
+<h2>Bonne(s) réponse(s) : {% for lettre in reponsesJustes %} {{ lettre }} {% endfor %}</h2>
+<h2>Scores</h2>
+
+<ul id="navigation">
+	{% for ligne in pointQuestion %}
+		<li>{{ligne.pseudojoueur}} : {{ligne.pointqx}} points</li>
+	{% endfor %}
+</ul>
+
+<br><br><div align="right">
+<a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+
+{% endblock %}
