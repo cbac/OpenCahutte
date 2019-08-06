@@ -7,8 +7,7 @@ use App\Validator as OCQuizdisAssert;
 /**
  * Gamepin
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizdisBundle\Entity\Gamepin")
+ * @ORM\Entity()
  * @OCQuizdisAssert\VerifGamepinExists
  */
 class Gamepin

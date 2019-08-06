@@ -1,6 +1,7 @@
 <?php
 namespace App\Validator;
 use App\Entity\Timer;
+use App\Entity\ReponseQuestion;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -39,7 +40,7 @@ class VerifRepUniqueValidator extends ConstraintValidator
 			$hdebut=$timers[0]->getHdebut();
 			$reponsesDejaEnregistrees = $this
 				->em
-				->getRepository('OCQuizdisBundle:ReponseQuestion')
+				->getRepository(ReponseQuestion::class)
 				->getReponsesUtilisateur($reponseQuestion->getGamepin(),$reponseQuestion->getUser(), $hdebut, $hfin)
 			;
 			if($reponsesDejaEnregistrees != NULL)

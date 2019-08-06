@@ -72,7 +72,7 @@ class QCMType extends AbstractType
     public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OC\QuizgenBundle\Entity\QCM'
+            'data_class' => 'App\Entity\QCM'
         ));
     }
 

@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\QCM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Quiz
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizgenBundle\Entity\QuizRepository")
+ * @ORM\Entity()
  */
 class Quiz
 {
@@ -71,7 +70,7 @@ class Quiz
     
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="OC\QuizgenBundle\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="App\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
 	 */
     private $QCMs;
 
@@ -248,10 +247,10 @@ class Quiz
     /**
      * Add QCMs
      *
-     * @param \OC\QuizgenBundle\Entity\QCM $qCMs
+     * @param QCM $QCM
      * @return Quiz
      */
-    public function addQCM(\OC\QuizgenBundle\Entity\QCM $QCM)
+    public function addQCM(QCM $QCM)
     {
         $this->QCMs[] = $QCM;
 		
@@ -261,23 +260,23 @@ class Quiz
     /**
      * Remove QCMs
      *
-     * @param \OC\QuizgenBundle\Entity\QCM $qCMs
+     * @param QCM $QCM
      */
-    public function removeQCM(\OC\QuizgenBundle\Entity\QCM $qCMs)
+    public function removeQCM(QCM $QCM)
     {
-        $this->QCMs->removeElement($qCMs);
+        $this->QCMs->removeElement($QCM);
     }
 
     /**
      * Get QCMs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return ArrayCollection 
      */
     public function getQCMs()
     {
         return $this->QCMs;
     }
-	
+	/** TODO check clone **/
 	//cloner l'objet
 	public function __clone()
 	{

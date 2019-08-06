@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stats
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\StatsRepository")
+ * @ORM\Entity()
  */
 class Stats
 {

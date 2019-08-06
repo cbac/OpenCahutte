@@ -7,8 +7,7 @@ use App\Validator as OCQuizdisAssert;
 /**
  * ReponseQuestion
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizdisBundle\Entity\ReponseQuestionRepository")
+ * @ORM\Entity()
  * @OCQuizdisAssert\VerifRepUnique
  */
 class ReponseQuestion
@@ -19,7 +18,7 @@ class ReponseQuestion
     }
 		
 	/**
-	 * @ORM\ManyToOne(targetEntity="OC\QuizlaunchBundle\Entity\Timer")
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Timer")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $timer;

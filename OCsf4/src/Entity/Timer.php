@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Timer
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\TimerRepository")
+ * @ORM\Entity()
  */
 class Timer
 {

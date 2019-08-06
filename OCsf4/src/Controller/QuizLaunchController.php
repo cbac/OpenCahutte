@@ -11,7 +11,6 @@ use App\Entity\PointQuestion;
 use App\Entity\Stats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-// use OC\QuizdisBundle\Form\PlayType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -324,56 +323,4 @@ class QuizLaunchController extends Controller
             'quiz' => $quiz
         ));
     }
-/** TODO remove unused code **/
-    /*
-     *
-     *
-     * public function showfinalAction($gamepin){
-     *
-     * $session = $request->getSession();
-     * if( $session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin ) {
-     * //$idquiz = 1;
-     *
-     * $pointsQs = new PointQuestion();
-     *
-     * $stats = new Stats();
-     *
-     * $repository = $this
-     * ->getDoctrine()
-     * ->getManager()
-     * ->getRepository('OCQuizlaunchBundle:PointQuestion')
-     * ;
-     *
-     * // récupérer toutes les sessions associées au gamepin
-     *
-     * $pointsQs = $repository->getPointQuestionByGamepin($gamepin);
-     *
-     *
-     * // initialiser tableau
-     *
-     * $allPlayers;
-     * $pointsTot = 100;
-     *
-     *
-     * // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
-     *
-     * foreach ( $pointsQs as $pointsQ ){
-     *
-     * $pointsTot[$pointsQ->getPseudojoueur()]+= $pointsQ->getPointqx();
-     *
-     * }
-     *
-     *
-     *
-     * return $this->render('OCQuizlaunchBundle:Default:stats.html.twig', array(
-     * 'pointsTot' => $pointsTot,
-     * 'allPlayers' => $allPlayers
-     * ));
-     *
-     * }
-     * else
-     * return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
-     *
-     * }
-     */
 }

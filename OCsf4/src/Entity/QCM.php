@@ -1,13 +1,12 @@
 <?php
 namespace App\Entity;
-
+use App\Entity\Quiz;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * QCM
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizgenBundle\Entity\QCMRepository")
+ * @ORM\Entity()
  */
 class QCM
 {
@@ -114,7 +113,7 @@ class QCM
     private $juste4;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OC\QuizgenBundle\Entity\Quiz", inversedBy="QCMs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="QCMs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $quiz;
@@ -247,10 +246,10 @@ class QCM
     /**
      * Set quiz
      *
-     * @param \OC\QuizgenBundle\Entity\Quiz $quiz
+     * @param Quiz $quiz
      * @return QCM
      */
-    public function setQuiz(\OC\QuizgenBundle\Entity\Quiz $quiz)
+    public function setQuiz(Quiz $quiz)
     {
         $this->quiz = $quiz;
 
@@ -260,7 +259,7 @@ class QCM
     /**
      * Get quiz
      *
-     * @return \OC\QuizgenBundle\Entity\Quiz 
+     * @return Quiz 
      */
     public function getQuiz()
     {

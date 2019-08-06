@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Image
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizgenBundle\Entity\ImageRepository")
+ * @ORM\Entity()
  */
 class Image
 {

@@ -8,8 +8,7 @@ use App\Validator as OCQuizlaunchAssert;
 /**
  * PointQuestion
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="OC\QuizlaunchBundle\Entity\PointQuestionRepository")
+ * @ORM\Entity()
  * @OCQuizlaunchAssert\VerifPseudoUnique
  */
 class PointQuestion

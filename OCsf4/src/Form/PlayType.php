@@ -1,7 +1,7 @@
 <?php
 namespace App\Form;
 
-
+use App\Entity\ReponseQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,7 +34,7 @@ class PlayType extends AbstractType
     public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OC\QuizdisBundle\Entity\ReponseQuestion',
+            'data_class' => ReponseQuestion::class,
 			'rep' => null,
 			'class' => 'btn btn-primary'
         ));
