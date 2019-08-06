@@ -1,5 +1,6 @@
 <?php
 namespace App\Validator;
+use App\Entity\Timer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,7 +25,7 @@ class VerifRepUniqueValidator extends ConstraintValidator
 	{
 		$timers = $this
 			->em
-			->getRepository('Timer')
+			->getRepository(Timer::class)
 			->findBy(
 				array('gamepin' => $reponseQuestion->getGamepin()), // Critere
 				array('question' => 'desc'),        // Tri

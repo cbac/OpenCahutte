@@ -29,7 +29,7 @@ class QuizGenController extends Controller
 	 * Add a quiz
 	 *
 	 * @Route("/add", name="oc_quizgen_add")
-	 * @Method("GET", "POST")
+	 * @Method({"GET", "POST"})
 	 */
 	public function addAction(Request $request)
 	{
@@ -80,7 +80,7 @@ class QuizGenController extends Controller
 	 *
 	 * @Route("/edit/{id}", name="oc_quizgen_edit", requirements={
      * "id": "\d+" }))
-	 * @Method("GET", "POST")
+	 * @Method({"GET", "POST"})
 	 */
 	public function editAction( Request $request, Quiz $quiz)
 	{
@@ -115,7 +115,7 @@ class QuizGenController extends Controller
 	 * "id": "\d+" }))
 	 * @Method("GET")
 	 */
-	public function viewAction(Quiz $quiz)
+	public function viewAction(Request $request, Quiz $quiz)
 	{
 		if (null === $quiz) {
 			throw new NotFoundHttpException("Le quiz n'existe pas.");
@@ -151,7 +151,7 @@ class QuizGenController extends Controller
 		$listQuizs = $this
 			->getDoctrine()
 			->getManager()
-			->getRepository('Quiz')
+			->getRepository(Quiz::class)
 			->findBy(
 				array('acces' => 'public'),
 				array('id' => 'desc'),
@@ -174,7 +174,7 @@ class QuizGenController extends Controller
 		$listQuizs = $this
 			->getDoctrine()
 			->getManager()
-			->getRepository('Quiz::class')
+			->getRepository(Quiz::class)
 			->findBy(
 				array('acces'=>'public'),
 				array('id' => 'desc')
@@ -208,7 +208,7 @@ class QuizGenController extends Controller
 			$listQuizs = $this
 				->getDoctrine()
 				->getManager()
-				->getRepository('Quiz::class')
+				->getRepository(Quiz::class)
 				->findBy(
 					array('author'=> $this->getUser()->getId()),
 					array('id' => 'desc')
@@ -298,5 +298,4 @@ class QuizGenController extends Controller
 			'form' => $form->createView(),
 		));
 	}
-	
 }

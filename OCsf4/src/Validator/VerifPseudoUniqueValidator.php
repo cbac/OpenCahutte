@@ -1,6 +1,6 @@
 <?php
 namespace App\Validator;
-
+use App\Entity\PointQuestion;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
@@ -22,7 +22,7 @@ class VerifPseudoUniqueValidator extends ConstraintValidator
 	public function validate($pointQuestion, Constraint $constraint)
 	{
 		$sessionjoueur = $this->em
-			->getRepository('PointQuestion')
+			->getRepository(PointQuestion::class)
 			->findBy(
 				array('gamepin'=>$pointQuestion->getGamepin(), 'idq'=>0, 'pseudojoueur'=>$pointQuestion->getPseudojoueur() )
 			)

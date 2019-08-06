@@ -1,6 +1,6 @@
 <?php
 namespace App\Validator;
-
+use App\Entity\Timer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
@@ -23,7 +23,7 @@ class VerifGamepinExistsValidator extends ConstraintValidator
 	public function validate($gamepin, Constraint $constraint)
 	{
 		$quiz = $this->em
-			->getRepository('Timer')
+			->getRepository(Timer::class)
 			->findByGamepin($gamepin->getGamepin())
 		;
 
