@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Form\QuizType;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -126,8 +127,12 @@ class QuizGenController extends Controller
 		if($idAuteur == 0)
 			$auteur= 'Anonyme';
 		else {
-			$userManager = $this->get('fos_user.user_manager');
+		    $em = $this->getDoctrine()->getManager();
+		    $auteur = $em->getRepository(User::class)->find($idAuteur)->getUserName();
+		    
+			/* $userManager = $this->get('fos_user.user_manager');
 			$auteur = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
+			*/
 		}
 				
 		if(($idAuteur != 0) && ($this->getUser() != null) && $idAuteur == $this->getUser()->getId())

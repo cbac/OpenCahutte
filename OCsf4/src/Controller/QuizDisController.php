@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\Timer;
-use App\Form\QuizType;
+use App\Entity\User;
 use App\Entity\ReponseQuestion;
 use App\Entity\PointQuestion;
 use App\Entity\Gamepin;
@@ -26,7 +26,7 @@ class QuizDisController extends Controller
 
     /**
      * Lists all quizs
-     *
+     * @Route("/home", name="oc_home")
      * @Route("/", name="oc_quizdis_select")
      * @Method({"GET", "POST"})
      */
@@ -96,25 +96,24 @@ class QuizDisController extends Controller
         $em = $this->getDoctrine()->getManager();
         $timers = $em->getRepository(Timer::class)->findByGamepin($gamepin);
         if (null == $timers) {
-            throw new NotFoundHttpException("Le gamepin " . $gamepin . " n'existe pas.");
+            throw new NotFoundHttpException("Unknown gamepin " . $gamepin);
         }
         $id = $timers[0]->getQuizid();
         $quiz = $em->getRepository(Quiz::class)->find($id);
         if (null === $quiz) {
-            throw new NotFoundHttpException("Le quiz d'id " . $id . " n'existe pas.");
+            throw new NotFoundHttpException("Can't find quiz for " . $gamepin);
         }
-
         $idAuteur = $quiz->getAuthor();
-
         if ($idAuteur == 0) {
-
             $auteur = "anonyme";
-        } 
-        else {
-            $userManager = $this->get('fos_user.user_manager');
+        } else {
+            /* $userManager = $this->get('fos_user.user_manager');
             $auteur = $userManager->findUserBy(array(
                 'id' => $idAuteur
             ))->getUsername();
+            */
+            $auteur = $em->getRepository(User::class)->find($idAuteur)->getUserName();
+            
         }
 
         $statReponse = new ReponseQuestion();
