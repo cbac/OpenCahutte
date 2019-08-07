@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class QCMType extends AbstractType
 {
@@ -25,40 +28,40 @@ class QCMType extends AbstractType
 		$align = array('style' => 'text-align:center');
 		
         $builder
-            ->add('question','text', array(
+            ->add('question',TextType::class, array(
 				'label' => 'Question', 
 				'attr' => $largeurChamps
 			))
 			
-            ->add('rep1','text', array(
+            ->add('rep1',TextType::class, array(
 				'label' => 'A', 
 				'attr' => $largeurChamps,
 				'label_attr' => $align
 			))
-            ->add('juste1','choice', $paramChoice)
+            ->add('juste1',ChoiceType::class, $paramChoice)
 			
-            ->add('rep2','text', array(
+            ->add('rep2',TextType::class, array(
 				'label' => 'B', 
 				'attr' => $largeurChamps,
 				'label_attr' => $align
 			))
-            ->add('juste2','choice', $paramChoice)
+			->add('juste2',ChoiceType::class, $paramChoice)
 			
-            ->add('rep3','text', array(
+            ->add('rep3',TextType::class, array(
 				'label' => 'C', 
 				'attr' => $largeurChamps,
 				'label_attr' => $align
 			))
-            ->add('juste3','choice', $paramChoice)
+			->add('juste3',ChoiceType::class, $paramChoice)
 			
-            ->add('rep4','text', array(
+            ->add('rep4',TextType::class, array(
 				'label' => 'D', 
 				'attr' => $largeurChamps,
 				'label_attr' => $align
 			))
-            ->add('juste4','choice', $paramChoice)
+			->add('juste4',ChoiceType::class, $paramChoice)
             
-            ->add('temps','integer', array(
+            ->add('temps',IntegerType::class, array(
 				'label' => 'Temps pour répondre (secondes)', 
 				'label_attr' => array('style'=> 'width: 300px; text-align:left'),
 				'attr' => array('style'=> 'width: 100px')

@@ -1,6 +1,5 @@
-{# src/templates/OCQuizGen/list.html.twig #}
-
-{% extends "OCQuizGen/layout.html.twig" %}
+{# src/templates/OCQuizLaunch/index.html.twig #}
+{% extends "OCQuizgen/layout.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
@@ -8,17 +7,15 @@
 
 {% block ocquizgen_body %}
 
-  <h2>Liste des quiz</h2>
+  <h2>Choisissez un quiz à lancer !</h2>
 
   <ul>
     {% for quiz in listQuizs %}
       <li>
-        <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
+        <a href="{{ path('oc_quizlaunch_pick', {'id': quiz.id}) }}">
           {{ quiz.nom }}
         </a>
-		{% set idauteur=quiz.author %}
-        par {{ listNoms[idauteur] }},
-		
+        par {{ quiz.author }},
         le {{ quiz.date|date('d/m/Y') }}
       </li>
     {% else %}

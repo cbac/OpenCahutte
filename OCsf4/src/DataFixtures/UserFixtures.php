@@ -24,9 +24,10 @@ class UserFixtures extends Fixture
     }
     private function loadUsers(ObjectManager $manager)
     {
-        foreach ($this->getUserData() as [$name,$plainPassword,$role]) {
-            $user = new User($name);
+        foreach ($this->getUserData() as [$email,$plainPassword,$role]) {
+            $user = new User();
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
+            $user->setEmail($email);
             $user->setPassword($encodedPassword);
             $user->addRole($role);
             $manager->persist($user);

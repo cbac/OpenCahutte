@@ -5,6 +5,9 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class PseudoType extends AbstractType
 {
@@ -16,12 +19,12 @@ class PseudoType extends AbstractType
     {	
 		$largeurChamps = 'width: 200px';
 		$builder
-			->add('pseudojoueur', 'text', array(
+		->add('pseudojoueur', TextType::class, array(
 				'attr' => array(
 					'style'=> $largeurChamps,
 				)
 			))
-			->add('save', 'submit', array(
+			->add('save', SubmitType::class, array(
 				'label' => 'GO !', 
 				'attr' => array(
 					'style'=> $largeurChamps,

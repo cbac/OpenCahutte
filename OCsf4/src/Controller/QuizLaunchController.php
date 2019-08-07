@@ -13,12 +13,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  *
  * @Route("/quizlaunch")
  */
-class QuizLaunchController extends Controller
+class QuizLaunchController extends AbstractController
 {
 
     /**

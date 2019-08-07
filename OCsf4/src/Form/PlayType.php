@@ -5,6 +5,8 @@ use App\Entity\ReponseQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class PlayType extends AbstractType
 {
@@ -17,8 +19,8 @@ class PlayType extends AbstractType
 		$rep=$options['rep'];
 		$class=$options['class'];
 		$builder
-			->add('reponseDonnee','hidden', array('data' => $rep))
-			->add('save','submit', array(
+			->add('reponseDonnee',HiddenType::class, array('data' => $rep))
+			->add('save',SubmitType::class, array(
 				'label' => $rep, 
 				'attr' => array(
 					'style'=> 'width: 100%; height:100%;  margin:2px; font-size:60px;',

@@ -16,12 +16,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  *
  * @Route("/quizdis")
  */
-class QuizDisController extends Controller
+class QuizDisController extends AbstractController
 {
 
     /**
@@ -33,7 +34,7 @@ class QuizDisController extends Controller
     public function indexAction(Request $request)
     {
         $gamepin = new Gamepin();
-        $form = $this->createForm(new GamepinType(), $gamepin);
+        $form = $this->createForm('App\Form\GamepinType', $gamepin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +57,7 @@ class QuizDisController extends Controller
     {
         $pointQuestion = new PointQuestion();
 
-        $form = $this->createForm(new PseudoType(), $pointQuestion);
+        $form = $this->createForm('App\Form\PseudoType', $pointQuestion);
 
         if ($request->isMethod('POST')) {
             $pointQuestion->setQuizid(0);
@@ -125,7 +126,7 @@ class QuizDisController extends Controller
         );
         $form = array();
         for ($i = 0; $i < 4; $i ++) {
-            $form[$i] = $this->createForm(new PlayType(), $statReponse, array(
+            $form[$i] = $this->createForm('App\Form\PlayType', $statReponse, array(
                 'rep' => chr(65 + $i),
                 'class' => $class[$i]
             ));

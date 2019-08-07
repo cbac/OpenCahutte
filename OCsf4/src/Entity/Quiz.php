@@ -66,10 +66,7 @@ class Quiz
      */
     private $nbQuestions;
     
-    
-    
-	
-	/**
+ 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
 	 */
     private $QCMs;
@@ -84,9 +81,9 @@ class Quiz
     /**
      * Get id
      *
-     * @return integer 
+     * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -95,27 +92,23 @@ class Quiz
      * Set id
      *
      * @param string $id
-     * @return Quiz
+     * @return self
      */
-    public function setId($id)
+    public function setId($id) : self
     {
         $this->id = $id;
-
         return $this;
     }
-  
-    
 
     /**
      * Set nom
      *
      * @param string $nom
-     * @return Quiz
+     * @return self
      */
-    public function setNom($nom)
+    public function setNom($nom) : self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -133,21 +126,20 @@ class Quiz
      * Set author
      *
      * @param string $author
-     * @return Quiz
+     * @return self
      */
-    public function setAuthor($author)
+    public function setAuthor($author) : self
     {
         $this->author = $author;
-
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return int
      */
-    public function getAuthor()
+    public function getAuthor():int
     {
         return $this->author;
     }
@@ -156,12 +148,11 @@ class Quiz
      * Set date
      *
      * @param \DateTime $date
-     * @return Quiz
+     * @return self
      */
-    public function setDate($date)
+    public function setDate($date):self
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -170,7 +161,7 @@ class Quiz
      *
      * @return \DateTime 
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
@@ -179,12 +170,11 @@ class Quiz
      * Set category
      *
      * @param string $category
-     * @return Quiz
+     * @return self
      */
-    public function setCategory($category)
+    public function setCategory($category) : self
     {
         $this->category = $category;
-
         return $this;
     }
 
@@ -193,7 +183,7 @@ class Quiz
      *
      * @return string 
      */
-    public function getCategory()
+    public function getCategory() :?string
     {
         return $this->category;
     }
@@ -202,12 +192,11 @@ class Quiz
      * Set type
      *
      * @param string $type
-     * @return Quiz
+     * @return self
      */
-    public function setType($type)
+    public function setType($type) : self
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -216,7 +205,7 @@ class Quiz
      *
      * @return string 
      */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
@@ -225,21 +214,20 @@ class Quiz
      * Set nbQuestions
      *
      * @param integer $nbQuestions
-     * @return Quiz
+     * @return self
      */
-    public function setNbQuestions($nbQuestions)
+    public function setNbQuestions($nbQuestions) : self
     {
         $this->nbQuestions = $nbQuestions;
-
         return $this;
     }
 
     /**
      * Get nbQuestions
      *
-     * @return integer 
+     * @return int
      */
-    public function getNbQuestions()
+    public function getNbQuestions() : int
     {
         return $this->nbQuestions;
     }
@@ -248,12 +236,11 @@ class Quiz
      * Add QCMs
      *
      * @param QCM $QCM
-     * @return Quiz
+     * @return self
      */
-    public function addQCM(QCM $QCM)
+    public function addQCM(QCM $QCM) : self
     {
         $this->QCMs[] = $QCM;
-		
         return $this;
     }
 
@@ -261,10 +248,12 @@ class Quiz
      * Remove QCMs
      *
      * @param QCM $QCM
+     * @return self
      */
-    public function removeQCM(QCM $QCM)
+    public function removeQCM(QCM $QCM) : self
     {
         $this->QCMs->removeElement($QCM);
+        return $this;
     }
 
     /**
@@ -272,7 +261,7 @@ class Quiz
      *
      * @return ArrayCollection 
      */
-    public function getQCMs()
+    public function getQCMs() : ArrayCollection
     {
         return $this->QCMs;
     }
@@ -289,12 +278,11 @@ class Quiz
      * Set acces
      *
      * @param string $acces
-     * @return Quiz
+     * @return self
      */
-    public function setAcces($acces)
+    public function setAcces($acces) : self
     {
         $this->acces = $acces;
-
         return $this;
     }
 
@@ -303,7 +291,7 @@ class Quiz
      *
      * @return string 
      */
-    public function getAcces()
+    public function getAcces() : string
     {
         return $this->acces;
     }
