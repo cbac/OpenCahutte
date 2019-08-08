@@ -19,8 +19,8 @@
 	  <br/><br/>
       <p>
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_logout') }}">Déconnexion</a> -
-	Connecté en tant que <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> - 
+	<a class="btn btn-primary btn-lg" href="{{ path('app_logout') }}">Logout</a> -
+	Connected as {{ app.user.username }} - 
       {% else %}
 	<a class="btn btn-primary btn-lg" href="{{ path('app_login') }}">
           Connectez-vous »

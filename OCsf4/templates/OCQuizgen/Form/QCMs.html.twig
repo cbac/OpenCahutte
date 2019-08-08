@@ -1,0 +1,33 @@
+    {{ form_row(form.question) }}
+    	<table>
+    
+    {{ form_errors(form.temps) }}	
+    <tr>
+	<td>{{ form_label(form.temps) }}</td>
+	<td>{{ form_widget(form.temps) }}</td>
+	
+    </tr>	
+	
+	<tr>
+	<td>{{ form_row(form.rep1) }}</td>
+    <td>{{ form_row(form.juste1) }}</td>
+	</tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep2) }}</td>
+    <td>{{ form_row(form.juste2) }}</td>
+    </tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep3) }}</td>
+    <td>{{ form_row(form.juste3) }}</td>
+    </tr>
+	
+	<tr>
+	<td>{{ form_row(form.rep4) }}</td>
+    <td>{{ form_row(form.juste4) }}</td>
+    </tr>
+    
+    
+	
+	</table>

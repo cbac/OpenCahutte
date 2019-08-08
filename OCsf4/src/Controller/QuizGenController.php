@@ -49,6 +49,7 @@ class QuizGenController extends AbstractController
             } else {
                 $quiz->setAuthor($this->getUser()
                     ->getId());
+                $quiz->setAcces('private');
             }
 
             $form->handleRequest($request);
@@ -96,15 +97,14 @@ class QuizGenController extends AbstractController
         if (null === $quiz) {
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
-        $form = $this->createForm('App\Form\QuizType', $quiz, array(
-            'user' => $this->getUser()
-        ));
+        $form = $this->createForm('App\Form\QuizType', $quiz);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
                     $QCM->setQuiz($quiz);
                 }
+                $em = $this->getDoctrine()->getManager();
                 $em->flush();
                 $request->getSession()
                     ->getFlashBag()

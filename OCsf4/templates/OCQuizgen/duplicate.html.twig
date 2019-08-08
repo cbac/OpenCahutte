@@ -1,19 +1,19 @@
-{# src/templates/OCQuizGen/add.html.twig #}
+{# src/templates/OCQuizgen/add.html.twig #}
 
 {% extends "OCQuizgen/layout.html.twig" %}
 
 {% block title %}
-  Dupliquer un quiz - {{ parent() }}
+  Duplicate quiz - {{ parent() }}
 {% endblock %}
 
 {% block ocquizgen_body %}
 
-  <h2>Dupliquer un quiz</h2>
+  <h2>Duplicate quiz</h2>
 
   {{ include("OCQuizgenBundle:Default:form.html.twig") }}
 
   <p>
-    Vous dupliquez un quiz. 
+    You are cloning a quiz. 
   </p>
 
 {% endblock %}

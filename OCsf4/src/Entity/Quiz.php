@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Entity\QCM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Quiz
@@ -259,9 +260,9 @@ class Quiz
     /**
      * Get QCMs
      *
-     * @return ArrayCollection 
+     * @return Collection 
      */
-    public function getQCMs() : ArrayCollection
+    public function getQCMs() : Collection
     {
         return $this->QCMs;
     }

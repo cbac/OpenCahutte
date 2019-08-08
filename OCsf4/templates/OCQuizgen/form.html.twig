@@ -1,4 +1,4 @@
-{# src/templates/OCQuizGen/edit.html.twig #}
+{# src/templates/OCQuizgen/edit.html.twig #}
 
 <h3>Formulaire de création de Quiz </h3>
 
@@ -12,12 +12,11 @@
 
 	
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-		<h4 class="simili-form">Auteur : <i>{{ app.user.username }}</i></h4>
+		<h4 class="simili-form">Autor : <i>{{ app.user.username }}</i></h4>
 		<br/>
-		{{ form_row(form.acces) }}
 	{% else %}
-		<h4 class="simili-form">Auteur : <i>Anonyme</i></h4>
-		<h4 class="simili-form">Accès : <i>Public</i> (Connectez vous pour le passer en <i>Privé</i>)</h4>
+		<h4 class="simili-form">Autor : <i>Anonyme</i></h4>
+		<h4 class="simili-form">Acces : <i>Public</i> (Connect to select <i>Private</i>)</h4>
 		<br/>
     {% endif %}
 	{# Génération du label + error + widget pour un champ #}
@@ -29,7 +28,7 @@
 	
     <ul class="QCMs" data-prototype="
 		{% filter escape %}
-            {{ include('OCQuizgenBundle:Form:QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
+            {{ include('OCQuizgen/Form/QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
         {% endfilter %}
 		<br/>
 	">

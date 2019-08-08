@@ -1,14 +1,14 @@
-{# src/templates/OCQuizGen/mylist.html.twig #}
+{# src/templates/OCQuizgen/mylist.html.twig #}
 
 {% extends "OCQuizgen/layout.html.twig" %}
 
 {% block title %}
-  Accueil - {{ parent() }}
+  My Quiz List - {{ parent() }}
 {% endblock %}
 
 {% block ocquizgen_body %}
 
-  <h2>Liste des quiz de {{ auteur }}</h2>
+  <h2>Quiz list for {{ auteur }}</h2>
 
   <ul>
     {% for quiz in listQuizs %}
@@ -20,7 +20,7 @@
         le {{ quiz.date|date('d/m/Y') }}
       </li>
     {% else %}
-      <li>Pas (encore !) de quiz.</li>
+      <li>No Quiz yet.</li>
     {% endfor %}
   </ul>
 

@@ -1,25 +1,25 @@
-{# src/templates/OCQuizGen/edit.html.twig #}
+{# src/templates/OCQuizgen/edit.html.twig #}
 
 {% extends "OCQuizgen/layout.html.twig" %}
 
 {% block title %}
-  Modifier un quiz - {{ parent() }}
+  Modify quiz - {{ parent() }}
 {% endblock %}
 
 {% block ocquizgen_body %}
 
-  <h2>Modifier un quiz</h2>
+  <h2>Modify quiz</h2>
 
-  {{ include("OCQuizGen/form.html.twig") }}
+  {{ include("OCQuizgen/form.html.twig") }}
 
   <p>
-    Vous éditez un quiz. 
+    You are modifiing a quiz. 
   </p>
 
   <p>
     <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour au quiz
+      Back to the quiz
     </a>
   </p>
 
