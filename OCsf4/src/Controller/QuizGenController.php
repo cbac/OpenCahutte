@@ -2,14 +2,12 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
-use App\Form\QuizType;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  *
@@ -17,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class QuizGenController extends AbstractController
 {
-
+     
     /**
      * Lists all quizs => redirect to quizdis
      *

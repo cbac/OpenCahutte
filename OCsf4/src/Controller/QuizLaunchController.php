@@ -2,7 +2,6 @@
 // controller prof
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Quiz;
 use App\Entity\QCM;
 use App\Entity\ReponseQuestion;
@@ -10,7 +9,7 @@ use App\Entity\Timer;
 use App\Entity\PointQuestion;
 use App\Entity\Stats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
