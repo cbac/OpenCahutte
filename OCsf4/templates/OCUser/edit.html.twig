@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du Client{% endblock %}
+
+{% block body %}
+    <h1>Modification Client</h1>
+
+    {{ include('OCUser/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('OCUser/_delete_form.html.twig') }}
+    {{ include('_button.html.twig', {'action_path':'user_index','label':'Liste des utilisateurs'}) }}
+
+{% endblock %}

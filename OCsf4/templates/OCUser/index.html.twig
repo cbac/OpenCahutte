@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users List{% endblock %}
+
+{% block body %}
+    <h1>Users List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>
+                {{ include('_button_id.html.twig', {'action_path':'user_edit','label':'Edit user',
+                'id_value': user.id}) }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ include('_button.html.twig', {'action_path':'oc_register','label':'New user'}) }}
+
+{% endblock %}

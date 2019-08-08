@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un nouveau Client{% endblock %}
+
+{% block body %}
+    <h1>Création d'un nouveau  Client</h1>
+
+    {{ include('OCUser/_form.html.twig') }}
+
+    {{ include('_button.html.twig', {'action_path':'user_index','label':'Users List'}) }}
+{% endblock %}

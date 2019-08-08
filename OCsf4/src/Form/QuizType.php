@@ -40,7 +40,7 @@ class QuizType extends AbstractType
 				'label' => 'Catégorie', 
 				'attr' => $largeurChamps
 			))
-			->add('QCMs',CollectionType::class, array(
+			->add('QCMs', CollectionType::class, array(
 				'entry_type'   => QCMType::class,
 				'allow_add'    => true,
 				'allow_delete' => true

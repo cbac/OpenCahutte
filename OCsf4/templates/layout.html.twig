@@ -22,10 +22,10 @@
 	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_logout') }}">Déconnexion</a> -
 	Connecté en tant que <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> - 
       {% else %}
-	<a class="btn btn-primary btn-lg" href="{{ path('fos_user_security_login') }}">
+	<a class="btn btn-primary btn-lg" href="{{ path('app_login') }}">
           Connectez-vous »
         </a><br/>
-		<div><a href="{{ path('fos_user_registration_register') }}" class="btn btn-success btn-xs">Inscription</a></div>
+		<div><a href="{{ path('app_register') }}" class="btn btn-success btn-xs">Inscription</a></div>
       {% endif %}
       </p>
     </div>

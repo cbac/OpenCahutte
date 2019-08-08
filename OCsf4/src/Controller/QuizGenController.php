@@ -31,7 +31,7 @@ class QuizGenController extends AbstractController
 
     /**
      * Add a quiz
-     *
+     * @Route("/new", name="oc_quizgen_new")
      * @Route("/add", name="oc_quizgen_add")
      * @Method({"GET", "POST"})
      */
