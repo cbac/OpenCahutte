@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\User;
+use App\Form\QuizType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,7 @@ class QuizGenController extends AbstractController
     {
         $quiz = new Quiz();
 
-        $form = $this->createForm('App\Form\QuizType', $quiz, array());
+        $form = $this->createForm(QuizType::class, $quiz, array());
 
         if ($request->isMethod('POST')) {
 
@@ -95,7 +96,7 @@ class QuizGenController extends AbstractController
         if (null === $quiz) {
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
-        $form = $this->createForm('App\Form\QuizType', $quiz);
+        $form = $this->createForm(QuizType::class, $quiz);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -303,7 +304,7 @@ class QuizGenController extends AbstractController
         // $nQuiz->setQuiz(aQuiz->getQuiz());
         $newQuiz = clone $oldQuiz;
 
-        $form = $this->createForm('App\Form\QuizType', $newQuiz, array(
+        $form = $this->createForm(QuizType::class, $newQuiz, array(
             'user' => $this->getUser()
         ));
         if ($request->getMethod() == 'POST') {

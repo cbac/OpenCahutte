@@ -47,6 +47,6 @@ class PlayType extends AbstractType
      */
     public function getName()
     {
-        return 'oc_quizdisbundle_play';
+        return 'Form\PlayType';
     }
 }

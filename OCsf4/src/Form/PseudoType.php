@@ -47,6 +47,6 @@ class PseudoType extends AbstractType
      */
     public function getName()
     {
-        return 'oc_quizdisbundle_pseudo';
+        return 'Form\PseudoType';
     }
 }

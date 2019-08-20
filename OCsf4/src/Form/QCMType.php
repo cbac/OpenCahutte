@@ -84,6 +84,6 @@ class QCMType extends AbstractType
      */
     public function getName()
     {
-        return 'oc_quizgenbundle_qcm';
+        return 'Form\QCMType';
     }
 }

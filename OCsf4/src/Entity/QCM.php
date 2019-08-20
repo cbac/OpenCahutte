@@ -26,8 +26,7 @@ class QCM
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    
+     
       /**
      * @var integer
      *
@@ -35,33 +34,26 @@ class QCM
      */
     private $idq;
     
-    
      /**
      * @var integer
      *
      * @ORM\Column(name="temps", type="integer")
      */
     private $temps;
-    
-
+ 
     /**
      * @var string
      *
      * @ORM\Column(name="question", type="string", length=255)
      */
-    
-     
-    private $question;
-
-    
+     private $question;
     
     /**
      * @var string
      *
      * @ORM\Column(name="rep1", type="string", length=255)
      */
-     
-    private $rep1;
+     private $rep1;
 
     /**
      * @var string
@@ -123,7 +115,7 @@ class QCM
      *
      * @return integer 
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -134,7 +126,7 @@ class QCM
      * @param string $question
      * @return QCM
      */
-    public function setQuestion($question)
+    public function setQuestion($question) : self
     {
         $this->question = $question;
 
@@ -146,7 +138,7 @@ class QCM
      *
      * @return string 
      */
-    public function getQuestion()
+    public function getQuestion() : ? string
     {
         return $this->question;
     }
@@ -157,7 +149,7 @@ class QCM
      * @param string $rep1
      * @return QCM
      */
-    public function setRep1($rep1)
+    public function setRep1($rep1) : self
     {
         $this->rep1 = $rep1;
 
@@ -169,7 +161,7 @@ class QCM
      *
      * @return string 
      */
-    public function getRep1()
+    public function getRep1() : ? string
     {
         return $this->rep1;
     }
@@ -180,7 +172,7 @@ class QCM
      * @param string $rep2
      * @return QCM
      */
-    public function setRep2($rep2)
+    public function setRep2($rep2) : self
     {
         $this->rep2 = $rep2;
 
@@ -192,7 +184,7 @@ class QCM
      *
      * @return string 
      */
-    public function getRep2()
+    public function getRep2() : ? string
     {
         return $this->rep2;
     }
@@ -203,7 +195,7 @@ class QCM
      * @param string $rep3
      * @return QCM
      */
-    public function setRep3($rep3)
+    public function setRep3($rep3) : self
     {
         $this->rep3 = $rep3;
 
@@ -215,7 +207,7 @@ class QCM
      *
      * @return string 
      */
-    public function getRep3()
+    public function getRep3() : ? string
     {
         return $this->rep3;
     }
@@ -226,7 +218,7 @@ class QCM
      * @param string $rep4
      * @return QCM
      */
-    public function setRep4($rep4)
+    public function setRep4($rep4) : self
     {
         $this->rep4 = $rep4;
 
@@ -238,7 +230,7 @@ class QCM
      *
      * @return string 
      */
-    public function getRep4()
+    public function getRep4() : ? string
     {
         return $this->rep4;
     }
@@ -249,7 +241,7 @@ class QCM
      * @param Quiz $quiz
      * @return QCM
      */
-    public function setQuiz(Quiz $quiz)
+    public function setQuiz(Quiz $quiz) : self
     {
         $this->quiz = $quiz;
 
@@ -261,7 +253,7 @@ class QCM
      *
      * @return Quiz 
      */
-    public function getQuiz()
+    public function getQuiz() : Quiz
     {
         return $this->quiz;
     }
@@ -272,7 +264,7 @@ class QCM
      * @param boolean $juste1
      * @return QCM
      */
-    public function setJuste1($juste1)
+    public function setJuste1($juste1) : self
     {
         $this->juste1 = $juste1;
 
@@ -284,7 +276,7 @@ class QCM
      *
      * @return boolean 
      */
-    public function getJuste1()
+    public function getJuste1() : bool
     {
         return $this->juste1;
     }
@@ -295,7 +287,7 @@ class QCM
      * @param boolean $juste2
      * @return QCM
      */
-    public function setJuste2($juste2)
+    public function setJuste2($juste2) : self
     {
         $this->juste2 = $juste2;
 
@@ -307,7 +299,7 @@ class QCM
      *
      * @return boolean 
      */
-    public function getJuste2()
+    public function getJuste2() : bool
     {
         return $this->juste2;
     }
@@ -318,7 +310,7 @@ class QCM
      * @param boolean $juste3
      * @return QCM
      */
-    public function setJuste3($juste3)
+    public function setJuste3($juste3) : self
     {
         $this->juste3 = $juste3;
 
@@ -330,7 +322,7 @@ class QCM
      *
      * @return boolean 
      */
-    public function getJuste3()
+    public function getJuste3() : bool
     {
         return $this->juste3;
     }
@@ -341,7 +333,7 @@ class QCM
      * @param boolean $juste4
      * @return QCM
      */
-    public function setJuste4($juste4)
+    public function setJuste4($juste4) : self
     {
         $this->juste4 = $juste4;
 
@@ -353,12 +345,16 @@ class QCM
      *
      * @return boolean 
      */
-    public function getJuste4()
+    public function getJuste4() : bool
     {
         return $this->juste4;
     }
-	
-	public function getReponsesPossibles() {
+	/**
+	 * 
+	 * @return string[]
+	 */
+	public function getReponsesPossibles() : array
+	{
 		return array(
 			1 => $this->getRep1(),
 			2 => $this->getRep2(),
@@ -366,8 +362,12 @@ class QCM
 			4 => $this->getRep4()
 		);
 	}
-	
-	public function getReponsesJustes() {
+	/**
+	 *
+	 * @return string[]
+	 */
+	public function getReponsesJustes() : array
+	{
 		$reponsesJustes=array();
 		
 		if($this->getJuste1())
@@ -388,7 +388,7 @@ class QCM
      * @param integer $idq
      * @return QCM
      */
-    public function setIdq($idq)
+    public function setIdq($idq) : self
     {
         $this->idq = $idq;
 
@@ -400,7 +400,7 @@ class QCM
      *
      * @return integer 
      */
-    public function getIdq()
+    public function getIdq() : int
     {
         return $this->idq;
     }
@@ -411,7 +411,7 @@ class QCM
      * @param integer $temps
      * @return QCM
      */
-    public function setTemps($temps)
+    public function setTemps($temps) : self
     {
         $this->temps = $temps;
 
@@ -423,7 +423,7 @@ class QCM
      *
      * @return integer 
      */
-    public function getTemps()
+    public function getTemps() : int
     {
         return $this->temps;
     }

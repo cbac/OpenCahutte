@@ -241,7 +241,7 @@ class Quiz
      */
     public function addQCM(QCM $QCM) : self
     {
-        $this->QCMs[] = $QCM;
+        $this->QCMs->add($QCM) ;
         return $this;
     }
 
