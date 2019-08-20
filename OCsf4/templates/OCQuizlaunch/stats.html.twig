@@ -1,11 +1,11 @@
 
-{% extends "OCQuizgen/layout.html.twig" %}
+{% extends "/layout.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocquizgen_body %}
+{% block body %}
 
 <h2>Résultats du quiz "{{ quiz.nom }}" :</h2>
 {% for key in allPlayers %}

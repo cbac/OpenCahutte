@@ -1,12 +1,12 @@
 {# src/templates/templates/QuizDis/layout.html.twig #}
 
-{% extends "OCQuizdis/layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block ocquizgen_body %}
+{% block body %}
 
 {# Overture de la balise <form> du formulaire HTML #}
 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
