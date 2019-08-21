@@ -193,16 +193,13 @@ class QuizGenController extends AbstractController
         ), array(
             'id' => 'desc'
         ));
-        $listNoms = null;
+        $listNoms = array();
         foreach ($listQuizs as $quiz) {
-            $idAuteur = $quiz->getAuthor();
-            if ($idAuteur == 0)
-                $listNoms[$idAuteur] = 'Anonyme';
+            $auteur = $quiz->getAuthor();
+            if ($auteur == null)
+                $listNoms[] = 'Anonyme';
             else {
-                $auteur = $em->getRepository(User::class)
-                    ->find($idAuteur)
-                    ->getUserName();
-                $listNoms[$idAuteur] = $auteur;
+                $listNoms[] = $auteur->getNom();
                 // $userManager = $this->get('fos_user.user_manager');
                 // $listNoms[$idAuteur] = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
             }

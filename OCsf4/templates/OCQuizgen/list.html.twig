@@ -16,8 +16,7 @@
         <a href="{{ path('oc_quizgen_view', {'id': quiz.id}) }}">
           {{ quiz.nom }}
         </a>
-		{% set idauteur=quiz.author %}
-        par {{ listNoms[idauteur] }},
+        par {{ listNoms[loop.index0] }},
 		
         le {{ quiz.date|date('d/m/Y') }}
       </li>

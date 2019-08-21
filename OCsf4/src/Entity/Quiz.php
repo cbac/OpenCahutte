@@ -131,9 +131,9 @@ class Quiz
     /**
      * Get author
      *
-     * @return int
+     * @return User
      */
-    public function getAuthor():int
+    public function getAuthor():? User
     {
         return $this->author;
     }
