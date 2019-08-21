@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Form;
-
+use App\Entity\QCM;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -75,7 +75,7 @@ class QCMType extends AbstractType
     public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\QCM'
+            'data_class' => QCM::class
         ));
     }
 

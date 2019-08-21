@@ -30,7 +30,7 @@ class Quiz
     private $nom;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="quizzes")
      */
     private $author;
 
@@ -59,13 +59,6 @@ class Quiz
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
-    
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nbQuestions", type="integer")
-     */
-    private $nbQuestions;
     
  	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\QCM", mappedBy="quiz", cascade={"persist", "remove"})
@@ -212,25 +205,13 @@ class Quiz
     }
 
     /**
-     * Set nbQuestions
-     *
-     * @param integer $nbQuestions
-     * @return self
-     */
-    public function setNbQuestions($nbQuestions) : self
-    {
-        $this->nbQuestions = $nbQuestions;
-        return $this;
-    }
-
-    /**
      * Get nbQuestions
      *
      * @return int
      */
     public function getNbQuestions() : int
     {
-        return $this->nbQuestions;
+        return $this->QCMs->count();
     }
 
     /**
@@ -242,6 +223,7 @@ class Quiz
     public function addQCM(QCM $QCM) : self
     {
         $this->QCMs->add($QCM) ;
+        $QCM->setQuiz($this);
         return $this;
     }
 
@@ -254,6 +236,7 @@ class Quiz
     public function removeQCM(QCM $QCM) : self
     {
         $this->QCMs->removeElement($QCM);
+        $QCM->setQuiz();
         return $this;
     }
 

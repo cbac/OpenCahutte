@@ -2,6 +2,8 @@
 
 namespace App\Form; 
 
+use App\Entity\Quiz;
+use App\Entity\QCM;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -69,7 +71,7 @@ class QuizType extends AbstractType
     public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Quiz',
+            'data_class' => Quiz::class,
 			'user' => null
         ));
     }

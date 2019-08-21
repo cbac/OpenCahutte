@@ -39,9 +39,9 @@ class Gamepin
      * Set gamepin
      *
      * @param integer $gamepin
-     * @return ReponseQuestion
+     * @return Gamepin
      */
-    public function setGamepin($gamepin)
+    public function setGamepin($gamepin) : self
     {
         $this->gamepin = $gamepin;
 
@@ -53,7 +53,7 @@ class Gamepin
      *
      * @return integer 
      */
-    public function getGamepin()
+    public function getGamepin() : ? int
     {
         return $this->gamepin;
     }

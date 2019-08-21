@@ -56,16 +56,11 @@ class QuizGenController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($quiz);
-
-                $i = 1;
-                foreach ($quiz->getQCMs() as $QCM) {
-                    $QCM->setIdq($i);
+                $QCMS = $quiz->getQCMs();
+                foreach ($QCMs as $key => $QCM) {
+                    $QCM->setIdq($key+1);
                     $QCM->setQuiz($quiz);
-                    $i ++;
                 }
-
-                $quiz->setNbQuestions($i - 1);
-
                 $em->flush();
 
                 $request->getSession()
@@ -101,9 +96,11 @@ class QuizGenController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
+                    var_dump($QCM);
                     $QCM->setQuiz($quiz);
                 }
                 $em = $this->getDoctrine()->getManager();
+                $em->persist($quiz);
                 $em->flush();
                 $request->getSession()
                     ->getFlashBag()

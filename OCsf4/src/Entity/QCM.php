@@ -27,13 +27,6 @@ class QCM
      */
     private $id;
      
-      /**
-     * @var integer
-     *
-     * @ORM\Column(name="idq", type="integer")
-     */
-    private $idq;
-    
      /**
      * @var integer
      *
@@ -106,7 +99,6 @@ class QCM
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="QCMs")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $quiz;
 
@@ -241,7 +233,7 @@ class QCM
      * @param Quiz $quiz
      * @return QCM
      */
-    public function setQuiz(Quiz $quiz) : self
+    public function setQuiz(Quiz $quiz=null) : self
     {
         $this->quiz = $quiz;
 
@@ -381,29 +373,6 @@ class QCM
 			
 		return $reponsesJustes;
 	}
-
-    /**
-     * Set idq
-     *
-     * @param integer $idq
-     * @return QCM
-     */
-    public function setIdq($idq) : self
-    {
-        $this->idq = $idq;
-
-        return $this;
-    }
-
-    /**
-     * Get idq
-     *
-     * @return integer 
-     */
-    public function getIdq() : int
-    {
-        return $this->idq;
-    }
 
     /**
      * Set temps
