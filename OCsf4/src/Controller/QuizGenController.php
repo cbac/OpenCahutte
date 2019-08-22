@@ -42,10 +42,10 @@ class QuizGenController extends AbstractController
 
             if ($this->getUser() == null) {
                 $quiz->setAuthor(null);
-                $quiz->setAcces('public');
+                $quiz->setAccess('public');
             } else {
                 $quiz->setAuthor($this->getUser());
-                $quiz->setAcces('private');
+                $quiz->setAccess('private');
             }
 
             $form->handleRequest($request);
@@ -128,35 +128,25 @@ class QuizGenController extends AbstractController
         if (null === $quiz) {
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
+        $auteur = $quiz->getAuthor();
+        $access = $quiz->getAccess();
 
-        $idAuteur = $quiz->getAuthor();
-        $acces = $quiz->getAcces();
-        if ($idAuteur == 0)
-            $auteur = 'Anonyme';
-        else {
-            $em = $this->getDoctrine()->getManager();
-            $auteur = $em->getRepository(User::class)
-                ->find($idAuteur)
-                ->getUserName();
-
-            /*
-             * $userManager = $this->get('fos_user.user_manager');
-             * $auteur = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
-             */
-        }
-
-        if (($idAuteur != 0) && ($this->getUser() != null) && $idAuteur == $this->getUser()->getId())
+        if ($auteur == $this->getUser()) {
             return $this->render('OCQuizgen\view.html.twig', array(
                 'quiz' => $quiz,
-                'auteur' => $auteur
+                'auteur' => $auteur->getEmail()
             ));
-        else if ($acces == 'public')
-            return $this->render('OCQuizgen\viewpublic.html.twig', array(
-                'quiz' => $quiz,
-                'auteur' => $auteur
-            ));
-        else
-            throw new NotFoundHttpException("Vous n'avez pas accès au quiz ");
+        } else {
+            if ($access == 'public') {
+
+                return $this->render('OCQuizgen\viewpublic.html.twig', array(
+                    'quiz' => $quiz,
+                    'auteur' => $auteur == null ? 'Anonyme' : $auteur->getEmail()
+                ));
+            } else {
+                throw new NotFoundHttpException("Vous n'avez pas accès au quiz ");
+            }
+        }
     }
 
     /**

@@ -265,7 +265,7 @@ class Quiz
      * @param string $acces
      * @return self
      */
-    public function setAcces($acces) : self
+    public function setAccess($acces) : self
     {
         $this->acces = $acces;
         return $this;
@@ -276,7 +276,7 @@ class Quiz
      *
      * @return string 
      */
-    public function getAcces() : string
+    public function getAccess() : string
     {
         return $this->acces;
     }

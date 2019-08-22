@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
         foreach ($this->getQuizData() as [$nom,$access,$category]) {
             $quiz->setDate(date_create());
             $quiz->setNom($nom);
-            $quiz->setAcces($access);
+            $quiz->setAccess($access);
             $quiz->setCategory($category);
         }
         
