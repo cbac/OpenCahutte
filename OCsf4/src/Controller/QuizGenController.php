@@ -2,13 +2,13 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Entity\QCM;
 use App\Entity\User;
 use App\Form\QuizType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  *
@@ -20,8 +20,7 @@ class QuizGenController extends AbstractController
     /**
      * Lists all quizs => redirect to quizdis
      *
-     * @Route("/", name="oc_quizgen_homepage")
-     * @Method("GET")
+     * @Route("/", name="oc_quizgen_homepage", methods={"GET"})
      */
     public function indexAction()
     {
@@ -30,24 +29,22 @@ class QuizGenController extends AbstractController
 
     /**
      * Add a quiz
-     * @Route("/new", name="oc_quizgen_new")
-     * @Route("/add", name="oc_quizgen_add")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="oc_quizgen_new", methods={"GET", "POST"})
+     * @Route("/add", name="oc_quizgen_add", methods={"GET", "POST"})
      */
     public function addAction(Request $request)
     {
         $quiz = new Quiz();
 
-        $form = $this->createForm(QuizType::class, $quiz, array());
+        $form = $this->createForm(QuizType::class, $quiz);
 
         if ($request->isMethod('POST')) {
 
             if ($this->getUser() == null) {
-                $quiz->setAuthor(0);
+                $quiz->setAuthor(null);
                 $quiz->setAcces('public');
             } else {
-                $quiz->setAuthor($this->getUser()
-                    ->getId());
+                $quiz->setAuthor($this->getUser());
                 $quiz->setAcces('private');
             }
 
@@ -55,11 +52,14 @@ class QuizGenController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                dump($quiz);
+
                 $em->persist($quiz);
-                $QCMS = $quiz->getQCMs();
-                foreach ($QCMs as $key => $QCM) {
-                    $QCM->setIdq($key+1);
-                    $QCM->setQuiz($quiz);
+                $QCMs = $quiz->getQCMs();
+                foreach ($QCMs as $key => $qcm) {
+                    $qcm->setIdq($key);
+                    $qcm->setQuiz($quiz);
+                    $em->persist($qcm);
                 }
                 $em->flush();
 
@@ -83,8 +83,7 @@ class QuizGenController extends AbstractController
      * Edit a quiz
      *
      * @Route("/edit/{id}", name="oc_quizgen_edit", requirements={
-     * "id": "\d+" }))
-     * @Method({"GET", "POST"})
+     * "id": "\d+" }, methods={"GET", "POST"})
      */
     public function editAction(Request $request, Quiz $quiz)
     {
@@ -92,14 +91,16 @@ class QuizGenController extends AbstractController
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
         $form = $this->createForm(QuizType::class, $quiz);
+        $form->handleRequest($request);
+        
         if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();     
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
                     var_dump($QCM);
                     $QCM->setQuiz($quiz);
+                    $em->persist($qcm);
                 }
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($quiz);
                 $em->flush();
                 $request->getSession()
@@ -120,8 +121,7 @@ class QuizGenController extends AbstractController
      * View a quiz
      *
      * @Route("/view/{id}", name="oc_quizgen_view", requirements={
-     * "id": "\d+" }))
-     * @Method("GET")
+     * "id": "\d+" }, methods={"GET", "POST"})
      */
     public function viewAction(Request $request, Quiz $quiz)
     {
@@ -159,32 +159,13 @@ class QuizGenController extends AbstractController
             throw new NotFoundHttpException("Vous n'avez pas accès au quiz ");
     }
 
-    /*
-     * Seems unused
-     */
-    private function menuAction($limit)
-    {
-        $listQuizs = $this->getDoctrine()
-            ->getManager()
-            ->getRepository(Quiz::class)
-            ->findBy(array(
-            'acces' => 'public'
-        ), array(
-            'id' => 'desc'
-        ), $limit, 0);
-        return $this->render('OCQuizgen\menu.html.twig', array(
-            'listQuizs' => $listQuizs
-        ));
-    }
-
     /**
      * Lists all public quizs
      * TODO remove fos_user management
      *
-     * @Route("/list", name="oc_quizgen_list")
-     * @Method("GET")
+     * @Route("/list", name="oc_quizgen_list", methods={"GET"})
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -200,8 +181,6 @@ class QuizGenController extends AbstractController
                 $listNoms[] = 'Anonyme';
             else {
                 $listNoms[] = $auteur->getNom();
-                // $userManager = $this->get('fos_user.user_manager');
-                // $listNoms[$idAuteur] = $userManager->findUserBy(array('id' => $idAuteur))->getUsername();
             }
         }
 
@@ -215,10 +194,9 @@ class QuizGenController extends AbstractController
      * Lists a user quizs
      * TODO remove fos_user management
      *
-     * @Route("/mylist", name="oc_quizgen_mylist")
-     * @Method("GET")
+     * @Route("/mylist", name="oc_quizgen_mylist", methods={"GET"})
      */
-    public function mylistAction()
+    public function mylistAction(Request $request)
     {
         if ($this->getUser() != NULL) {
             $listQuizs = $this->getDoctrine()
@@ -236,23 +214,21 @@ class QuizGenController extends AbstractController
                     ->getUsername()
             ));
         } else
-            return $this->redirect($this->generateUrl('fos_user_registration_register'));
+            return $this->redirect($this->generateUrl('oc_register'));
     }
 
     /**
      * Delete a quiz
      *
      * @Route("/delete/{id}", name="oc_quizgen_delete", requirements={
-     * "id": "\d+" }))
-     * @Method({"GET","DELETE"})
+     * "id": "\d+" }, methods={"GET","DELETE"})
      */
-    public function deleteAction(Quiz $quiz)
+    public function deleteAction(Request $request, Quiz $quiz)
     {
         // On crée un formulaire vide, qui ne contiendra que le champ CSRF
         // Cela permet de protéger la suppression d'article contre cette faille
         $form = $this->createFormBuilder()->getForm();
 
-        $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
@@ -282,8 +258,7 @@ class QuizGenController extends AbstractController
      * Duplicate a quiz
      *
      * @Route("/delete/{id}", name="oc_quizgen_duplicate", requirements={
-     * "id": "\d+" }))
-     * @Method({"GET","POST"})
+     * "id": "\d+" }, methods={"GET","POST"})
      */
     public function duplicateAction(Request $request, Quiz $oldQuiz)
     {

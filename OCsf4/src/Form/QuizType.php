@@ -55,6 +55,7 @@ class QuizType extends AbstractType
 			))
         ;
 		/* Should be managed with User identified or anonymous 
+		 * but how to retrieve this information this deep
 		if ($options['user'] != null) {
 		    $builder->add('acces',ChoiceType::class, array(
 				'choices' => $accesChoices,
@@ -68,11 +69,10 @@ class QuizType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolver $resolver)
-    {
+    public function configureOptions(OptionsResolver $resolver) {
+        
         $resolver->setDefaults(array(
-            'data_class' => Quiz::class,
-			'user' => null
+            'data_class' => Quiz::class
         ));
     }
 

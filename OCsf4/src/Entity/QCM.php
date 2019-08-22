@@ -11,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class QCM
 {
     public function __construct()
-    {/*
+    {
 		$this->setJuste1(false);
 		$this->setJuste2(false);
 		$this->setJuste3(false);
-		$this->setJuste4(false); */
+		$this->setJuste4(false); 
     } 
 	
     /**
@@ -25,14 +25,14 @@ class QCM
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id = 0;
      
      /**
      * @var integer
      *
      * @ORM\Column(name="temps", type="integer")
      */
-    private $temps;
+    private $temps = 0;
  
     /**
      * @var string
@@ -74,33 +74,38 @@ class QCM
      *
      * @ORM\Column(name="juste1", type="boolean")
      */
-    private $juste1;
+    private $juste1 = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="juste2", type="boolean")
      */
-    private $juste2;
+    private $juste2 = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="juste3", type="boolean")
      */
-    private $juste3;
+    private $juste3 = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="juste4", type="boolean")
      */
-    private $juste4;
+    private $juste4 = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz", inversedBy="QCMs")
      */
     private $quiz;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idq;
 
     /**
      * Get id
@@ -245,7 +250,7 @@ class QCM
      *
      * @return Quiz 
      */
-    public function getQuiz() : Quiz
+    public function getQuiz() : ? Quiz
     {
         return $this->quiz;
     }
@@ -346,33 +351,33 @@ class QCM
 	 * @return string[]
 	 */
 	public function getReponsesPossibles() : array
-	{
-		return array(
-			1 => $this->getRep1(),
-			2 => $this->getRep2(),
-			3 => $this->getRep3(),
-			4 => $this->getRep4()
-		);
-	}
+         	{
+         		return array(
+         			1 => $this->getRep1(),
+         			2 => $this->getRep2(),
+         			3 => $this->getRep3(),
+         			4 => $this->getRep4()
+         		);
+         	}
 	/**
 	 *
 	 * @return string[]
 	 */
 	public function getReponsesJustes() : array
-	{
-		$reponsesJustes=array();
-		
-		if($this->getJuste1())
-			array_push($reponsesJustes,"A");
-		if($this->getJuste2())
-			array_push($reponsesJustes,"B");
-		if($this->getJuste3())
-			array_push($reponsesJustes,"C");
-		if($this->getJuste4())
-			array_push($reponsesJustes,"D");
-			
-		return $reponsesJustes;
-	}
+         	{
+         		$reponsesJustes=array();
+         		
+         		if($this->getJuste1())
+         			array_push($reponsesJustes,"A");
+         		if($this->getJuste2())
+         			array_push($reponsesJustes,"B");
+         		if($this->getJuste3())
+         			array_push($reponsesJustes,"C");
+         		if($this->getJuste4())
+         			array_push($reponsesJustes,"D");
+         			
+         		return $reponsesJustes;
+         	}
 
     /**
      * Set temps
@@ -395,5 +400,17 @@ class QCM
     public function getTemps() : int
     {
         return $this->temps;
+    }
+
+    public function getIdq(): ?int
+    {
+        return $this->idq;
+    }
+
+    public function setIdq(int $idq): self
+    {
+        $this->idq = $idq;
+
+        return $this;
     }
 }

@@ -20,9 +20,10 @@ class AppFixtures extends Fixture
             $quiz->setCategory($category);
         }
         
-        foreach ($this->getQCMData() as [$question, $rep1, $j1, $rep2, $j2,
+        foreach ($this->getQCMData() as $idq => [$question, $rep1, $j1, $rep2, $j2,
             $rep3, $j3, $rep4,$j4, $temps]) {
             $qcm = new QCM();
+            $qcm->setIdq($idq);
             $qcm->setQuestion($question);
             $qcm->setRep1($rep1);
             $qcm->setRep2($rep2);

@@ -122,7 +122,7 @@ class Quiz
      * @param string $author
      * @return self
      */
-    public function setAuthor($author) : self
+    public function setAuthor($author=null) : self
     {
         $this->author = $author;
         return $this;
@@ -223,6 +223,7 @@ class Quiz
     public function addQCM(QCM $QCM) : self
     {
         $this->QCMs->add($QCM) ;
+        $QCM->setIdq($this->QCMs->key());
         $QCM->setQuiz($this);
         return $this;
     }
