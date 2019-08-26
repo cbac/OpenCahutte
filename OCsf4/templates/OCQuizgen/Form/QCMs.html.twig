@@ -1,11 +1,11 @@
-    {{ form_row(form.question) }}
-    	<table>
     
-    {{ form_errors(form.temps) }}	
+    	<table>
+    <th>
+    <tr><td colspan="2">{{ form_row(form.question) }}</td></tr>
+    </th>
     <tr>
 	<td>{{ form_label(form.temps) }}</td>
 	<td>{{ form_widget(form.temps) }}</td>
-	
     </tr>	
 	
 	<tr>

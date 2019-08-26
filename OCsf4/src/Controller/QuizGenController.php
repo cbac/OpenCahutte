@@ -92,14 +92,15 @@ class QuizGenController extends AbstractController
         }
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
+        dump($quiz);
         
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();     
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
-                    var_dump($QCM);
+                    dump($QCM);
                     $QCM->setQuiz($quiz);
-                    $em->persist($qcm);
+                    $em->persist($QCM);
                 }
                 $em->persist($quiz);
                 $em->flush();
@@ -134,14 +135,17 @@ class QuizGenController extends AbstractController
         if ($auteur == $this->getUser()) {
             return $this->render('OCQuizgen\view.html.twig', array(
                 'quiz' => $quiz,
-                'auteur' => $auteur->getEmail()
+                'auteur' => $auteur->getEmail(),
+                'user' => $auteur->getEmail()
             ));
         } else {
             if ($access == 'public') {
 
-                return $this->render('OCQuizgen\viewpublic.html.twig', array(
+                return $this->render('OCQuizgen\view.html.twig', array(
                     'quiz' => $quiz,
-                    'auteur' => $auteur == null ? 'Anonyme' : $auteur->getEmail()
+                    'auteur' => $auteur == null ? 'Anonyme' : $auteur->getEmail(),
+                    'user' => $this->getUser()->getEmail()
+                    
                 ));
             } else {
                 throw new NotFoundHttpException("Vous n'avez pas accès au quiz ");
@@ -247,7 +251,7 @@ class QuizGenController extends AbstractController
     /**
      * Duplicate a quiz
      *
-     * @Route("/delete/{id}", name="oc_quizgen_duplicate", requirements={
+     * @Route("/duplicate/{id}", name="oc_quizgen_duplicate", requirements={
      * "id": "\d+" }, methods={"GET","POST"})
      */
     public function duplicateAction(Request $request, Quiz $oldQuiz)
@@ -259,14 +263,13 @@ class QuizGenController extends AbstractController
         if (null === $oldQuiz) {
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
-
-        // $nQuiz->setQuiz(aQuiz->getQuiz());
         $newQuiz = clone $oldQuiz;
-
+        dump($newQuiz);
         $form = $this->createForm(QuizType::class, $newQuiz, array(
-            'user' => $this->getUser()
         ));
+        $newQuiz->setAuthor($this->getUser());
         if ($request->getMethod() == 'POST') {
+            
             $form->handleRequest($request);
             /**
              * TODO check that object is deeply copied and not referenced *

@@ -26,17 +26,12 @@
 	
 	<h3>Questions</h3>
 	
-    <ul class="QCMs" data-prototype="
-		{% filter escape %}
-            {{ include('OCQuizgen/Form/QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
-        {% endfilter %}
-		<br/>
-	">
+    <ul class="QCMs">
 		{% for QCM in form.QCMs %}
 		<li>
 			{{ form_row(QCM.question) }}
 			<table>
-			
+			<tr> <td>{{ form_row(QCM.temps)}}</td></tr>
 			<tr>
 				<td>{{ form_row(QCM.rep1) }}</td>
 				<td>{{ form_row(QCM.juste1) }}</td>

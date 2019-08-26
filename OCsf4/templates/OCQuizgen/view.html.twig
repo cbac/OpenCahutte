@@ -47,10 +47,12 @@
       <i class="glyphicon glyphicon-duplicate"></i>
       Duplicate quiz
     </a>
+    {% if user == auteur %}
     <a href="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
       Delete quiz
     </a>
+    {% endif %}
   </p>
 
 {% endblock %}
