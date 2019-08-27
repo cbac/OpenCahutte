@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReponseQuestionRepository extends EntityRepository
 {
-	public function getReponsesUtilisateur($gamepin,$user,$hdebut,$hfin)
+	public function findByReponsesUtilisateur($gamepin,$user,$hdebut,$hfin)
 	{
 	 
 		$qb = $this->createQueryBuilder('r')
@@ -32,7 +32,7 @@ class ReponseQuestionRepository extends EntityRepository
 	
 	}
 	
-	public function getByGamepin($gamepin) {
+	public function findByGamepin($gamepin) {
 	
 		$qb = $this->createQueryBuilder('r')
 			->where('r.gamepin = :gamepin')
@@ -47,7 +47,7 @@ class ReponseQuestionRepository extends EntityRepository
 	}
 	
 	
-	public function getReponseQuestionTimer($gamepin, $question) {
+	public function findByTimer($gamepin, $question) {
 	
 		$qb = $this->createQueryBuilder('rq')
 			->join('rq.timer', 't')

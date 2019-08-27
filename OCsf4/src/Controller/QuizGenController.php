@@ -132,7 +132,7 @@ class QuizGenController extends AbstractController
         $auteur = $quiz->getAuthor();
         $access = $quiz->getAccess();
 
-        if ($auteur == $this->getUser()) {
+        if ($this->getUser() != null && $auteur == $this->getUser()) {
             return $this->render('OCQuizgen\view.html.twig', array(
                 'quiz' => $quiz,
                 'auteur' => $auteur->getEmail(),
@@ -144,7 +144,7 @@ class QuizGenController extends AbstractController
                 return $this->render('OCQuizgen\view.html.twig', array(
                     'quiz' => $quiz,
                     'auteur' => $auteur == null ? 'Anonyme' : $auteur->getEmail(),
-                    'user' => $this->getUser()->getEmail()
+                    'user' => $this->getUser() == null ? 'Anonyme' : $this->getUser()->getEmail()
                     
                 ));
             } else {

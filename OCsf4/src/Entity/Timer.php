@@ -21,28 +21,19 @@ class Timer
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="gamepin", type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gamepin")
      */
     private $gamepin;
     
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="quizid", type="integer")
-     */
-    private $quizid;
-
     /**
      * @var integer
      *
-     * @ORM\Column(name="question", type="integer")
+     * @ORM\Column(name="qNumber", type="integer")
      */
-    private $question;
+    private $qNumber;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
      * @ORM\Column(name="hfin", type="integer")
      */
@@ -82,7 +73,7 @@ class Timer
     /**
      * Get gamepin
      *
-     * @return integer 
+     * @return Gamepin 
      */
     public function getGamepin()
     {
@@ -95,10 +86,9 @@ class Timer
      * @param integer $question
      * @return Timer
      */
-    public function setQuestion($question)
+    public function setQNumber($question)
     {
-        $this->question = $question;
-
+        $this->qNumber = $question;
         return $this;
     }
 
@@ -107,9 +97,9 @@ class Timer
      *
      * @return integer 
      */
-    public function getQuestion()
+    public function getQNumber()
     {
-        return $this->question;
+        return $this->qNumber;
     }
 
     /**
@@ -121,7 +111,6 @@ class Timer
     public function setHfin($hfin)
     {
         $this->hfin = $hfin;
-
         return $this;
     }
 
@@ -136,29 +125,6 @@ class Timer
     }
 
     /**
-     * Set quizid
-     *
-     * @param integer $quizid
-     * @return Timer
-     */
-    public function setQuizid($quizid)
-    {
-        $this->quizid = $quizid;
-
-        return $this;
-    }
-
-    /**
-     * Get quizid
-     *
-     * @return integer 
-     */
-    public function getQuizid()
-    {
-        return $this->quizid;
-    }
-
-    /**
      * Set hdebut
      *
      * @param \DateTime $hdebut
@@ -167,7 +133,6 @@ class Timer
     public function setHdebut($hdebut)
     {
         $this->hdebut = $hdebut;
-
         return $this;
     }
 
@@ -179,28 +144,5 @@ class Timer
     public function getHdebut()
     {
         return $this->hdebut;
-    }
-
-    /**
-     * Set idcreateur
-     *
-     * @param integer $idcreateur
-     * @return Timer
-     */
-    public function setIdcreateur($idcreateur)
-    {
-        $this->idcreateur = $idcreateur;
-
-        return $this;
-    }
-
-    /**
-     * Get idcreateur
-     *
-     * @return integer 
-     */
-    public function getIdcreateur()
-    {
-        return $this->idcreateur;
     }
 }

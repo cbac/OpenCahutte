@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Entity\Timer;
-use App\Entity\User;
 use App\Entity\ReponseQuestion;
 use App\Entity\PointQuestion;
 use App\Entity\Gamepin;
@@ -12,10 +11,7 @@ use App\Form\PseudoType;
 use App\Form\PlayType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -24,19 +20,18 @@ class QuizDisController extends AbstractController
 
     /**
      * Lists all quizs
-     * @Route("/home", name="oc_home")
-     * @Route("/", name="oc_quizdis_select")
-     * @Method({"GET", "POST"})
+     * @Route("/home", name="oc_home", methods={"GET", "POST"})
+     * @Route("/", name="oc_quizdis_select", methods={"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
         $gamepin = new Gamepin();
-        $form = $this->createForm('App\Form\GamepinType', $gamepin);
+        $form = $this->createForm(GamepinType::class, $gamepin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array(
-                'gamepin' => $gamepin->getGamepin()
+                'gamepin' => $gamepin->getPinNumber()
             )));
         }
         return $this->render('OCQuizdis\index.html.twig', array(
@@ -45,19 +40,18 @@ class QuizDisController extends AbstractController
     }
 
     /**
-     *
+     * Choose a user pseudo name
+     * 
      * @Route("/pseudo/{gamepin}", name="oc_quizdis_pseudo",requirements={
-     * "gamepin": "\d+" })
-     * @Method({"GET", "POST"})
+     * "gamepin": "\d+" }, methods={"GET", "POST"})
      */
     public function pseudoAction(Request $request, $gamepin)
     {
         $pointQuestion = new PointQuestion();
 
-        $form = $this->createForm('App\Form\PseudoType', $pointQuestion);
+        $form = $this->createForm(PseudoType::class, $pointQuestion);
 
         if ($request->isMethod('POST')) {
-            $pointQuestion->setQuizid(0);
             $pointQuestion->setIdq(0);
             $pointQuestion->setGamepin($gamepin);
             $pointQuestion->setPointqx(0);
@@ -85,11 +79,10 @@ class QuizDisController extends AbstractController
     /**
      * Play quiz
      *
-     * @Route("/{gamepin}", name="oc_quizdis_play",
-     *  requirements={"gamepin": "\d+" })
-     * @Method({"GET", "POST"})
+     * @Route("/play/{gamepin}", name="oc_quizdis_play",
+     *  requirements={"gamepin": "\d+" }, methods={"GET", "POST"})
      */
-    public function playAction(Request $request, $gamepin)
+    public function playAction(Request $request, Gamepin $gamepin)
     {
         $em = $this->getDoctrine()->getManager();
         $timers = $em->getRepository(Timer::class)->findByGamepin($gamepin);
@@ -118,7 +111,7 @@ class QuizDisController extends AbstractController
         );
         $form = array();
         for ($i = 0; $i < 4; $i ++) {
-            $form[$i] = $this->createForm('App\Form\PlayType', $statReponse, array(
+            $form[$i] = $this->createForm(PlayType::class, $statReponse, array(
                 'rep' => chr(65 + $i),
                 'class' => $class[$i]
             ));

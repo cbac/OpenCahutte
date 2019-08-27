@@ -18,7 +18,7 @@ class GamepinType extends AbstractType
     {	
 		$largeurChamps = 'width: 200px';
 		$builder
-			->add('gamepin', TextType::class, array(
+			->add('pinNumber', TextType::class, array(
 				'attr' => array(
 					'style'=> $largeurChamps,
 				)

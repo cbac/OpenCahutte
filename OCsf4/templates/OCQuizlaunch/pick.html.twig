@@ -8,9 +8,7 @@
 
   <h2>Début du quiz {{ name }} !</h2>
 
-  <p>Connectez-vous avec le gamepin : {{ gamepin }} !</p>
-          <a href="{{ path('oc_quizlaunch_question', {'id': id, 'gamepin' : gamepin, 'idq': 1}) }}">Lancer le quiz</a>
-
-  
+  <p>Connectez-vous avec le gamepin : {{ gamepin.pinNumber }} !</p>
+          <a href="{{ path('oc_quizlaunch_question', {'gamepin' : gamepin.pinNumber, 'idq': 1}) }}">Lancer le quiz</a>
 
 {% endblock %}

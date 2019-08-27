@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 use App\Entity\Quiz;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,8 @@ class QCM
 		$this->setJuste1(false);
 		$this->setJuste2(false);
 		$this->setJuste3(false);
-		$this->setJuste4(false); 
+		$this->setJuste4(false);
+  $this->reponseQuestions = new ArrayCollection(); 
     } 
 	
     /**
@@ -106,6 +109,11 @@ class QCM
      * @ORM\Column(type="integer")
      */
     private $idq;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ReponseQuestion", mappedBy="qcm", orphanRemoval=true)
+     */
+    private $reponseQuestions;
 
     /**
      * Get id
@@ -351,33 +359,33 @@ class QCM
 	 * @return string[]
 	 */
 	public function getReponsesPossibles() : array
-         	{
-         		return array(
-         			1 => $this->getRep1(),
-         			2 => $this->getRep2(),
-         			3 => $this->getRep3(),
-         			4 => $this->getRep4()
-         		);
-         	}
+                              	{
+                              		return array(
+                              			1 => $this->getRep1(),
+                              			2 => $this->getRep2(),
+                              			3 => $this->getRep3(),
+                              			4 => $this->getRep4()
+                              		);
+                              	}
 	/**
 	 *
 	 * @return string[]
 	 */
 	public function getReponsesJustes() : array
-         	{
-         		$reponsesJustes=array();
-         		
-         		if($this->getJuste1())
-         			array_push($reponsesJustes,"A");
-         		if($this->getJuste2())
-         			array_push($reponsesJustes,"B");
-         		if($this->getJuste3())
-         			array_push($reponsesJustes,"C");
-         		if($this->getJuste4())
-         			array_push($reponsesJustes,"D");
-         			
-         		return $reponsesJustes;
-         	}
+                              	{
+                              		$reponsesJustes=array();
+                              		
+                              		if($this->getJuste1())
+                              			array_push($reponsesJustes,"A");
+                              		if($this->getJuste2())
+                              			array_push($reponsesJustes,"B");
+                              		if($this->getJuste3())
+                              			array_push($reponsesJustes,"C");
+                              		if($this->getJuste4())
+                              			array_push($reponsesJustes,"D");
+                              			
+                              		return $reponsesJustes;
+                              	}
 
     /**
      * Set temps
@@ -410,6 +418,37 @@ class QCM
     public function setIdq(int $idq): self
     {
         $this->idq = $idq;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReponseQuestion[]
+     */
+    public function getReponseQuestions(): Collection
+    {
+        return $this->reponseQuestions;
+    }
+
+    public function addReponseQuestion(ReponseQuestion $reponseQuestion): self
+    {
+        if (!$this->reponseQuestions->contains($reponseQuestion)) {
+            $this->reponseQuestions[] = $reponseQuestion;
+            $reponseQuestion->setQcm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseQuestion(ReponseQuestion $reponseQuestion): self
+    {
+        if ($this->reponseQuestions->contains($reponseQuestion)) {
+            $this->reponseQuestions->removeElement($reponseQuestion);
+            // set the owning side to null (unless already changed)
+            if ($reponseQuestion->getQcm() === $this) {
+                $reponseQuestion->setQcm(null);
+            }
+        }
 
         return $this;
     }

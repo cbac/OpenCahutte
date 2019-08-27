@@ -28,16 +28,7 @@ class Stats
     private $pseudojoueur;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="quizid", type="integer")
-     */
-    private $quizid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="gamepin", type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gamepin")
      */
     private $gamepin;
 
@@ -89,51 +80,27 @@ class Stats
     }
 
     /**
-     * Set quizid
-     *
-     * @param integer $quizid
-     * @return Stats
-     */
-    public function setQuizid($quizid)
-    {
-        $this->quizid = $quizid;
-
-        return $this;
-    }
-
-    /**
-     * Get quizid
-     *
-     * @return integer 
-     */
-    public function getQuizid()
-    {
-        return $this->quizid;
-    }
-
-    /**
      * Set gamepin
      *
-     * @param integer $gamepin
-     * @return Stats
+     * @param Gamepin $gamepin
+     * @return PointQuestion
      */
     public function setGamepin($gamepin)
     {
         $this->gamepin = $gamepin;
-
+        
         return $this;
     }
-
+    
     /**
      * Get gamepin
      *
-     * @return integer 
+     * @return Gamepin
      */
     public function getGamepin()
     {
         return $this->gamepin;
     }
-
     /**
      * Set idcreateur
      *

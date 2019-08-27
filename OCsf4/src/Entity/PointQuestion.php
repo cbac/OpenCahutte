@@ -25,21 +25,12 @@ class PointQuestion
     /**
      * @var integer
      *
-     * @ORM\Column(name="quizid", type="integer")
-     */
-    private $quizid;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="idq", type="integer")
      */
     private $idq;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="gamepin", type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gamepin")
      */
     private $gamepin;
 
@@ -64,29 +55,6 @@ class PointQuestion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set quizid
-     *
-     * @param integer $quizid
-     * @return PointQuestion
-     */
-    public function setQuizid($quizid)
-    {
-        $this->quizid = $quizid;
-
-        return $this;
-    }
-
-    /**
-     * Get quizid
-     *
-     * @return integer 
-     */
-    public function getQuizid()
-    {
-        return $this->quizid;
     }
 
     /**
@@ -115,7 +83,7 @@ class PointQuestion
     /**
      * Set gamepin
      *
-     * @param integer $gamepin
+     * @param Gamepin $gamepin
      * @return PointQuestion
      */
     public function setGamepin($gamepin)
@@ -128,7 +96,7 @@ class PointQuestion
     /**
      * Get gamepin
      *
-     * @return integer 
+     * @return Gamepin 
      */
     public function getGamepin()
     {

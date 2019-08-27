@@ -13,9 +13,9 @@ use App\Validator as OCQuizdisAssert;
 class ReponseQuestion
 {
 	public function __construct()
-    {
-        $this->time = time();
-    }
+             {
+                 $this->time = time();
+             }
 		
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Timer")
@@ -39,7 +39,7 @@ class ReponseQuestion
 	/**
      * @ORM\Column(type="string", length=255)
      */
-    private $user;
+    private $pseudoUser;
 	
     /**
      * @ORM\Column(type="integer")
@@ -50,6 +50,12 @@ class ReponseQuestion
      * @ORM\Column(type="string", length=1)
      */
     private $reponseDonnee;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QCM", inversedBy="reponseQuestions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $qcm;
 	
     /**
      * Get id
@@ -85,26 +91,26 @@ class ReponseQuestion
     }
 
     /**
-     * Set user
+     * Set pseudoUser
      *
      * @param integer $user
      * @return ReponseQuestion
      */
-    public function setUser($user)
+    public function setPseudoUser($user)
     {
-        $this->user = $user;
+        $this->pseudoUser = $user;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get pseudoUser
      *
      * @return integer 
      */
-    public function getUser()
+    public function getPseudoUser()
     {
-        return $this->user;
+        return $this->pseudoUser;
     }
 
     /**
@@ -156,10 +162,10 @@ class ReponseQuestion
     /**
      * Set timer
      *
-     * @param \AppEntity\Timer $timer
+     * @param Timer $timer
      * @return ReponseQuestion
      */
-    public function setTimer(\App\Entity\Timer $timer)
+    public function setTimer(Timer $timer)
     {
         $this->timer = $timer;
 
@@ -169,10 +175,22 @@ class ReponseQuestion
     /**
      * Get timer
      *
-     * @return \App\Entity\Timer 
+     * @return Timer 
      */
     public function getTimer()
     {
         return $this->timer;
+    }
+
+    public function getQcm(): ?QCM
+    {
+        return $this->qcm;
+    }
+
+    public function setQcm(?QCM $qcm): self
+    {
+        $this->qcm = $qcm;
+
+        return $this;
     }
 }

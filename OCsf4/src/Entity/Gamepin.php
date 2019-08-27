@@ -20,11 +20,24 @@ class Gamepin
      */
     private $id;
 	
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz")
+     */
+    private $quiz;
+    
 	/**
      * @ORM\Column(type="integer")
      */
-    private $gamepin;
-		
+    private $pinNumber;
+    
+    function __construct(Quiz $quiz=null){
+        /* TODO check unicity */
+        if($quiz !== null) {
+            $this->setQuiz($quiz);
+            $this->pinNumber = rand(1, 999999);
+        }
+        
+    }
     /**
      * Get id
      *
@@ -36,26 +49,47 @@ class Gamepin
     }
 
     /**
-     * Set gamepin
+     * Set pinNumber
      *
      * @param integer $gamepin
      * @return Gamepin
      */
-    public function setGamepin($gamepin) : self
+    public function setPinNumber($pinNumber) : self
     {
-        $this->gamepin = $gamepin;
+        $this->pinNumber = $pinNumber;
 
         return $this;
     }
 
     /**
-     * Get gamepin
+     * Get pinNumber
      *
      * @return integer 
      */
-    public function getGamepin() : ? int
+    public function getPinNumber() : ? int
     {
-        return $this->gamepin;
+        return $this->pinNumber;
     }
-
+    /**
+     * Set quiz
+     *
+     * @param Quiz $quiz
+     * @return QCM
+     */
+    public function setQuiz(Quiz $quiz=null) : self
+    {
+        $this->quiz = $quiz;
+        
+        return $this;
+    }
+    
+    /**
+     * Get quiz
+     *
+     * @return Quiz
+     */
+    public function getQuiz() : ? Quiz
+    {
+        return $this->quiz;
+    }
 }

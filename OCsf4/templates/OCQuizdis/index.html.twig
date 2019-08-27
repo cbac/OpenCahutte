@@ -13,13 +13,13 @@
 
 {# Les erreurs générales du formulaire. #}
 {{ form_errors(form) }}
-{{ form_errors(form.gamepin) }}
+{{ form_errors(form.pinNumber) }}
   <h3>Gamepin</h3>
 		
 		<table>
 		
 		<tr>
-			<td>{{ form_widget(form.gamepin) }}</td>
+			<td>{{ form_widget(form.pinNumber) }}</td>
 		</tr>
 		
 		<tr>
@@ -30,7 +30,7 @@
 		
 		  <p>
 		  
-{{ form_row(form.gamepin) }}
+{{ form_row(form.pinNumber) }}
 		  
 {# Génération automatique des champs pas encore écrits.#}
 {{ form_rest(form) }}
