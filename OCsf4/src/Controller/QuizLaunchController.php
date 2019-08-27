@@ -105,7 +105,9 @@ class QuizLaunchController extends AbstractController
         if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin) {
             // On récupère l'EntityManager
             $em = $this->getDoctrine()->getManager();
-            $question = $em->getRepository(QCM::class)->getQbyIdq($idq, $quiz->getId());
+            $question = $em->getRepository(QCM::class)->findOneBy([
+                'quiz'=> $quiz,
+                'idq'=>$idq ] );
             if ($question == Null) {
                 throw new NotFoundHttpException("Launchquestion can't get question in quiz ");
             }
@@ -114,8 +116,8 @@ class QuizLaunchController extends AbstractController
 
             if ($idq <= $nbqTot) {
 
-                $texte = $question[0]->getQuestion();
-                $tempsrep = $question[0]->getTemps();
+                $texte = $question->getQuestion();
+                $tempsrep = $question->getTemps();
 
                 // timer
                 $hdebut = time();
@@ -146,9 +148,8 @@ class QuizLaunchController extends AbstractController
                     'quiz' => $quiz,
                     'idq' => $idq,
                     'gamepin' => $gamepin,
-                    'id' => $quiz->getId(),
                     'texte' => $texte,
-                    'question' => $question[0],
+                    'question' => $question,
                     'tempsrep' => $tempsrep
                 ));
             } 

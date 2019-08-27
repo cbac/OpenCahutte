@@ -13,7 +13,8 @@ use Doctrine\ORM\EntityRepository;
 class QCMRepository extends EntityRepository
 {
 
-public function getQbyIdq($idq,$quiz) {
+/*
+ public function fondByIdq($idq,$quiz) {
 	
 		$question = $this->createQueryBuilder('q')
 			->where('q.idq=:idq')
@@ -28,4 +29,5 @@ public function getQbyIdq($idq,$quiz) {
 		;
 	
 	}
+	*/
 }

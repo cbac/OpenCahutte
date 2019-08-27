@@ -4,7 +4,12 @@
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
-
+{% block customPageScripts  %}
+<script type="text/javascript" src="{{ 'js/countdown.js' }}"></script>
+<script>
+       var myCountdown1 = new Countdown({time:{{tempsrep}}, width:"100", rangeHi:"second", hideLabels:"true"});
+</script>  
+{% endblock %} 
  
 {% block body %}
 <table style="width: 810px">
@@ -14,14 +19,7 @@
 		<td style="width: 90%">  <h2>Q.{{ idq }} : {{ texte }}</h2><br> </td>
 		<td>
 	
-			 {% javascripts '@OCQuizlaunchBundle/Resources/public/js/countdown_v5.0/countdown.js' %}
-				<script type="text/javascript" src="{{ asset_url }}"></script>
 
-			<script>
-			var myCountdown1 = new Countdown({time:{{tempsrep}}, width:"100", rangeHi:"second", hideLabels:"true"});
-			</script>  
-
-			{% endjavascripts %} 
 			<br><br>
 			
 		</td>
@@ -52,7 +50,7 @@
 #}
 <br><br><div align="right">
 
-<a href="{{ path('oc_quizlaunch_score', {'id': id, 'gamepin' : gamepin, 'idq': idq}) }}" class="btn btn-default btn-lg">Scores   <i class="glyphicon glyphicon-chevron-right"></i></a>
+<a href="{{ path('oc_quizlaunch_score', {'id': quiz.id, 'gamepin' : gamepin, 'idq': idq}) }}" class="btn btn-default btn-lg">Scores   <i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>
 
 

@@ -101,16 +101,11 @@ class QuizDisController extends AbstractController
         if (null === $quiz) {
             throw new NotFoundHttpException("Can't find quiz for " . $gamepin);
         }
-        $idAuteur = $quiz->getAuthor();
-        if ($idAuteur == 0) {
-            $auteur = "anonyme";
+        $auteur = $quiz->getAuthor();
+        if ($quiz->getAuthor() == null) {
+            $authorName = "anonyme";
         } else {
-            /* $userManager = $this->get('fos_user.user_manager');
-            $auteur = $userManager->findUserBy(array(
-                'id' => $idAuteur
-            ))->getUsername();
-            */
-            $auteur = $em->getRepository(User::class)->find($idAuteur)->getUserName();
+            $authorName = $auteur->getEmail();
             
         }
 
@@ -149,7 +144,7 @@ class QuizDisController extends AbstractController
         return $this->render('OCQuizdis\play.html.twig', array(
             'quiz' => $quiz,
             'reponse' => $statReponse,
-            'auteur' => $auteur,
+            'auteur' => $authorName,
             'form' => array(
                 $form[0]->createView(),
                 $form[1]->createView(),
