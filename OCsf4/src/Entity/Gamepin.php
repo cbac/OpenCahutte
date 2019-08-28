@@ -2,13 +2,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Validator as OCQuizdisAssert;
+use App\Validator as OCAssert;
 
 /**
  * Gamepin
  *
  * @ORM\Entity()
- * @OCQuizdisAssert\VerifGamepinExists
+ * @OCAssert\VerifyGamepinExists
  */
 class Gamepin
 {

@@ -5,7 +5,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class VerifGamepinExists extends Constraint{
+class VerifyGamepinExists extends Constraint {
 
 	
 	public function validatedBy()

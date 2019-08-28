@@ -24,24 +24,23 @@ class VerifRepUniqueValidator extends ConstraintValidator
   
 	public function validate($reponseQuestion, Constraint $constraint)
 	{
-		$timers = $this
+		$timer = $this
 			->em
 			->getRepository(Timer::class)
-			->findBy(
-				array('gamepin' => $reponseQuestion->getGamepin()), // Critere
-				array('question' => 'desc'),        // Tri
-				1 								// on n'en prend qu'un
+			->findOneBy(
+				array('gamepin' => $reponseQuestion->getGamepin())
 			)
 		;
-		if ($timers == NULL || $timers[0]->getQuestion() == 0)
+		if ($timer == NULL )
 			$this->context->addViolation(" Quiz pas encore lancé !");
 		else {
-			$hfin=$timers[0]->getHfin();
-			$hdebut=$timers[0]->getHdebut();
+			$hfin=$timer->getHfin();
+			$hdebut=$timer->getHdebut();
 			$reponsesDejaEnregistrees = $this
 				->em
 				->getRepository(ReponseQuestion::class)
-				->getReponsesUtilisateur($reponseQuestion->getGamepin(),$reponseQuestion->getUser(), $hdebut, $hfin)
+				->findReponsesUtilisateur($reponseQuestion->getGamepin(),
+				    $reponseQuestion->getPseudoUser(),$hdebut,$hfin)
 			;
 			if($reponsesDejaEnregistrees != NULL)
 				$this->context->addViolation(" Vous avez déjà répondu à la question actuelle !");

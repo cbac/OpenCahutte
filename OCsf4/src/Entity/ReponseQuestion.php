@@ -6,8 +6,7 @@ use App\Validator as OCQuizdisAssert;
 
 /**
  * ReponseQuestion
- *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\ReponseQuestionRepository")
  * @OCQuizdisAssert\VerifRepUnique
  */
 class ReponseQuestion

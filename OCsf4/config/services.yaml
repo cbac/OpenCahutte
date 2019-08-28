@@ -31,8 +31,8 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: oc_quizdis_verifrepunique }  # route alias
 
-    oc_quizdis.validator.verifgamepinexists:                 # service name
-        class: App\Validator\VerifGamepinExistsValidator     # service class
+    app.validator.verifygamepinexists:                 # service name
+        class: App\Validator\VerifyGamepinExistsValidator     # service class
         arguments: ['@request_stack', '@doctrine.orm.entity_manager'] # injected datas
         tags:
             - { name: validator.constraint_validator, alias: oc_quizdis_verifgamepinexists }  # route alias

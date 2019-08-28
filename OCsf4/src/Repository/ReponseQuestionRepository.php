@@ -11,32 +11,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReponseQuestionRepository extends EntityRepository
 {
-	public function findByReponsesUtilisateur($gamepin,$user,$hdebut,$hfin)
+	public function findReponsesUtilisateur($gamepin,$user,$hdebut,$hfin)
 	{
 	 
 		$qb = $this->createQueryBuilder('r')
 			->where('r.gamepin = :gamepin')
 				->setParameter('gamepin', $gamepin)
-			->andWhere('r.user = :user')
-				->setParameter('user', $user)
+			->andWhere('r.pseudoUser = :pseudoUser')
+				->setParameter('pseudoUser', $user)
 			->andWhere('r.time < :hfin')
 				->setParameter('hfin', $hfin)
 			->andWhere('r.time > :hdebut')
 				->setParameter('hdebut', $hdebut)
-		;
-		
-		return $qb
-		  ->getQuery()
-		  ->getResult()
-		;
-	
-	}
-	
-	public function findByGamepin($gamepin) {
-	
-		$qb = $this->createQueryBuilder('r')
-			->where('r.gamepin = :gamepin')
-				->setParameter('gamepin', $gamepin)
 		;
 		
 		return $qb

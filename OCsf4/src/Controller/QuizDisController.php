@@ -30,8 +30,11 @@ class QuizDisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($gamepin);
+            $em->flush();
             return $this->redirect($this->generateUrl('oc_quizdis_pseudo', array(
-                'gamepin' => $gamepin->getPinNumber()
+                'pinNumber' => $gamepin->getPinNumber()
             )));
         }
         return $this->render('OCQuizdis\index.html.twig', array(
@@ -42,11 +45,18 @@ class QuizDisController extends AbstractController
     /**
      * Choose a user pseudo name
      * 
-     * @Route("/pseudo/{gamepin}", name="oc_quizdis_pseudo",requirements={
-     * "gamepin": "\d+" }, methods={"GET", "POST"})
+     * @Route("/pseudo/{pinNumber}", name="oc_quizdis_pseudo",requirements={
+     * "pinNumber": "\d+" }, methods={"GET", "POST"})
      */
-    public function pseudoAction(Request $request, $gamepin)
+    public function pseudoAction(Request $request, $pinNumber)
     {
+        $em = $this->getDoctrine()->getManager();
+        $gamepin = $em->getRepository(Gamepin::class)->findOneBy(array(
+            'pinNumber' => $pinNumber
+        ));
+        if( $gamepin == null ) {
+            throw new NotFoundHttpException("Unknown gamepin " . $gamepin);
+        }
         $pointQuestion = new PointQuestion();
 
         $form = $this->createForm(PseudoType::class, $pointQuestion);
@@ -62,12 +72,11 @@ class QuizDisController extends AbstractController
                 $session = $request->getSession();
                 $session->set('pseudo', $pointQuestion->getPseudojoueur());
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($pointQuestion);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('oc_quizdis_play', array(
-                    'gamepin' => $gamepin
+                    'pinNumber' => $gamepin->getPinNumber()
                 )));
             }
         }
@@ -79,20 +88,24 @@ class QuizDisController extends AbstractController
     /**
      * Play quiz
      *
-     * @Route("/play/{gamepin}", name="oc_quizdis_play",
-     *  requirements={"gamepin": "\d+" }, methods={"GET", "POST"})
+     * @Route("/play/{pinNumber}", name="oc_quizdis_play",
+     *  requirements={"pinNumber": "\d+" }, methods={"GET", "POST"})
      */
-    public function playAction(Request $request, Gamepin $gamepin)
+    public function playAction(Request $request, $pinNumber)
     {
         $em = $this->getDoctrine()->getManager();
-        $timers = $em->getRepository(Timer::class)->findByGamepin($gamepin);
-        if (null == $timers) {
-            throw new NotFoundHttpException("Unknown gamepin " . $gamepin);
+        $gamepin = $em->getRepository(Gamepin::class)->findOneBy(['pinNumber'=> $pinNumber]);
+        if (null == $gamepin) {
+            throw new NotFoundHttpException("Unknown gamepin " . $pinNumber);
         }
-        $id = $timers[0]->getQuizid();
-        $quiz = $em->getRepository(Quiz::class)->find($id);
+        $timer = $em->getRepository(Timer::class)->findOneByGamepin($gamepin);
+        if (null == $timer) {
+            throw new NotFoundHttpException("No timer for gamepin " . $pinNumber);
+        }
+        $quiz = $gamepin->getQuiz();
         if (null === $quiz) {
-            throw new NotFoundHttpException("Can't find quiz for " . $gamepin);
+            dump($gamepin);
+            throw new NotFoundHttpException("No quiz associated to " . $pinNumber);
         }
         $auteur = $quiz->getAuthor();
         if ($quiz->getAuthor() == null) {
@@ -117,12 +130,13 @@ class QuizDisController extends AbstractController
             ));
         }
         if ($request->isMethod('POST')) {
-            $rep = $request->get('oc_quizdisbundle_play')['reponseDonnee'];
+            $rep = $request->get('play')['reponseDonnee'];
+            dump($rep);
             $idRep = ord($rep) - 65;
 
             $statReponse->setGamepin($gamepin);
             $session = $request->getSession();
-            $statReponse->setUser($session->get('pseudo'));
+            $statReponse->setPseudoUser($session->get('pseudo'));
 
             $form[$idRep]->handleRequest($request);
 
