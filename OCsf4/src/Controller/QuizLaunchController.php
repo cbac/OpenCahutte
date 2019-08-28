@@ -64,7 +64,7 @@ class QuizLaunchController extends AbstractController
         
 
         $session = $request->getSession();
-        $session->set('creatorGamepin', $gamepin);
+        $session->set('creatorGamepin', $gamepin->getPinNumber());
 
         $timer = new Timer();
         $timer->setGamepin($gamepin);
@@ -94,23 +94,23 @@ class QuizLaunchController extends AbstractController
     /**
      * Launch one question:
      *
-     * @Route("/gamepin/{gamepin}/{idq}", name="oc_quizlaunch_question", requirements={
-     * "id": "\d+", "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
+     * @Route("/question/{gamepin}/{idq}", name="oc_quizlaunch_question", requirements={
+     * "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
      */
     public function launchquestionAction(Request $request, Gamepin $gamepin, $idq)
     {
         $session = $request->getSession();
-        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin) {
+        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
             // On récupère l'EntityManager
             $em = $this->getDoctrine()->getManager();
             $quiz = $gamepin->getQuiz();
             if($quiz == null) {
-                throw new NotFoundHttpException("Launchquestion can't get quiz with gamepin ");
+                throw new NotFoundHttpException("Launchquestion can't get quiz with gamepin ". $gamepin->getPinNumber());
             }
-            $nbqTot = $gamepin->getQuiz()->getNbQuestions();
-
+            $nbqTot = $quiz->getNbQuestions();
             if ($idq <= $nbqTot) {
-                $question = $quiz->getQCMs()[$idq];
+                dump($quiz->getQCMS());
+                $question = $quiz->getQCMs()->get($idq-1);
                 if ($question == Null) {
                     throw new NotFoundHttpException("Launchquestion can't get question in quiz ");
                 }
@@ -154,8 +154,8 @@ class QuizLaunchController extends AbstractController
             {
                 return $this->redirect($this->generateUrl('oc_quizlaunch_stats', 
                     array(
-                    'gamepin' => $gamepin,
-                    'id' => $quiz->getId()
+                    'gamepin' => $gamepin->getId(),
+                    'quiz' => $quiz->getId()
                     )
                     ));
             }
@@ -190,8 +190,6 @@ class QuizLaunchController extends AbstractController
                 'idq' => $idq
             ));
 
- //           $nbqTot = $quiz->getNbQuestions();
-
             $allPlayers = array();
 
             foreach ($qcm0 as $ligne) {
@@ -208,19 +206,16 @@ class QuizLaunchController extends AbstractController
 
                 $pointQuestion[$i] = new PointQuestion();
                 $em->persist($pointQuestion[$i]);
-                $pointQuestion[$i]->setGamepin($reponseQuestionTimer->getGamepin());
-                $pointQuestion[$i]->setQuizid($reponseQuestionTimer->getTimer()
-                    ->getQuizid());
+                $pointQuestion[$i]->setGamepin($gamepin);
                 $pointQuestion[$i]->setPseudojoueur($reponseQuestionTimer->getUser());
-                $pointQuestion[$i]->setIdq($reponseQuestionTimer->getTimer()
-                    ->getQuestion());
+                $pointQuestion[$i]->setIdq($idq);
 
                 $reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
 
-                $reponseJuste = false;
-                if (($reponseDonnee == 'A' && $qcm->getJuste1()) || ($reponseDonnee == 'B' && $qcm->getJuste2()) || ($reponseDonnee == 'C' && $qcm->getJuste3()) || ($reponseDonnee == 'D' && $qcm->getJuste4())) {
-                    $reponseJuste = true;
-                }
+                $reponseJuste = (($reponseDonnee == 'A' && $qcm->getJuste1()) 
+                    || ($reponseDonnee == 'B' && $qcm->getJuste2()) 
+                    || ($reponseDonnee == 'C' && $qcm->getJuste3()) 
+                    || ($reponseDonnee == 'D' && $qcm->getJuste4())) ;
 
                 if ($reponseJuste) {
                     $hfin = $reponseQuestionTimer->getTimer()->getHfin();
@@ -242,7 +237,6 @@ class QuizLaunchController extends AbstractController
                     $pointQuestion[$i] = new PointQuestion();
                     $em->persist($pointQuestion[$i]);
                     $pointQuestion[$i]->setGamepin($gamepin);
-                    $pointQuestion[$i]->setQuizid($quiz->getId());
                     $pointQuestion[$i]->setPseudojoueur($player);
                     $pointQuestion[$i]->setIdq($idq);
                     $pointQuestion[$i]->setPointqx(0);
@@ -252,7 +246,6 @@ class QuizLaunchController extends AbstractController
             }
 
             return $this->render('OCQuizlaunch\tempresult.html.twig', array(
-                'id' => $quiz->getId(),
                 'idq' => $idq,
                 'gamepin' => $gamepin,
                 'pointQuestion' => $pointQuestion,
@@ -276,13 +269,13 @@ class QuizLaunchController extends AbstractController
 
         $pointsQs = new PointQuestion();
 
-        $stats = new Stats();
+ //        $stats = new Stats();
 
         $repository = $em->getRepository(PointQuestion::class);
 
         // récupérer toutes les sessions associées au gamepin
 
-        $pointsQs = $repository->getPointQuestionByGamepin($gamepin);
+        $pointsQs = $repository->getPointQuestionByGamepin($gamepin->getPinNumber());
 
         // initialiser tableau
         // recupérer tous les joueurs associés au gamepin

@@ -30,11 +30,10 @@ class ReponseQuestion
      */
     private $id;
 	
-	/**
-     * @ORM\Column(type="integer")
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gamepin")
      */
     private $gamepin;
-	
 	/**
      * @ORM\Column(type="string", length=255)
      */

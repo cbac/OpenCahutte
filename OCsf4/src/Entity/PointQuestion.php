@@ -127,29 +127,6 @@ class PointQuestion
     }
 
     /**
-     * Set nomjoueur
-     *
-     * @param string $nomjoueur
-     * @return PointQuestion
-     */
-    public function setNomjoueur($nomjoueur)
-    {
-        $this->nomjoueur = $nomjoueur;
-
-        return $this;
-    }
-
-    /**
-     * Get nomjoueur
-     *
-     * @return string 
-     */
-    public function getNomjoueur()
-    {
-        return $this->nomjoueur;
-    }
-
-    /**
      * Set pointqx
      *
      * @param integer $pointqx
@@ -170,29 +147,6 @@ class PointQuestion
     public function getPointqx()
     {
         return $this->pointqx;
-    }
-
-    /**
-     * Set idjoueur
-     *
-     * @param integer $idjoueur
-     * @return PointQuestion
-     */
-    public function setIdjoueur($idjoueur)
-    {
-        $this->idjoueur = $idjoueur;
-
-        return $this;
-    }
-
-    /**
-     * Get idjoueur
-     *
-     * @return integer 
-     */
-    public function getIdjoueur()
-    {
-        return $this->idjoueur;
     }
 
     /**

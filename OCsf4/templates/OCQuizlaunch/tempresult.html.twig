@@ -15,7 +15,7 @@
 </ul>
 
 <br><br><div align="right">
-<a href="{{ path('oc_quizlaunch_question', {'gamepin' : gamepin, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+<a href="{{ path('oc_quizlaunch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>
 
 {% endblock %}
