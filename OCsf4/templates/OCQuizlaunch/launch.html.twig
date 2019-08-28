@@ -5,10 +5,22 @@
   Accueil - {{ parent() }}
 {% endblock %}
 {% block customPageScripts  %}
-<script type="text/javascript" src="{{ 'js/countdown.js' }}"></script>
+<script type="text/javascript" src="{{ 'js/jquery-countdown-timer-control.js' }}"></script>
 <script>
-       var myCountdown1 = new Countdown({time:{{tempsrep}}, width:"100", rangeHi:"second", hideLabels:"true"});
-</script>  
+    $(function(){
+        //default
+        //without control
+        var timer0=$('.timer0').startTimer({
+            onComplete: function(element){console.log('Complete');}
+            //,onPause: $('.timerpause'), //optional, pause control
+            //onReset: $('.timerreset'), //optional, reset control
+            //onStart: $('.timerstart') //optional, start control
+            //loop: true, //optional, enable loop
+            //loopInterval: 2 //optional
+        });
+        timer0.trigger('start'); //optional, use to start without control button
+    })
+</script> 
 {% endblock %} 
  
 {% block body %}
@@ -16,22 +28,20 @@
 
 	<tr>
 	
-		<td style="width: 90%">  <h2>Q.{{ idq }} : {{ texte }}</h2><br> </td>
-		<td>
-	
-
-			<br><br>
-			
-		</td>
+		<td>  <h2>Gamepin: {{ gamepin.pinNumber }} </h2></td>
+		<td>  <h2>Q.{{ idq }} : {{ texte }} </h2></td>
 	</tr>
 </table>
 			
-  {# if question.idq is defined #}
+  <div class="container">
+    <h2>Countdown</h2>
+    <div class="timer timer0 alert alert-primary" data-minutes-left="{{tempsrep*0.1}}"></div>
+</div>
 		
 	<table>	
 	<tr>	
 	
-	    <td  style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-primary">	A : <br>{{ question.rep1 }} </td>
+	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-primary">	A : <br>{{ question.rep1 }} </td>
 	    <td style="width: 400px; height:200px;  margin:2px; font-size:60px;" class ="btn btn-success">	B : <br>{{ question.rep2 }} </td>
 	</tr>
 	<tr>	
