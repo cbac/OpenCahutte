@@ -174,17 +174,18 @@ class QuizLaunchController extends AbstractController
     {
         /** TODO check algorithm and unused vars **/
         $session = $request->getSession();
-        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getGamepin()) {
+        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $reponsesQuestionsTimers = $em->getRepository(ReponseQuestion::class)
-            ->findBy([ 'gamepin'=>$gamepin, 'question' => $idq]);
+
 
             $QCMs = $gamepin->getQuiz()->getQCMs();
 
             $qcm = $QCMs->get($idq - 1);
-
+            $reponsesQuestionsTimers = $em->getRepository(ReponseQuestion::class)
+            ->findBy([ 'gamepin'=>$gamepin, 'qcm' => $qcm]);
+            
             $qcm0 = $em->getRepository(PointQuestion::class)->findBy(array(
                 'gamepin' => $gamepin,
                 'idq' => $idq
