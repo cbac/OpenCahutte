@@ -3,7 +3,7 @@
 var collectionHolder = $('ul.QCMs');
 
 // ajoute un lien « add a tag »
-var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter une question</a>');
+var $addTagLink = $('<a href="#" class="add_tag_link">Add a question</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {

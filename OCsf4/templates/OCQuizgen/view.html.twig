@@ -31,25 +31,20 @@
   </div>
   
    <p>
-    <a href="{{ path('oc_quizgen_list') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
+    <a class="btn btn-secondary" href="{{ path('oc_quizgen_list') }}">
       Back to the list
     </a>
-    <a href="{{ path('oc_quizlaunch_pick', {'id': quiz.id}) }}" class="btn btn-success">
-      <i class="glyphicon glyphicon-play-circle"></i>
+    <a class="btn btn-primary" href="{{ path('oc_launch_pick', {'id': quiz.id}) }}" >
       Launch quiz!
     </a>
-    <a href="{{ path('oc_quizgen_edit', {'id': quiz.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
+    <a href="{{ path('oc_quizgen_edit', {'id': quiz.id}) }}" class="btn btn-warning">
       Modify quiz
     </a>
-	<a href="{{ path('oc_quizgen_duplicate', {'id': quiz.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-duplicate"></i>
+	<a href="{{ path('oc_quizgen_duplicate', {'id': quiz.id}) }}" class="btn btn-info">
       Duplicate quiz
     </a>
     {% if user == auteur %}
     <a href="{{ path('oc_quizgen_delete', {'id': quiz.id}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
       Delete quiz
     </a>
     {% endif %}

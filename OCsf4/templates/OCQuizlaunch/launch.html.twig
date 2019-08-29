@@ -4,7 +4,8 @@
 {% block title %}
   Accueil - {{ parent() }}
 {% endblock %}
-
+{%  block navigation %}
+{% endblock %}
  
 {% block body %}
 <table style="width: 810px">
@@ -18,7 +19,7 @@
 			
   <div class="container">
     <h2>Countdown</h2>
-    <div class="timer timer0 alert alert-primary" data-minutes-left="{{tempsrep*0.1/6}}"></div>
+    <div class="timer timer0 alert alert-primary" data-minutes-left="{{tempsrep/60.0}}"></div>
 </div>
 		
 	<table>	
@@ -40,7 +41,7 @@
 
 <br><br><div align="right">
 
-<a href="{{ path('oc_quizlaunch_score', {'gamepin' : gamepin.id, 'idq': idq}) }}" class="btn btn-default btn-lg">Scores   <i class="glyphicon glyphicon-chevron-right"></i></a>
+<a href="{{ path('oc_launch_score', {'gamepin' : gamepin.id, 'idq': idq}) }}" class="btn btn-primary btn-lg">Scores  </a>
 </div>
 
 

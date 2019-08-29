@@ -26,7 +26,11 @@
 	
 	<h3>Questions</h3>
 	
-    <ul class="QCMs">
+    <ul class="QCMs" " data-prototype="
+       {% filter escape %}
+            {{ include('OCQuizgen/Form/QCMs.html.twig', { 'form': form.QCMs.vars.prototype }) }}
+        {% endfilter %}
+   ">
 		{% for QCM in form.QCMs %}
 		<li>
 			{{ form_row(QCM.question) }}

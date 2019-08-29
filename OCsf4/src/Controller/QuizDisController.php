@@ -112,10 +112,9 @@ class QuizDisController extends AbstractController
             $authorName = "anonyme";
         } else {
             $authorName = $auteur->getEmail();
-            
         }
 
-        $statReponse = new ReponseQuestion();
+
         $class = array(
             "btn btn-primary",
             "btn btn-success",
@@ -123,6 +122,8 @@ class QuizDisController extends AbstractController
             "btn btn-danger"
         );
         $form = array();
+        $statReponse = new ReponseQuestion();
+        
         for ($i = 0; $i < 4; $i ++) {
             $form[$i] = $this->createForm(PlayType::class, $statReponse, array(
                 'rep' => chr(65 + $i),
@@ -131,16 +132,17 @@ class QuizDisController extends AbstractController
         }
         if ($request->isMethod('POST')) {
             $rep = $request->get('play')['reponseDonnee'];
-            dump($rep);
             $idRep = ord($rep) - 65;
 
             $statReponse->setGamepin($gamepin);
             $session = $request->getSession();
             $statReponse->setPseudoUser($session->get('pseudo'));
+            $statReponse->setTime(time());
+            $statReponse->setQcm($gamepin->getQuiz()->getQcms()->get($timer->getQNumber()));
 
             $form[$idRep]->handleRequest($request);
-
-            if ($form[$idRep]->isValid()) {
+            // get $statReponse.reponseDonnee from form 
+            if ($form[$idRep]->isSubmitted() && $form[$idRep]->isValid()) {
                 $em->persist($statReponse);
                 $em->flush();
                 return $this->redirect($this->generateUrl('oc_quizdis_play', array(

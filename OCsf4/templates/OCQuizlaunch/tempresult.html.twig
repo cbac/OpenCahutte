@@ -4,6 +4,9 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
+{% block navigation %}
+{% endblock %}
+
 {% block body %}
 <h2>Bonne(s) réponse(s) : {% for lettre in reponsesJustes %} {{ lettre }} {% endfor %}</h2>
 <h2>Scores</h2>
@@ -15,7 +18,7 @@
 </ul>
 
 <br><br><div align="right">
-<a href="{{ path('oc_quizlaunch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+<a href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
 </div>
 
 {% endblock %}

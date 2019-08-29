@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  *
- * @Route("/quizlaunch")
+ * @Route("/launch")
  */
 class QuizLaunchController extends AbstractController
 {
@@ -25,7 +25,7 @@ class QuizLaunchController extends AbstractController
     /**
      * Lists all quizs
      *
-     * @Route("/", name="oc_quizlaunch_index", methods={"GET"})
+     * @Route("/", name="oc_launch_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -45,7 +45,7 @@ class QuizLaunchController extends AbstractController
     /**
      * Pick a quiz
      *
-     * @Route("/{id}", name="oc_quizlaunch_pick", requirements={
+     * @Route("/{id}", name="oc_launch_pick", requirements={
      * "id": "\d+" }, methods={"GET"})
      */
     public function pickAction(Request $request, Quiz $quiz)
@@ -94,7 +94,7 @@ class QuizLaunchController extends AbstractController
     /**
      * Launch one question:
      *
-     * @Route("/question/{gamepin}/{idq}", name="oc_quizlaunch_question", requirements={
+     * @Route("/question/{gamepin}/{idq}", name="oc_launch_question", requirements={
      * "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
      */
     public function launchquestionAction(Request $request, Gamepin $gamepin, $idq)
@@ -109,7 +109,6 @@ class QuizLaunchController extends AbstractController
             }
             $nbqTot = $quiz->getNbQuestions();
             if ($idq <= $nbqTot) {
-                dump($quiz->getQCMS());
                 $question = $quiz->getQCMs()->get($idq-1);
                 if ($question == Null) {
                     throw new NotFoundHttpException("Launchquestion can't get question in quiz ");
@@ -134,11 +133,11 @@ class QuizLaunchController extends AbstractController
                 // Étape 2 : On « flush » tout ce qui a été persisté avant
                 $em->flush();
 
-                if ($request->isMethod('POST')) {
+ //               if ($request->isMethod('POST')) {
                     $request->getSession()
                         ->getFlashBag()
                         ->add('notice', 'Début de la question.');
-                }
+   //             }
 
                 // si idq == nbquestion
 
@@ -152,10 +151,9 @@ class QuizLaunchController extends AbstractController
             } 
             else /* if( idq > nbqTot) */
             {
-                return $this->redirect($this->generateUrl('oc_quizlaunch_stats', 
+                return $this->redirect($this->generateUrl('oc_launch_final', 
                     array(
-                    'gamepin' => $gamepin->getId(),
-                    'quiz' => $quiz->getId()
+                    'gamepin' => $gamepin->getId()
                     )
                     ));
             }
@@ -167,7 +165,7 @@ class QuizLaunchController extends AbstractController
     /**
      * Launch one question:
      *
-     * @Route("/score/{gamepin}/{idq}", name="oc_quizlaunch_score", requirements={
+     * @Route("/score/{gamepin}/{idq}", name="oc_launch_score", requirements={
      * "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
      */
     public function resQuestionAction(Request $request, Gamepin $gamepin, $idq)
@@ -260,10 +258,10 @@ class QuizLaunchController extends AbstractController
     /**
      * Stats after launch
      *
-     * @Route("/stats/{gamepin}", name="oc_quizlaunch_stats", requirements={
+     * @Route("/stats/{gamepin}", name="oc_launch_final", requirements={
      * "gamepin": "\d+" }, methods={"GET"})
      */
-    public function showfinalAction(Request $request, Gamepin $gamepin)
+    public function finalAction(Request $request, Gamepin $gamepin)
     {
         /** TODO check the algorithm and code **/
         $em = $this->getDoctrine()->getManager();
@@ -306,7 +304,7 @@ class QuizLaunchController extends AbstractController
         return $this->render('OCQuizlaunch\stats.html.twig', array(
             'pointsTot' => $pointsTot,
             'allPlayers' => $allPlayers,
-            'quiz' => $gamepin->getQuiz()
+            'gamepin' => $gamepin
         ));
     }
 }

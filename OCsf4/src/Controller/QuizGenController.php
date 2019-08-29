@@ -174,7 +174,7 @@ class QuizGenController extends AbstractController
             if ($auteur == null)
                 $listNoms[] = 'Anonyme';
             else {
-                $listNoms[] = $auteur->getNom();
+                $listNoms[] = $auteur->getEmail();
             }
         }
 
