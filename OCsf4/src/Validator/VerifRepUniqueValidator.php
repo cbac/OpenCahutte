@@ -47,7 +47,7 @@ class VerifRepUniqueValidator extends ConstraintValidator
 			else if ($reponseQuestion->getTime() > $hfin)
 				$this->context->addViolation(" Temps écoulé !");
 			else
-				$reponseQuestion->setTimer($timers[0]);
+				$reponseQuestion->setTimer($timer);
 		}
 	}
 }

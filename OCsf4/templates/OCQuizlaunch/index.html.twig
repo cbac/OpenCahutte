@@ -12,7 +12,7 @@
   <ul>
     {% for quiz in listQuizs %}
       <li>
-        <a href="{{ path('oc_launch_pick', {'id': quiz.id}) }}">
+        <a href="{{ path('oc_launch_gamepin', {'id': quiz.id}) }}">
           {{ quiz.nom }}
         </a>
         par {{ quiz.author }},

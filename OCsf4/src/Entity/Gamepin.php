@@ -31,7 +31,6 @@ class Gamepin
     private $pinNumber;
     
     function __construct(Quiz $quiz=null){
-        /* TODO check unicity */
         if($quiz !== null) {
             $this->setQuiz($quiz);
             $this->pinNumber = rand(1, 999999);
