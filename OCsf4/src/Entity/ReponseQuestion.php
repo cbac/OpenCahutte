@@ -12,9 +12,9 @@ use App\Validator as OCQuizdisAssert;
 class ReponseQuestion
 {
 	public function __construct()
-             {
-                 $this->time = time();
-             }
+                      {
+                          $this->time = time();
+                      }
 		
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Timer")
@@ -54,6 +54,11 @@ class ReponseQuestion
      * @ORM\JoinColumn(nullable=false)
      */
     private $qcm;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $points;
 	
     /**
      * Get id
@@ -188,6 +193,18 @@ class ReponseQuestion
     public function setQcm(?QCM $qcm): self
     {
         $this->qcm = $qcm;
+
+        return $this;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(?int $points): self
+    {
+        $this->points = $points;
 
         return $this;
     }

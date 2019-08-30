@@ -12,8 +12,8 @@
 <h2>Scores</h2>
 
 <ul id="navigation">
-	{% for ligne in pointQuestion %}
-		<li>{{ligne.pseudojoueur}} : {{ligne.pointqx}} points</li>
+	{% for pseudo, total in pointsTotaux %}
+		<li>{{pseudo}} : {{total.pointqx}} points</li>
 	{% endfor %}
 </ul>
 

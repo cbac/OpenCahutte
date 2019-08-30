@@ -135,7 +135,7 @@ class QuizLaunchController extends AbstractController
 
                 // retrieve Timer in db
                 $timer = $em->getRepository(Timer::class)->findOneBy(array(
-                        'gamepin' => $gamepin
+                    'gamepin' => $gamepin
                 ));
                 if ($timer == null) {
                     throw new NotFoundHttpException("No timer for gamepin " . $gamepin->getPinNumber());
@@ -175,10 +175,10 @@ class QuizLaunchController extends AbstractController
      * @Route("/score/{gamepin}/{idq}", name="oc_launch_score", requirements={
      * "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
      */
-    public function resQuestionAction(Request $request, Gamepin $gamepin, $idq)
+    public function scoreAction(Request $request, Gamepin $gamepin, $idq)
     {
         /**
-         * TODO check algorithm and unused vars *
+         * TODO check algorithm and unused vars
          */
         $session = $request->getSession();
         if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
@@ -193,67 +193,66 @@ class QuizLaunchController extends AbstractController
                 'qcm' => $qcm
             ]);
 
-            $qcm0 = $em->getRepository(PointQuestion::class)->findBy(array(
+            /*
+             * on est en train de les mettre dans la base
+             * donc il n'y en a pas encore
+             * $pointsQuestions = $em->getRepository(PointQuestion::class)->findBy(array(
+             * 'gamepin' => $gamepin,
+             * 'idq' => $idq
+             * ));
+             */
+            $pointsTotaux = $em->getRepository(PointQuestion::class)->findBy(array(
                 'gamepin' => $gamepin,
-                'idq' => $idq
+                'idq' => 0
             ));
 
             $allPlayers = array();
+            $pointsByPseudo = array();
 
-            foreach ($qcm0 as $ligne) {
-                $allPlayers[] = $ligne->getPseudoJoueur();
+            foreach ($pointsTotaux as $pointQuestion) {
+                $pseudo = $pointQuestion->getPseudoJoueur();
+                $allPlayers[] = $pseudo;
+                $pointsByPseudo[$pseudo] = $pointQuestion;
             }
 
-            $i = 0;
             $pseudos = array();
-            $pointQuestion = array();
+            $pointsQuestions = array();
 
-            foreach ($reponsesQuestionsTimers as $reponseQuestionTimer) {
+            // for players that send a answer
+            foreach ($reponsesQuestionsTimers as $answer) {
 
-                $pseudos[$i] = $reponseQuestionTimer->getPseudoUser();
+                $pseudo = $answer->getPseudoUser();
+                $onePQ = new PointQuestion();
+                $em->persist($onePQ);
+                $onePQ->setGamepin($gamepin);
+                $onePQ->setPseudojoueur($pseudo);
+                $onePQ->setIdq($idq);
+                $onePQ->setPointqx($answer->getPoints());
 
-                $pointQuestion[$i] = new PointQuestion();
-                $em->persist($pointQuestion[$i]);
-                $pointQuestion[$i]->setGamepin($gamepin);
-                $pointQuestion[$i]->setPseudojoueur($reponseQuestionTimer->getPseudoUser());
-                $pointQuestion[$i]->setIdq($idq);
-
-                $reponseDonnee = $reponseQuestionTimer->getReponseDonnee();
-
-                $reponseJuste = (($reponseDonnee == 'A' && $qcm->getJuste1()) || ($reponseDonnee == 'B' && $qcm->getJuste2()) || ($reponseDonnee == 'C' && $qcm->getJuste3()) || ($reponseDonnee == 'D' && $qcm->getJuste4()));
-
-                if ($reponseJuste) {
-                    $hfin = $reponseQuestionTimer->getTimer()->getHfin();
-                    $hdebut = $reponseQuestionTimer->getTimer()->getHdebut();
-                    $time = $reponseQuestionTimer->getTime();
-                    $tempsDeReponse = $time - $hdebut;
-                    $score = 500 - 400 * $tempsDeReponse / ($hfin - $hdebut);
-
-                    $pointQuestion[$i]->setPointqx($score);
-                } else
-                    $pointQuestion[$i]->setPointqx(0);
-
-                $em->flush($pointQuestion[$i]);
-                $i ++;
+                $pointsByPseudo[$pseudo]->setPointqx($pointsByPseudo[$pseudo]->getPointqx()+ $answer->getPoints());
+                $pointsQuestions[] = $onePQ;
+                $pseudos[] = $pseudo;
             }
-
+            // for players that dit not send an answer
             foreach ($allPlayers as $player) {
                 if (! in_array($player, $pseudos)) {
-                    $pointQuestion[$i] = new PointQuestion();
-                    $em->persist($pointQuestion[$i]);
-                    $pointQuestion[$i]->setGamepin($gamepin);
-                    $pointQuestion[$i]->setPseudojoueur($player);
-                    $pointQuestion[$i]->setIdq($idq);
-                    $pointQuestion[$i]->setPointqx(0);
-                    $em->flush($pointQuestion[$i]);
-                    $i ++;
+                    $onePQ = new PointQuestion();
+                    $em->persist($onePQ);
+                    $onePQ->setGamepin($gamepin);
+                    $onePQ->setPseudojoueur($pseudo);
+                    $onePQ->setIdq($idq);
+                    $onePQ->setPointqx(0);
+                    $pointsQuestions[] = $onePQ;
+                    $pseudos[] = $pseudo;
                 }
             }
-
+            $em->flush();
+            asort($pointsByPseudo);
             return $this->render('OCQuizlaunch\tempresult.html.twig', array(
                 'idq' => $idq,
                 'gamepin' => $gamepin,
-                'pointQuestion' => $pointQuestion,
+                'pointsQuestion' => $pointsQuestions,
+                'pointsTotaux' => $pointsByPseudo,
                 'reponsesJustes' => $qcm->getReponsesJustes()
             ));
         } else {

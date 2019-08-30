@@ -146,14 +146,26 @@ class QuizDisController extends AbstractController
 
                 $statReponse->setGamepin($gamepin);
                 $statReponse->setPseudoUser($session->get('pseudo'));
-                $statReponse->setTime(time());
+                $time = time();
+                $statReponse->setTime($time);
                 $statReponse->setQcm($qcm);
 
                 $form[$idRep]->handleRequest($request);
                 // get $statReponse.reponseDonnee from form
                 if ($form[$idRep]->isSubmitted() && $form[$idRep]->isValid()) {
+                    $reponseDonnee = $statReponse->getReponseDonnee();
+                    $score = 0;
+                    if (($reponseDonnee == 'A' && $qcm->getJuste1()) || ($reponseDonnee == 'B' && $qcm->getJuste2()) || ($reponseDonnee == 'C' && $qcm->getJuste3()) || ($reponseDonnee == 'D' && $qcm->getJuste4())) {
+                        $hfin = $timer->getHfin();
+                        $hdebut = $timer->getHdebut();
+                        $tempsDeReponse = $time - $hdebut;
+                        $score = 500 - 400 * $tempsDeReponse / ($hfin - $hdebut);
+                    }
+                    $statReponse->setPoints($score);
                     $em->persist($statReponse);
                     $em->flush();
+                    $session->getFlashBag()->add('notice', 'Score: ' . $score);
+                    
                     return $this->redirect($this->generateUrl('oc_quizdis_play', array(
                         'pinNumber' => $gamepin->getPinNumber()
                     )));
