@@ -9,12 +9,10 @@
 {% block body %}
 
 <h2>Résultats du quiz "{{ gamepin.quiz.nom }}" :</h2>
-{% for key in allPlayers %}
+{% for pseudo, total in pointsTot %}
+        <li>{{pseudo}} : {{total.pointqx}} points</li>
+    {% endfor %}
 
-  <li>
-      {{ key }} : {{ pointsTot[key] }} points
-  </li>
-{% endfor %}  
           <nav class="nav">
           <a class="nav-link" href="{{ path('oc_quizdis_select') }}">Answer a quiz</a>
           <a class="nav-link" href="{{ path('oc_quizgen_list') }}">Public quizes</a>

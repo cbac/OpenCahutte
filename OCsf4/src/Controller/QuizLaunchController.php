@@ -273,18 +273,20 @@ class QuizLaunchController extends AbstractController
          * TODO check the algorithm and code *
          */
         $em = $this->getDoctrine()->getManager();
-
-        $pointsQs = new PointQuestion();
-
-        $repository = $em->getRepository(PointQuestion::class);
-
-        // récupérer toutes les sessions associées au gamepin
-
-        $pointsQs = $repository->getPointQuestionByGamepin($gamepin->getPinNumber());
-
+    
+        $pointsTotaux = $em->getRepository(PointQuestion::class)->findBy(array(
+            'gamepin' => $gamepin,
+            'idq' => 0
+        ));
+        
+        $pointsByPseudo = array();
+        
+        foreach ($pointsTotaux as $pointQuestion) {
+            $pointsByPseudo[$pointQuestion->getPseudoJoueur()] = $pointQuestion;
+        }
         // initialiser tableau
         // recupérer tous les joueurs associés au gamepin
-        $allPlayers = array();
+/*        $allPlayers = array();
         $pointsTot = array();
 
         $pointQuestion0 = $repository->findBy(array(
@@ -300,12 +302,11 @@ class QuizLaunchController extends AbstractController
             $nbJoueurs ++;
             $em->remove($ligne);
         }
-
-        // for each joueur in sessionsrecup set stats.joueur.pttotaux = somme(points du joueur à chaque q)
-
+*/
+        // Clean database
+        
+        $pointsQs = $em->getRepository(PointQuestion::class)->getPointQuestionByGamepin($gamepin->getPinNumber());
         foreach ($pointsQs as $pointsQ) {
-
-            $pointsTot[$pointsQ->getPseudojoueur()] += $pointsQ->getPointqx();
             $em->remove($pointsQ);
         }
         $timers = $em->getRepository(Timer::class)->findBy(array(
@@ -317,8 +318,7 @@ class QuizLaunchController extends AbstractController
         $em->remove($gamepin);
         $em->flush();
         return $this->render('OCQuizlaunch\stats.html.twig', array(
-            'pointsTot' => $pointsTot,
-            'allPlayers' => $allPlayers,
+            'pointsTot' => $pointsByPseudo,
             'gamepin' => $gamepin
         ));
     }
