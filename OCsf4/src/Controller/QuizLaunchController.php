@@ -169,10 +169,10 @@ class QuizLaunchController extends AbstractController
      * @Route("/getnbusers/{gamepin}", name="oc_launch_getnbusers", requirements={
      * "gamepin": "\d+" }, methods={"GET"})
      */
-    public function getNbUsers(Request $request, Gamepin $gamepin, $idq)
+    public function getNbUsers(Request $request, Gamepin $gamepin)
     {
         $session = $request->getSession();
-        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
+//        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
             
             $em = $this->getDoctrine()->getManager();
             
@@ -186,8 +186,8 @@ class QuizLaunchController extends AbstractController
             
             $size = count($pointsTotaux);
             return new Response($size, Response::HTTP_OK);
-        }
-        return new Response("Session Error", Response::HTTP_NOT_FOUND);
+//        }
+ //       return new Response("Session Error", Response::HTTP_NOT_FOUND);
         
     }
     /**
