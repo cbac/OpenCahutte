@@ -1,14 +1,39 @@
 {% extends "layout.html.twig" %}
-
+{% block customPageScripts %}
+<script>
+$(document).ready(function(){
+	setInterval(function() {
+	    $.ajax({url: "/launch/getnbusers/{{gamepin.id}}", async: false, success: function(result){
+	        $("#b1").html(result);
+	    }}, 5000); //5 seconds
+  });
+});
+</script>
+{% endblock %}
 {% block title %}
-  Accueil - {{ parent() }}
+Accueil -
+{{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h2>Début du quiz {{ name }} !</h2>
+<h2>
+	Début du quiz
+	{{ name }}
+	!
+</h2>
 
-  <p>Connectez-vous avec le gamepin : {{ gamepin.pinNumber }} !</p>
-          <a href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': 1}) }}">Lancer le quiz</a>
+<p>
+	Connectez-vous avec le gamepin :
+	{{ gamepin.pinNumber }}
+	!
+</p>
+<p>
+	Nombre d'utilisateurs : <b id="b1">0</b>
+</p>
+<a
+	href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': 1}) }}">Lancer
+	le quiz</a>
+
 
 {% endblock %}

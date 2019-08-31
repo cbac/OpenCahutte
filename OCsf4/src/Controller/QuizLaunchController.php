@@ -12,6 +12,7 @@ use App\Entity\Stats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -43,7 +44,7 @@ class QuizLaunchController extends AbstractController
     }
 
     /**
-     * Pick a quiz
+     * Pick a pinNumber
      *
      * @Route("/{id}", name="oc_launch_gamepin", requirements={
      * "id": "\d+" }, methods={"GET"})
@@ -78,13 +79,7 @@ class QuizLaunchController extends AbstractController
         $em->persist($gamepin);
         $em->flush();
 
-        if ($request->isMethod('POST')) {
-            $request->getSession()
-                ->getFlashBag()
-                ->add('notice', 'Début du quiz.');
-        }
-
-        /* affichage utilisateurs */
+        /* Display PinNumber and Waits for players */
 
         return $this->render('OCQuizlaunch\gamepin.html.twig', array(
             'gamepin' => $gamepin,
@@ -168,7 +163,33 @@ class QuizLaunchController extends AbstractController
         } else
             return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
     }
-
+    /**
+     * Get nb users for a gamepin
+     *
+     * @Route("/getnbusers/{gamepin}", name="oc_launch_getnbusers", requirements={
+     * "gamepin": "\d+" }, methods={"GET"})
+     */
+    public function getNbUsers(Request $request, Gamepin $gamepin, $idq)
+    {
+        $session = $request->getSession();
+        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            /*
+             * Retrieves entries associated to users
+             */
+            $pointsTotaux = $em->getRepository(PointQuestion::class)->findBy(array(
+                'gamepin' => $gamepin,
+                'idq' => 0
+            ));
+            
+            $size = count($pointsTotaux);
+            return new Response($size, Response::HTTP_OK);
+        }
+        return new Response("Session Error", Response::HTTP_NOT_FOUND);
+        
+    }
     /**
      * Launch one question:
      *
@@ -247,12 +268,12 @@ class QuizLaunchController extends AbstractController
                 }
             }
             $em->flush();
-            asort($pointsByPseudo);
+            $toDisplay = self::prepareDisplay($pointsByPseudo);
             return $this->render('OCQuizlaunch\tempresult.html.twig', array(
                 'idq' => $idq,
                 'gamepin' => $gamepin,
                 'pointsQuestion' => $pointsQuestions,
-                'pointsTotaux' => $pointsByPseudo,
+                'pointsTotaux' => $toDisplay,
                 'reponsesJustes' => $qcm->getReponsesJustes()
             ));
         } else {
@@ -317,9 +338,32 @@ class QuizLaunchController extends AbstractController
         }
         $em->remove($gamepin);
         $em->flush();
+        $toDisplay = self::prepareDisplay($pointsByPseudo);
         return $this->render('OCQuizlaunch\stats.html.twig', array(
-            'pointsTot' => $pointsByPseudo,
+            'pointsTot' => $toDisplay,
             'gamepin' => $gamepin
         ));
+    }
+    /**
+     * Prepare array containing quiz result to display 
+     * the 10 firsts entries
+     * @param array $toPrepare
+     * @return array
+     */
+    private function prepareDisplay($toPrepare) : array
+    {
+        $toDisplay = array();
+        arsort($toPrepare, SORT_NUMERIC);
+        if(count($toPrepare) < 10 ){
+            $toDisplay = $toPrepare;
+        } else {
+            reset($toPrepare);
+            for ($i = 0; $i < 10; $i++ ) {
+                $toDisplay[key($toPrepare)] = current($toPrepare);
+                next($toPrepare);
+            }
+        }
+        arsort($toDisplay);
+        return $toDisplay;
     }
 }
