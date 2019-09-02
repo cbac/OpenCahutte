@@ -284,7 +284,7 @@ class QuizLaunchController extends AbstractController
             $pointsByPseudo[$pointQuestion->getPseudoJoueur()] = $pointQuestion;
         }
         // Clean database
-        // self::cleanDB();
+        self::cleanDB($gamepin);
 
         $toDisplay = self::prepareDisplay($pointsByPseudo);
         return $this->render('OCQuizlaunch\stats.html.twig', array(
@@ -294,10 +294,20 @@ class QuizLaunchController extends AbstractController
     }
     private function cleanDB(Gamepin $gamepin){
         $em = $this->getDoctrine()->getManager();
-        $pointsQs = $em->getRepository(PointQuestion::class)->getPointQuestionByGamepin($gamepin->getPinNumber());
+        $reponsesQuestions = $em->getRepository(ReponseQuestion::class)->findBy([
+            'gamepin' => $gamepin,
+        ]);
+        foreach ($reponsesQuestions as $response) {
+            $em->remove($response);
+        }
+        
+        $pointsQs = $em->getRepository(PointQuestion::class)->findBy([
+            'gamepin' => $gamepin,
+        ]);
         foreach ($pointsQs as $pointsQ) {
             $em->remove($pointsQ);
         }
+        
         $timers = $em->getRepository(Timer::class)->findBy(array(
             'gamepin' => $gamepin
         ));
