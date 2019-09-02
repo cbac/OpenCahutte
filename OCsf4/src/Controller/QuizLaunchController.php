@@ -203,45 +203,35 @@ class QuizLaunchController extends AbstractController
          */
         $session = $request->getSession();
         if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
-
             $em = $this->getDoctrine()->getManager();
-
             $QCMs = $gamepin->getQuiz()->getQCMs();
-
             $qcm = $QCMs->get($idq - 1);
+            // answers to this question number
             $reponsesQuestionsTimers = $em->getRepository(ReponseQuestion::class)->findBy([
                 'gamepin' => $gamepin,
                 'qcm' => $qcm
             ]);
 
-            /*
-             * on est en train de les mettre dans la base
-             * donc il n'y en a pas encore
-             * $pointsQuestions = $em->getRepository(PointQuestion::class)->findBy(array(
-             * 'gamepin' => $gamepin,
-             * 'idq' => $idq
-             * ));
-             */
+            // all entries associated to question 0 that is used to sum the points
+            // when a player registers this entry is created
             $pointsTotaux = $em->getRepository(PointQuestion::class)->findBy(array(
                 'gamepin' => $gamepin,
                 'idq' => 0
             ));
 
-            $allPlayers = array();
             $pointsByPseudo = array();
-
+            // creates pointsByPseudo => associative array to PointQuestion objects
+            // associated to qnumber 0 (total of points)
+            // key is the pseudo user
             foreach ($pointsTotaux as $pointQuestion) {
-                $pseudo = $pointQuestion->getPseudoJoueur();
-                $allPlayers[] = $pseudo;
-                $pointsByPseudo[$pseudo] = $pointQuestion;
+                $pointsByPseudo[$pointQuestion->getPseudoJoueur()] = $pointQuestion;
             }
 
-            $pseudos = array();
             $pointsQuestions = array();
 
-            // for players that send a answer
+            // for players that send a answer to that question
+            // there may be less answers than registered players
             foreach ($reponsesQuestionsTimers as $answer) {
-
                 $pseudo = $answer->getPseudoUser();
                 $onePQ = new PointQuestion();
                 $em->persist($onePQ);
@@ -250,30 +240,21 @@ class QuizLaunchController extends AbstractController
                 $onePQ->setIdq($idq);
                 $onePQ->setPointqx($answer->getPoints());
 
-                $pointsByPseudo[$pseudo]->setPointqx($pointsByPseudo[$pseudo]->getPointqx()+ $answer->getPoints());
-                $pointsQuestions[] = $onePQ;
-                $pseudos[] = $pseudo;
+                // modify pointQuestion for total points of pseudo 
+                // related object comes from db is already persisted 
+                // will be saved at next flush
+                $pointsByPseudo[$pseudo]->setPointqx($pointsByPseudo[$pseudo]->getPointqx() + $answer->getPoints()) ;
+                $pointsQuestions[$pseudo] = $onePQ;
             }
-            // for players that dit not send an answer
-            foreach ($allPlayers as $player) {
-                if (! in_array($player, $pseudos)) {
-                    $onePQ = new PointQuestion();
-                    $em->persist($onePQ);
-                    $onePQ->setGamepin($gamepin);
-                    $onePQ->setPseudojoueur($pseudo);
-                    $onePQ->setIdq($idq);
-                    $onePQ->setPointqx(0);
-                    $pointsQuestions[] = $onePQ;
-                    $pseudos[] = $pseudo;
-                }
-            }
+
             $em->flush();
-            $toDisplay = self::prepareDisplay($pointsByPseudo);
+            $totalDisplay = self::prepareDisplay($pointsByPseudo);
+            $currentDisplay = self::prepareDisplay($pointsQuestions);
             return $this->render('OCQuizlaunch\tempresult.html.twig', array(
                 'idq' => $idq,
                 'gamepin' => $gamepin,
-                'pointsQuestion' => $pointsQuestions,
-                'pointsTotaux' => $toDisplay,
+                'pointsQuestion' => $currentDisplay,
+                'pointsTotaux' => $totalDisplay,
                 'reponsesJustes' => $qcm->getReponsesJustes()
             ));
         } else {
@@ -290,9 +271,6 @@ class QuizLaunchController extends AbstractController
      */
     public function finalAction(Request $request, Gamepin $gamepin)
     {
-        /**
-         * TODO check the algorithm and code *
-         */
         $em = $this->getDoctrine()->getManager();
     
         $pointsTotaux = $em->getRepository(PointQuestion::class)->findBy(array(
@@ -305,27 +283,17 @@ class QuizLaunchController extends AbstractController
         foreach ($pointsTotaux as $pointQuestion) {
             $pointsByPseudo[$pointQuestion->getPseudoJoueur()] = $pointQuestion;
         }
-        // initialiser tableau
-        // recupérer tous les joueurs associés au gamepin
-/*        $allPlayers = array();
-        $pointsTot = array();
-
-        $pointQuestion0 = $repository->findBy(array(
-            'gamepin' => $gamepin,
-            'idq' => 0
-        ));
-
-        $nbJoueurs = 0;
-        foreach ($pointQuestion0 as $ligne) {
-            $pseudo = $ligne->getPseudoJoueur();
-            $allPlayers[] = $pseudo;
-            $pointsTot[$pseudo] = 0;
-            $nbJoueurs ++;
-            $em->remove($ligne);
-        }
-*/
         // Clean database
-        
+        // self::cleanDB();
+
+        $toDisplay = self::prepareDisplay($pointsByPseudo);
+        return $this->render('OCQuizlaunch\stats.html.twig', array(
+            'pointsTot' => $toDisplay,
+            'gamepin' => $gamepin
+        ));
+    }
+    private function cleanDB(Gamepin $gamepin){
+        $em = $this->getDoctrine()->getManager();
         $pointsQs = $em->getRepository(PointQuestion::class)->getPointQuestionByGamepin($gamepin->getPinNumber());
         foreach ($pointsQs as $pointsQ) {
             $em->remove($pointsQ);
@@ -338,11 +306,6 @@ class QuizLaunchController extends AbstractController
         }
         $em->remove($gamepin);
         $em->flush();
-        $toDisplay = self::prepareDisplay($pointsByPseudo);
-        return $this->render('OCQuizlaunch\stats.html.twig', array(
-            'pointsTot' => $toDisplay,
-            'gamepin' => $gamepin
-        ));
     }
     /**
      * Prepare array containing quiz result to display 
@@ -353,17 +316,21 @@ class QuizLaunchController extends AbstractController
     private function prepareDisplay($toPrepare) : array
     {
         $toDisplay = array();
-        arsort($toPrepare, SORT_NUMERIC);
-        if(count($toPrepare) < 10 ){
-            $toDisplay = $toPrepare;
+        $finalDisplay = array();
+        foreach($toPrepare as $key => $pointQuestion) {
+            $toDisplay[$key] = $pointQuestion->getPointqx();
+        }
+        arsort($toDisplay, SORT_NUMERIC);
+        if(count($toDisplay) < 10 ){
+            $finalDisplay = $toDisplay;
         } else {
-            reset($toPrepare);
+            reset($toDisplay);
             for ($i = 0; $i < 10; $i++ ) {
-                $toDisplay[key($toPrepare)] = current($toPrepare);
-                next($toPrepare);
+                $finalDisplay[key($toDisplay)] = current($toDisplay);
+                next($toDisplay);
             }
         }
-        arsort($toDisplay);
-        return $toDisplay;
+        arsort($finalDisplay);
+        return $finalDisplay;
     }
 }

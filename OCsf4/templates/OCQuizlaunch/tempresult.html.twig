@@ -10,12 +10,32 @@
 {% block body %}
 <h2>Bonne(s) réponse(s) : {% for lettre in reponsesJustes %} {{ lettre }} {% endfor %}</h2>
 <h2>Scores</h2>
-
-<ul id="navigation">
-	{% for pseudo, total in pointsTotaux %}
-		<li>{{pseudo}} : {{total.pointqx}} points</li>
-	{% endfor %}
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    This question
+    </div>
+    <div class="col-sm">
+    Total
+    </div>    
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <ul >
+    {% for pseudo, question in pointsQuestion %}
+        <li>{{pseudo}} : {{question}} points</li>
+    {% endfor %}
+    </ul>
+    </div>
+    <div class="col-sm">
+    <ul >
+    {% for pseudo, total in pointsTotaux %}
+        <li>{{pseudo}} : {{total}} points</li>
+    {% endfor %}
+    </ul>
+    </div>    
+    </div>
+</div>
 
 <br><br><div align="right">
 <a href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>

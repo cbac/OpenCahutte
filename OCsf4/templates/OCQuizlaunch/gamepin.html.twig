@@ -5,9 +5,8 @@ $(document).ready(function(){
 	setInterval(function() {
 	    $.ajax({url: "/launch/getnbusers/{{gamepin.id}}", async: false, success: function(result){
 	        $("#b1").html(result);
-	    }}, 10000); //5 seconds
+	    }})}, 5000); //5 seconds
   });
-});
 </script>
 {% endblock %}
 {% block title %}
