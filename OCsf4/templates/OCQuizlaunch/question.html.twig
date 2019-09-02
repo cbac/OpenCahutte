@@ -49,11 +49,13 @@
 {% block customPageScripts  %}
 <script type="text/javascript" src="{{ '/js/jquery-countdown-timer-control.js' }}"></script>
 <script>
+
     $(function(){
         //default
         //without control
         var timer0=$('.timer0').startTimer({
-            onComplete: function(element){console.log('Complete');}
+            onComplete: function() {
+            	$(location).attr('href',"/launch/score/{{gamepin.id}}/{{idq}}"); }
             //,onPause: $('.timerpause'), //optional, pause control
             //onReset: $('.timerreset'), //optional, reset control
             //onStart: $('.timerstart') //optional, start control

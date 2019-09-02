@@ -109,7 +109,7 @@ class QuizLaunchController extends AbstractController
      * @Route("/question/{gamepin}/{idq}", name="oc_launch_question", requirements={
      * "gamepin": "\d+", "idq": "\d+" }, methods={"GET"})
      */
-    public function launchquestionAction(Request $request, Gamepin $gamepin, $idq)
+    public function questionAction(Request $request, Gamepin $gamepin, $idq)
     {
         $session = $request->getSession();
         if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
@@ -148,7 +148,7 @@ class QuizLaunchController extends AbstractController
                     ->getFlashBag()
                     ->add('notice', 'Début de la question.');
 
-                return $this->render('OCQuizlaunch\launch.html.twig', array(
+                return $this->render('OCQuizlaunch\question.html.twig', array(
                     'idq' => $idq,
                     'gamepin' => $gamepin,
                     'texte' => $texte,
@@ -165,13 +165,13 @@ class QuizLaunchController extends AbstractController
     }
     /**
      * Get nb users for a gamepin
-     *
+     * lightweight service called by ajax
      * @Route("/getnbusers/{gamepin}", name="oc_launch_getnbusers", requirements={
      * "gamepin": "\d+" }, methods={"GET"})
      */
     public function getNbUsers(Request $request, Gamepin $gamepin)
     {
-        $session = $request->getSession();
+//        $session = $request->getSession();
 //        if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
             
             $em = $this->getDoctrine()->getManager();
@@ -186,8 +186,8 @@ class QuizLaunchController extends AbstractController
             
             $size = count($pointsTotaux);
             return new Response($size, Response::HTTP_OK);
-//        }
- //       return new Response("Session Error", Response::HTTP_NOT_FOUND);
+ //       }
+       return new Response("Session Error", Response::HTTP_NOT_FOUND);
         
     }
     /**
@@ -205,6 +205,7 @@ class QuizLaunchController extends AbstractController
         if ($session->has('creatorGamepin') && $session->get('creatorGamepin') == $gamepin->getPinNumber()) {
             $em = $this->getDoctrine()->getManager();
             $QCMs = $gamepin->getQuiz()->getQCMs();
+            $lastIdq = $gamepin->getQuiz()->getNbQuestions();
             $qcm = $QCMs->get($idq - 1);
             // answers to this question number
             $reponsesQuestionsTimers = $em->getRepository(ReponseQuestion::class)->findBy([
@@ -250,8 +251,9 @@ class QuizLaunchController extends AbstractController
             $em->flush();
             $totalDisplay = self::prepareDisplay($pointsByPseudo);
             $currentDisplay = self::prepareDisplay($pointsQuestions);
-            return $this->render('OCQuizlaunch\tempresult.html.twig', array(
+            return $this->render('OCQuizlaunch\score.html.twig', array(
                 'idq' => $idq,
+                'lastidq' => $lastIdq,
                 'gamepin' => $gamepin,
                 'pointsQuestion' => $currentDisplay,
                 'pointsTotaux' => $totalDisplay,
@@ -269,7 +271,7 @@ class QuizLaunchController extends AbstractController
      * @Route("/stats/{gamepin}", name="oc_launch_stat", requirements={
      * "gamepin": "\d+" }, methods={"GET"})
      */
-    public function finalAction(Request $request, Gamepin $gamepin)
+    public function statsAction(Request $request, Gamepin $gamepin)
     {
         $em = $this->getDoctrine()->getManager();
     

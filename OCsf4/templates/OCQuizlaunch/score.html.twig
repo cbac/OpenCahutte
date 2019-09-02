@@ -37,8 +37,13 @@
     </div>
 </div>
 
-<br><br><div align="right">
-<a href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Question suivante   <i class="glyphicon glyphicon-chevron-right"></i></a>
+<br><br>
+<div align="right">
+{% if idq >= lastidq %}
+<a href="{{ path('oc_launch_stat', {'gamepin' : gamepin.id}) }}" class="btn btn-default btn-lg">Quiz results </a>
+{% else %}
+<a href="{{ path('oc_launch_question', {'gamepin' : gamepin.id, 'idq': idq+1}) }}" class="btn btn-default btn-lg">Next question </a>
+{% endif %}
 </div>
 
 {% endblock %}
