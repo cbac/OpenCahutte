@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Category;
+use App\Entity\Access;
 
 class QuizType extends AbstractType
 {
@@ -21,26 +24,29 @@ class QuizType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$categoryChoices=array(
-			'cg' => 'Culture générale', 
-			'maths' => 'Mathématiques', 
-			'phys' => 'Physique', 
-			'hist' => 'Histoire'
+			'General Knowledge' => 'Culture générale', 
+			'Maths' => 'Maths', 
+			'Physics' => 'Physics', 
+			'History' => 'History',
+		    'Computer Science'=>'Computer Science'
 		);
-		$accesChoices=array(
-			'public'=>'public',
-			'privé'=>'privé'
-		);
+
 		$largeurChamps = array('style'=> 'width: 200px');
 		
         $builder
 			->add('nom',TextType::class, array(
-				'label' => 'Nom du quiz', 
+				'label' => 'Quiz Title', 
+				'attr' => $largeurChamps
+			))
+			->add('access',EntityType::class, array(
+			    'class'=>Access::class,
+				'label' => 'Access', 
 				'attr' => $largeurChamps
 			))
 			->add('category',ChoiceType::class, array(
-				'choices' => $categoryChoices,
-				'label' => 'Catégorie', 
-				'attr' => $largeurChamps
+			    'choices' => $categoryChoices,
+			    'label' => 'Category',
+			    'attr' => $largeurChamps
 			))
 			->add('QCMs', CollectionType::class, array(
 				'entry_type'   => QCMType::class,
@@ -54,16 +60,6 @@ class QuizType extends AbstractType
 				)
 			))
         ;
-		/* Should be managed with User identified or anonymous 
-		 * but how to retrieve this information this deep
-		if ($options['user'] != null) {
-		    $builder->add('acces',ChoiceType::class, array(
-				'choices' => $accesChoices,
-				'label' => 'Acces', 
-				'attr' => $largeurChamps
-			));
-		}
-		*/
     }
     
     /**

@@ -35,9 +35,9 @@ class Quiz
     private $author;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Access")
      */
-    private $acces;
+    private $access;
 	
     /**
      * @var \DateTime
@@ -265,9 +265,9 @@ class Quiz
      * @param string $acces
      * @return self
      */
-    public function setAccess($acces) : self
+    public function setAccess($access) : self
     {
-        $this->acces = $acces;
+        $this->access = $access;
         return $this;
     }
 
@@ -278,6 +278,6 @@ class Quiz
      */
     public function getAccess() : string
     {
-        return $this->acces;
+        return $this->access;
     }
 }

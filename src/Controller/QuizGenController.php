@@ -37,18 +37,16 @@ class QuizGenController extends AbstractController
         $quiz = new Quiz();
 
         $form = $this->createForm(QuizType::class, $quiz);
-
+        $form->handleRequest($request);
+        
         if ($request->isMethod('POST')) {
-
+            
             if ($this->getUser() == null) {
                 $quiz->setAuthor(null);
                 $quiz->setAccess('public');
             } else {
                 $quiz->setAuthor($this->getUser());
-                $quiz->setAccess('private');
             }
-
-            $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -92,9 +90,14 @@ class QuizGenController extends AbstractController
         }
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
-        dump($quiz);
         
         if ($request->isMethod('POST')) {
+            if ($this->getUser() == null) {
+                $quiz->setAuthor(null);
+                $quiz->setAccess('public');
+            } else {
+                $quiz->setAuthor($this->getUser());
+            }
             $em = $this->getDoctrine()->getManager();     
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
@@ -208,7 +211,7 @@ class QuizGenController extends AbstractController
                     ->getUsername()
             ));
         } else
-            return $this->redirect($this->generateUrl('oc_register'));
+            return $this->redirect($this->generateUrl('app_login'));
     }
 
     /**
