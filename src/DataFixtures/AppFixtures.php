@@ -41,11 +41,12 @@ class AppFixtures extends Fixture
     }
     private function getQCMData()
     {
-        yield ['test1','rep1', true, 'rep2', false, 'rep3', true, 'rep4', false, 10];
-        
+        yield ['Année de création du groupe','1964', false, '1965', true, '1966', false, '1967', false, 20];
+        yield ["Année l'album Dark Side of the Moon", '1971', false, '1972', false, '1973', true, '1974', false, 20];
+        yield ["Année l'album The Wall", '1975', false, '1977', false, '1979', true, '1981', false, 20];      
     }
     private function getQuizData()
     {
-        yield ['test','public','Culture Générale'];     
+        yield ['Pink Floyd','public','Culture Générale'];     
     }
 }
