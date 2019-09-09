@@ -16,12 +16,12 @@
 		<br/>
 	{% else %}
 		<h4 class="simili-form">Autor : <i>Anonyme</i></h4>
-		<h4 class="simili-form">Acces : <i>Public</i> (Connect to select <i>Private</i>)</h4>
 		<br/>
     {% endif %}
 	{# Génération du label + error + widget pour un champ #}
 	{{ form_row(form.nom) }}
 	{{ form_row(form.category) }}
+	{{ form_row(form.access) }}
 	
 	
 	<h3>Questions</h3>

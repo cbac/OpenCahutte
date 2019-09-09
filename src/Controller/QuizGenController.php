@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
-use App\Entity\QCM;
+use App\Entity\Access;
 use App\Entity\User;
 use App\Form\QuizType;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +35,8 @@ class QuizGenController extends AbstractController
     public function addAction(Request $request)
     {
         $quiz = new Quiz();
-
+        $em = $this->getDoctrine()->getManager();
+        
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
         
@@ -43,7 +44,8 @@ class QuizGenController extends AbstractController
             
             if ($this->getUser() == null) {
                 $quiz->setAuthor(null);
-                $quiz->setAccess('public');
+                $pubAccess = $em->getRepository(Access::class)->findOneByName('public');
+                $quiz->setAccess($pubAccess);
             } else {
                 $quiz->setAuthor($this->getUser());
             }
@@ -85,6 +87,8 @@ class QuizGenController extends AbstractController
      */
     public function editAction(Request $request, Quiz $quiz)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         if (null === $quiz) {
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
@@ -94,11 +98,11 @@ class QuizGenController extends AbstractController
         if ($request->isMethod('POST')) {
             if ($this->getUser() == null) {
                 $quiz->setAuthor(null);
-                $quiz->setAccess('public');
+                $pubAccess = $em->getRepository(Access::class)->findOneByName('public');
+                $quiz->setAccess($pubAccess);
             } else {
                 $quiz->setAuthor($this->getUser());
             }
-            $em = $this->getDoctrine()->getManager();     
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
                     dump($QCM);
@@ -142,7 +146,7 @@ class QuizGenController extends AbstractController
                 'user' => $auteur->getEmail()
             ));
         } else {
-            if ($access == 'public') {
+            if ($access->getName() == 'public') {
 
                 return $this->render('OCQuizgen\view.html.twig', array(
                     'quiz' => $quiz,
@@ -166,11 +170,7 @@ class QuizGenController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $listQuizs = $em->getRepository(Quiz::class)->findBy(array(
-            'acces' => 'public'
-        ), array(
-            'id' => 'desc'
-        ));
+        $listQuizs = $em->getRepository(Quiz::class)->findPublicQuizes();
         $listNoms = array();
         foreach ($listQuizs as $quiz) {
             $auteur = $quiz->getAuthor();

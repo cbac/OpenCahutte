@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Quiz
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\QuizRepository")
  */
 class Quiz
 {
@@ -262,7 +262,7 @@ class Quiz
     /**
      * Set acces
      *
-     * @param string $acces
+     * @param Access $acces
      * @return self
      */
     public function setAccess($access) : self
@@ -274,9 +274,9 @@ class Quiz
     /**
      * Get acces
      *
-     * @return string 
+     * @return Access 
      */
-    public function getAccess() : string
+    public function getAccess() : ? Access
     {
         return $this->access;
     }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Quiz;
+use App\Entity\Access;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -17,5 +18,24 @@ class QuizRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Quiz::class);
+    }
+    public function findPublicQuizes() {
+         $qb = $this->createQueryBuilder('q');
+        // q.access refers to the "access" value
+        $qb->select('q')
+        ->join('q.access', 'a')
+        // selects all the public access data to avoid the query
+        ->where('a.name = ?1')
+        ->setParameter(1, 'public');
+//        ->from('App\Entity\Quiz', 'q')
+//        ->from('App\Entity\Access', 'a')
+;
+        dump($qb->getQuery());
+ //       return array();
+        return $qb
+        ->getQuery()
+        ->getResult();
+ 
+ 
     }
 }
