@@ -230,6 +230,11 @@ class QuizGenController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) { 
+                $submittedToken = $request->request->get('token');
+                
+                // 'delete-item' is the same value used in the template to generate the token
+                if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+                    // ... do something, like deleting an object
                 
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($quiz);
@@ -239,9 +244,15 @@ class QuizGenController extends AbstractController
                 $this->get('session')
                     ->getFlashBag()
                     ->add('info', 'Le quiz a été supprimé.');
-
+                } else {
+                    // On définit un message flash
+                    $this->get('session')
+                    ->getFlashBag()
+                    ->add('info', 'Bad CRSF when deleting Quiz.');
+                }
                 // Puis on redirige vers l'accueil
                 return $this->redirect($this->generateUrl('oc_quizgen_homepage'));
+                
             }
         }
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
