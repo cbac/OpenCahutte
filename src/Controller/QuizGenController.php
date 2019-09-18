@@ -218,7 +218,7 @@ class QuizGenController extends AbstractController
      * Delete a quiz
      *
      * @Route("/delete/{id}", name="oc_quizgen_delete", requirements={
-     * "id": "\d+" }, methods={"GET","DELETE"})
+     * "id": "\d+" }, methods={"GET","POST"})
      */
     public function deleteAction(Request $request, Quiz $quiz)
     {
@@ -227,10 +227,10 @@ class QuizGenController extends AbstractController
         $form = $this->createFormBuilder()->getForm();
 
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) { // Ici, isValid ne vérifie donc que le CSRF
-                                                            // On supprime l'article
+            if ($form->isSubmitted() && $form->isValid()) { 
+                
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($quiz);
                 $em->flush();
