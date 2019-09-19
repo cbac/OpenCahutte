@@ -52,8 +52,6 @@ class QuizGenController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                dump($quiz);
-
                 $em->persist($quiz);
                 $QCMs = $quiz->getQCMs();
                 foreach ($QCMs as $key => $qcm) {
@@ -105,7 +103,6 @@ class QuizGenController extends AbstractController
             }
             if ($form->isSubmitted() && $form->isValid()) {
                 foreach ($quiz->getQCMs() as $QCM) {
-                    dump($QCM);
                     $QCM->setQuiz($quiz);
                     $em->persist($QCM);
                 }
@@ -278,7 +275,6 @@ class QuizGenController extends AbstractController
             throw new NotFoundHttpException("Le quiz n'existe pas.");
         }
         $newQuiz = clone $oldQuiz;
-        dump($newQuiz);
         $form = $this->createForm(QuizType::class, $newQuiz, array(
         ));
         $newQuiz->setAuthor($this->getUser());

@@ -30,7 +30,6 @@ class QuizRepository extends ServiceEntityRepository
 //        ->from('App\Entity\Quiz', 'q')
 //        ->from('App\Entity\Access', 'a')
 ;
-        dump($qb->getQuery());
  //       return array();
         return $qb
         ->getQuery()

@@ -103,7 +103,6 @@ class QuizDisController extends AbstractController
         }
         $quiz = $gamepin->getQuiz();
         if (null === $quiz) {
-            dump($gamepin);
             throw new NotFoundHttpException("No quiz associated to " . $pinNumber);
         }
         $session = $request->getSession();
@@ -138,7 +137,6 @@ class QuizDisController extends AbstractController
                 $qnumber = $timer->getQNumber() - 1;
                 $qcm = $quiz->getQcms()->get($qnumber);
                 if (null === $qcm) {
-                    dump($quiz);
                     throw new NotFoundHttpException("No question associated to gamepin " . $pinNumber . " and question " . $qnumber);
                 }
                 $rep = $request->get('play')['reponseDonnee'];
